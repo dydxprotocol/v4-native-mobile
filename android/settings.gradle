@@ -1,0 +1,80 @@
+
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+
+    // Configures the React Native Gradle Settings plugin used for autolinking
+     includeBuild("../node_modules/@react-native/gradle-plugin")
+}
+
+plugins { id("com.facebook.react.settings") }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+
+// If using .gradle.kts files:
+// extensions.configure<com.facebook.react.ReactSettingsExtension> { autolinkLibrariesFromCommand() }
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url "https://jcenter.bintray.com" }
+
+        maven { url 'https://repo1.maven.org/maven2' }
+
+        maven {
+            def github_username = System.getenv('github_username')
+            def github_token = System.getenv('github_token')
+            name = "GitHubPackages_Abacus"
+            url = uri("https://maven.pkg.github.com/dydxprotocol/v4-abacus")
+            if (github_username != null && github_token != null) {
+                credentials {
+                    username github_username
+                    password github_token
+                }
+            }
+        }
+        mavenLocal()
+    }
+}
+
+rootProject.name = 'native-android'
+
+//Dependencies may look "down" (unenforced)
+include ':app'
+
+include ':v4:core'
+include ':v4:feature:trade'
+include ':v4:feature:profile'
+include ':v4:feature:portfolio'
+include ':v4:feature:market'
+include ':v4:feature:onboarding'
+include ':v4:integration:chart'
+include ':v4:integration:cosmos'
+include ':v4:integration:starkex'
+include ':v4:integration:javascript'
+include ':v4:integration:react'
+include ':v4:common'
+include ':v4:integration:dydxCartera'
+include ':v4:integration:dydxStateManager'
+include ':v4:utilities'
+include ':v4:platformUI'
+include ':v4:feature:shared'
+include ':v4:feature:newsalerts'
+include ':v4:feature:receipt'
+include ':v4:feature:workers'
+include ':v4:feature:transfer'
+include ':v4:integration:web3'
+include ':v4:integration:analytics'
+include ':v4:integration:statsig'
+include ':v4:integration:fcm'
+include ':v4:feature:vault'
+
+includeBuild("../node_modules/@react-native/gradle-plugin")
+
+include ':v4:integration:dydxFiatRamp'

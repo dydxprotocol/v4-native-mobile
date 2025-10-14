@@ -1,0 +1,112 @@
+package exchange.dydx.abacus.processor.wallet.account
+
+import exchange.dydx.abacus.output.account.SubaccountOrder
+import exchange.dydx.abacus.processor.base.BaseProcessor
+import exchange.dydx.abacus.processor.base.mergeWithIds
+import exchange.dydx.abacus.protocols.LocalizerProtocol
+import exchange.dydx.abacus.protocols.ParserProtocol
+import exchange.dydx.abacus.state.manager.BlockAndTime
+import exchange.dydx.abacus.utils.SHORT_TERM_ORDER_DURATION
+import exchange.dydx.abacus.utils.mutable
+import exchange.dydx.abacus.utils.safeSet
+import exchange.dydx.abacus.utils.typedSafeSet
+import indexer.models.IndexerCompositeOrderObject
+
+internal class OrdersProcessor(
+    parser: ParserProtocol,
+    localizer: LocalizerProtocol?,
+    private val orderProcessor: OrderProcessorProtocol = OrderProcessor(parser = parser, localizer = localizer),
+) : BaseProcessor(parser) {
+
+    private val itemProcessor: OrderProcessor? = orderProcessor as? OrderProcessor
+
+    fun process(
+        existing: List<SubaccountOrder>?,
+        payload: List<IndexerCompositeOrderObject>,
+        height: BlockAndTime?,
+        subaccountNumber: Int
+    ): List<SubaccountOrder> {
+        val new = payload.mapNotNull { eachPayload ->
+            val orderId = eachPayload.id ?: eachPayload.clientId
+            orderProcessor.process(
+                existing = existing?.find { it.id == orderId },
+                payload = eachPayload,
+                subaccountNumber = subaccountNumber,
+                height = height,
+            )
+        }
+        val merged = existing?.let {
+            mergeWithIds(new, existing) { item -> item.id }
+        } ?: new
+
+        return merged.sortedBy { block(it) }.reversed()
+    }
+
+    private fun block(order: SubaccountOrder): Int? {
+        return order.createdAtHeight ?: if (order.goodTilBlock != null) {
+            order.goodTilBlock - SHORT_TERM_ORDER_DURATION
+        } else {
+            null
+        }
+    }
+
+    internal fun received(
+        existing: Map<String, Any>?,
+        payload: List<Any>?,
+        height: BlockAndTime?,
+        subaccountNumber: Int?,
+    ): Map<String, Any>? {
+        return if (payload != null) {
+            val orders = existing?.mutable() ?: mutableMapOf<String, Any>()
+            for (data in payload) {
+                parser.asNativeMap(data)?.let { data ->
+                    val orderId = parser.asString(data["id"] ?: data["clientId"])
+                    val modified = data.toMutableMap()
+                    val orderSubaccountNumber = parser.asInt(data["subaccountNumber"])
+
+                    if (orderSubaccountNumber == null) {
+                        modified.safeSet("subaccountNumber", subaccountNumber)
+                    }
+
+                    if (orderId != null) {
+                        val existing = parser.asNativeMap(orders[orderId])
+                        val order = itemProcessor?.received(existing, modified, height)
+                        orders.typedSafeSet(orderId, order)
+                    }
+                }
+            }
+
+            orders
+        } else {
+            existing
+        }
+    }
+
+    fun updateHeight(
+        existing: List<SubaccountOrder>?,
+        height: BlockAndTime?
+    ): Pair<List<SubaccountOrder>?, Boolean> {
+        var updated = false
+        val modified = existing?.map { order ->
+            val (modifiedOrder, orderUpdated) = itemProcessor?.updateHeight(order, height) ?: Pair(order, false)
+            updated = updated || orderUpdated
+            modifiedOrder
+        }
+        return Pair(modified, updated)
+    }
+
+    fun canceled(
+        existing: List<SubaccountOrder>?,
+        orderId: String,
+    ): Pair<List<SubaccountOrder>?, Boolean> {
+        val order = existing?.find { it.id == orderId }
+        if (order != null && itemProcessor != null) {
+            val modifiedItem = itemProcessor.canceled(order)
+            val modified = existing.toMutableList()
+            modified[existing.indexOf(order)] = modifiedItem
+            return Pair(modified, true)
+        } else {
+            return Pair(existing, false)
+        }
+    }
+}

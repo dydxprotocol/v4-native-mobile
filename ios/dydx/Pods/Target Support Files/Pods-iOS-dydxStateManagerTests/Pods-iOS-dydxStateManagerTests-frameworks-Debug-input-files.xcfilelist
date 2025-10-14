@@ -1,0 +1,6 @@
+${PODS_ROOT}/Target Support Files/Pods-iOS-dydxStateManagerTests/Pods-iOS-dydxStateManagerTests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CombineExt/CombineExt.framework
+${BUILT_PRODUCTS_DIR}/KVOController/KVOController.framework
+${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
+${BUILT_PRODUCTS_DIR}/libPhoneNumber-iOS/libPhoneNumber_iOS.framework
+${PODS_ROOT}/Abacus/build/cocoapods/framework/Abacus.framework

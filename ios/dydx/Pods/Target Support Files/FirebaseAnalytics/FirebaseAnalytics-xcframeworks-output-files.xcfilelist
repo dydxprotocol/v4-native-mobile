@@ -1,0 +1,2 @@
+${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics/Default/FirebaseAnalytics.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics/WithoutAdIdSupport/FirebaseAnalytics.framework

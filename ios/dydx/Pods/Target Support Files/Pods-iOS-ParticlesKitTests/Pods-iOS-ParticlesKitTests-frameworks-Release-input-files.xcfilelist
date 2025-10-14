@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-iOS-ParticlesKitTests/Pods-iOS-ParticlesKitTests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CombineExt/CombineExt.framework
+${BUILT_PRODUCTS_DIR}/KVOController/KVOController.framework
+${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
+${BUILT_PRODUCTS_DIR}/libPhoneNumber-iOS/libPhoneNumber_iOS.framework

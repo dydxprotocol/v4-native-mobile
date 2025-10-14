@@ -1,0 +1,118 @@
+[
+    {
+        "title":"Dev Testing",
+        "input":"1",
+        "fields":[
+            {
+                "title":{
+                    "text":"Deployment Config"
+                },
+                "field":{
+                    "field":"deployment_url",
+                    "optional":true,
+                    "type" : "text"
+                }
+            },
+            {
+                "title":{
+                    "text":"Force Mainnet"
+                },
+                "field":{
+                    "field":"force_mainnet",
+                    "optional":true,
+                    "type" : "text",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : "1"
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Vault"
+                },
+                "field":{
+                    "field":"vault_enabled",
+                    "optional":true,
+                    "type" : "text",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : "1"
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Turnkey Onboarding"
+                },
+                "field":{
+                    "field":"ff_turnkey_android",
+                    "optional":true,
+                    "type" : "text",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : "1"
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            },
+             {
+                "title":{
+                    "text":"Rewards Sep 2025"
+                },
+                "field":{
+                    "field":"ff_rewards_sep_2025",
+                    "optional":true,
+                    "type" : "text",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : "1"
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Fiat Deposit"
+                },
+                "field":{
+                    "field":"ff_fiat_deposit",
+                    "optional":true,
+                    "type" : "text",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : "1"
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]

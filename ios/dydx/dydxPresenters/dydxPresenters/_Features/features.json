@@ -1,0 +1,178 @@
+[
+    {
+        "title":"Dev Testing",
+        "input":"1",
+        "fields":[
+            {
+                "title":{
+                    "text":"Deployment Config"
+                },
+                "field":{
+                    "field":"deployment_url",
+                    "optional":true,
+                    "type" : "text"
+                }
+            },
+            {
+                "title":{
+                    "text":"Force Mainnet"
+                },
+                "field":{
+                    "field":"force_mainnet",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : "0"
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Prediction Markets"
+                },
+                "field":{
+                    "field":"ff_show_prediction_markets_ui",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Privy"
+                },
+                "field":{
+                    "field":"ff_privy_ios",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Enable Simple UI"
+                },
+                "field":{
+                    "field":"ff_simple_ui",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Turnkey"
+                },
+                "field":{
+                    "field":"ff_turnkey_ios",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Apple Login"
+                },
+                "field":{
+                    "field":"ff_turnkey_ios_apple",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Rewards Sep 2025"
+                },
+                "field":{
+                    "field":"ff_rewards_sep_2025",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            },
+            {
+                "title":{
+                    "text":"Fiat Deposit"
+                },
+                "field":{
+                    "field":"ff_fiat_deposit",
+                    "optional":true,
+                    "type" : "bool",
+                    "options" : [
+                        {
+                            "text": "yes",
+                            "value" : 1
+                        },
+                        {
+                            "text": "no",
+                            "value" : 0
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]
