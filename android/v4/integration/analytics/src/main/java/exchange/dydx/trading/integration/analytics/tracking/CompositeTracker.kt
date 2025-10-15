@@ -19,7 +19,7 @@ class CompositeTracker @Inject constructor() : CompositeTracking {
         trackers.forEach { it.setUserId(userId) }
     }
 
-    override fun setUserProperties(properties: Map<String, String?>) {
+    override fun setUserProperties(properties: Map<String, Any?>) {
         trackers.forEach { it.setUserProperties(properties) }
     }
 

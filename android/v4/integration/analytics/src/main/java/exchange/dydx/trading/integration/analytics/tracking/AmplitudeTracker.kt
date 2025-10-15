@@ -11,7 +11,7 @@ class AmplitudeTracker(
         amplitude.setUserId(userId)
     }
 
-    override fun setUserProperties(properties: Map<String, String?>) {
+    override fun setUserProperties(properties: Map<String, Any?>) {
         val identify = Identify()
         properties.forEach { (key, value) ->
             if (value == null) {

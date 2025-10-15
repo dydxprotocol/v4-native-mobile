@@ -42,7 +42,7 @@ class DydxProfileLaunchIncentivesViewModel @Inject constructor(
         val season = launchIncentive?.currentSeason
         val points = formatter.raw(
             season?.let { launchIncentivePoints?.points?.get(it) }?.incentivePoints,
-            6
+            6,
         )
         return DydxProfileLaunchIncentivesView.ViewState(
             localizer = localizer,
@@ -63,6 +63,6 @@ class DydxProfileLaunchIncentivesViewModel @Inject constructor(
             isSep2025 = featureFlags.isFeatureEnabled(DydxBoolFeatureFlag.ff_rewards_sep_2025),
             rewards_dollar_amount = remoteFlags.getParamStoreValue("rewards_dollar_amount", "-"),
             rebate_percent = remoteFlags.getParamStoreValue("rewards_fee_rebate_percent", "-"),
-            )
+        )
     }
 }

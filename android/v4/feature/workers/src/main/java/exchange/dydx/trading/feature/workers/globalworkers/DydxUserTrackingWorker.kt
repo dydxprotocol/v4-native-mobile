@@ -9,6 +9,7 @@ import exchange.dydx.abacus.protocols.AbacusLocalizerProtocol
 import exchange.dydx.dydxCartera.CarteraConfig
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.trading.common.di.CoroutineScopes
+import exchange.dydx.trading.common.featureflags.DydxFeatureFlags
 import exchange.dydx.trading.feature.shared.analytics.UserProperty
 import exchange.dydx.trading.integration.analytics.tracking.Tracking
 import exchange.dydx.utilities.utils.WorkerProtocol
@@ -28,6 +29,7 @@ class DydxUserTrackingWorker @Inject constructor(
     private val localizer: AbacusLocalizerProtocol,
     private val tracker: Tracking,
     private val application: Application,
+    private val featureFlags: DydxFeatureFlags,
 ) : WorkerProtocol {
     override var isStarted = false
 
@@ -93,7 +95,14 @@ class DydxUserTrackingWorker @Inject constructor(
                 PackageManager.PERMISSION_GRANTED
             tracker.setUserProperties(
                 mapOf(
-                    "pushNotificationsEnabled" to pushEnabled.toString(),
+                    UserProperty.pushNotificationsEnabled.rawValue to pushEnabled.toString(),
+                ),
+            )
+
+            val currentFlagValues = featureFlags.currentFlagValues
+            tracker.setUserProperties(
+                mapOf(
+                    UserProperty.statsigFlags.rawValue to currentFlagValues,
                 ),
             )
         }
