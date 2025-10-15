@@ -70,4 +70,13 @@ class DydxFeatureFlags @Inject constructor(
         val value = sharedPreferences.read(featureFlag.name)
         return value?.toDoubleOrNull() ?: featureFlag.defaultValue
     }
+
+    val currentFlagValues: Map<String, Boolean>
+        get() {
+           val map = mutableMapOf<String, Boolean>()
+            DydxBoolFeatureFlag.entries.forEach {
+                map[it.name] = isFeatureEnabled(it)
+            }
+            return map
+        }
 }

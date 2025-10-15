@@ -8,7 +8,7 @@ interface Tracking : TrackingProtocol {
 
     fun setUserId(userId: String?)
 
-    fun setUserProperties(properties: Map<String, String?>)
+    fun setUserProperties(properties: Map<String, Any?>)
 
     override fun log(event: String, data: String?)
 

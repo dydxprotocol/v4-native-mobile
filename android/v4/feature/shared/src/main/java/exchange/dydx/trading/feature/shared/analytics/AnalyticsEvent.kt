@@ -55,5 +55,7 @@ enum class UserProperty(val rawValue: String) {
     network("network"),
     selectedLocale("selectedLocale"),
     dydxAddress("dydxAddress"),
-    subaccountNumber("subaccountNumber")
+    subaccountNumber("subaccountNumber"),
+    statsigFlags("statsigFlags"),
+    pushNotificationsEnabled("pushNotificationsEnabled"),
 }

@@ -12,8 +12,13 @@ class FirebaseTracker(
         firebaseAnalytics.setUserId(userId)
     }
 
-    override fun setUserProperties(properties: Map<String, String?>) {
+    override fun setUserProperties(properties: Map<String, Any?>) {
         properties.forEach { (key, value) ->
+            val value = when (value) {
+                is String -> value
+                is Boolean -> value.toString()
+                else -> null
+            }
             firebaseAnalytics.setUserProperty(key, value)
         }
     }
