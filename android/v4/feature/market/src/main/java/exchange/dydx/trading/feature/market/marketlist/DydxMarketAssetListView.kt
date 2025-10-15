@@ -4,13 +4,17 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,8 +23,11 @@ import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.platformui.components.dividers.PlatformDivider
 import exchange.dydx.platformui.compose.PlatformRememberLazyListState
 import exchange.dydx.platformui.designSystem.theme.ThemeColor
+import exchange.dydx.platformui.designSystem.theme.ThemeFont
 import exchange.dydx.platformui.designSystem.theme.ThemeShapes
+import exchange.dydx.platformui.designSystem.theme.dydxDefault
 import exchange.dydx.platformui.designSystem.theme.themeColor
+import exchange.dydx.platformui.designSystem.theme.themeFont
 import exchange.dydx.platformui.theme.DydxThemedPreviewSurface
 import exchange.dydx.platformui.theme.MockLocalizer
 import exchange.dydx.trading.common.component.DydxComponent
@@ -140,9 +147,16 @@ object DydxMarketAssetListView : DydxComponent {
                     }
 
                     item(key = "bottom") {
-                        Box(
-                            Modifier
-                                .fillMaxSize()
+                        Text(
+                            text = state.localizer.localize("APP.TRADE.MARKET_DISCLAIMER"),
+                            style = TextStyle.dydxDefault
+                                .themeFont(fontSize = ThemeFont.FontSize.tiny)
+                                .themeColor(ThemeColor.SemanticColor.text_tertiary),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = ThemeShapes.HorizontalPadding)
+                                .padding(top = ThemeShapes.VerticalPadding)
                                 .padding(bottom = 69.dp),
                         )
                     }
