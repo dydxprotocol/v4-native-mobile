@@ -105,7 +105,6 @@ class DydxUserTrackingWorker @Inject constructor(
                     UserProperty.statsigFlags.rawValue to currentFlagValues,
                 ),
             )
-            
         }
     }
 

@@ -73,7 +73,7 @@ class DydxFeatureFlags @Inject constructor(
 
     val currentFlagValues: Map<String, Boolean>
         get() {
-           val map = mutableMapOf<String, Boolean>()
+            val map = mutableMapOf<String, Boolean>()
             DydxBoolFeatureFlag.entries.forEach {
                 map[it.name] = isFeatureEnabled(it)
             }
