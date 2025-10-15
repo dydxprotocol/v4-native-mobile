@@ -87,11 +87,17 @@ public class dydxSimpleUIMarketsViewModel: PlatformViewModel {
                             let sortView = AnyView(self.marketSort?.createView(parentStyle: style))
                             let marketHeader = self.createHeader(text: DataLocalizer.localize(path: "APP.GENERAL.MARKETS"),
                                                                  rightAccessory: sortView)
-                            Section(header: marketHeader) {
-                                self.marketList?.createView(parentStyle: style)
 
-                                Spacer(minLength: 96)
+                            let footer = Text(DataLocalizer.localize(path: "APP.TRADE.MARKET_DISCLAIMER"))
+                                .themeFont(fontType: .base, fontSize: .smallest)
+                                .themeColor(foreground: .textTertiary)
+                                .multilineTextAlignment(.center)
+                                .padding(.all, 16)
+
+                            Section(header: marketHeader, footer: footer) {
+                                self.marketList?.createView(parentStyle: style)
                             }
+                            Spacer(minLength: 96)
                         }
                     }
                     .clipped()      // prevent blending into status bar
