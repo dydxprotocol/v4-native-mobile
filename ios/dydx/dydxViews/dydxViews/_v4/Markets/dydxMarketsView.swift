@@ -84,7 +84,13 @@ public class dydxMarketsViewModel: PlatformViewModel {
                              .id(Self.topId)
                              .zIndex(.greatestFiniteMagnitude)
 
-                             Section(header: header) {
+                            let footer = Text(DataLocalizer.localize(path: "APP.TRADE.MARKET_DISCLAIMER"))
+                                .themeFont(fontType: .base, fontSize: .smallest)
+                                .themeColor(foreground: .textTertiary)
+                                .multilineTextAlignment(.center)
+                                .padding(.all, 16)
+
+                            Section(header: header, footer: footer) {
                                  self.marketsListViewModel?
                                      .createView()
                                      .padding(.horizontal, 16)
