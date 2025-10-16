@@ -12,7 +12,7 @@ public protocol TurnkeyBridgeManagerDelegate: AnyObject {
     func onAuthRouteToWallet()
     func onAuthRouteToDesktopQR()
     func onAuthCompleted(onboardingSignature: String, evmAddress: String, svmAddress: String, mnemonics: String, loginMethod: String, userEmail: String?, dydxAddress: String?)
-    func onAppleAuthRequest(nonce: String)
+    func onAppleAuthRequest(nonce: String, publicKey: String)
 }
 
 public class TurnkeyBridgeManager {
@@ -49,11 +49,11 @@ public class TurnkeyBridgeManager {
         }
     }
 
-    public func appleSignInCompleted(identityToken: String?, error: String?) {
+    public func appleSignInCompleted(encodedResponse: String?, error: String?) {
         bridge.enqueueJSCall(
             "RCTDeviceEventEmitter",
             method: "emit",
-            args: ["AppleSignInCompleted", ["identityToken": identityToken, "error": error]],
+            args: ["AppleSignInCompleted", ["encodedResponse": encodedResponse, "error": error]],
             completion: nil
         )
     }

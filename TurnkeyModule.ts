@@ -10,7 +10,7 @@ interface TurnkeyNativeModuleType {
   onAuthCompleted: (onboardingSignature: string, evmAddress: string, svmAddress: string,
     mnemonics: string, loginMethod: string, userEmail: string | undefined, dydxAddress: string | undefined) => void;
 
-  onAppleAuthRequest: (nonce: string) => void;
+  onAppleAuthRequest: (nonce: string, publicKey: string) => void;
 
   onUploadDydxAddressUploadResponse: (dydxAddress: string, result: string) => void;
 
@@ -28,7 +28,7 @@ export interface NativeToJsRequestEvent {
 }
 
 export interface AppleSignInCompletedEvent {
-  identityToken: string | null;
+  encodedResponse: string | null;
   error: string | null;
 }
 
