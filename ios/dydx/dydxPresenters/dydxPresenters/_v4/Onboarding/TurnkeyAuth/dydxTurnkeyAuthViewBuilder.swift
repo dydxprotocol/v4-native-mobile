@@ -208,9 +208,21 @@ private class dydxTurnkeyAuthViewConntroller: ReactNativeHostingController, Turn
         }
     }
 
-    func onAppleAuthRequest(nonce: String) {
-        appleSignIn.signInWithApple(nonce: nonce) { identityToken, error in
-            TurnkeyBridgeManager.shared.appleSignInCompleted(identityToken: identityToken, error: error?.localizedDescription)
+    func onAppleAuthRequest(nonce: String, publicKey: String) {
+        guard let appleServiceId = CredientialConfig.shared.credential(for: "appleServiceId") else {
+            fatalError((#file as NSString).lastPathComponent + ": appleServiceId is missing")
+        }
+
+        guard let restHost = AbacusStateManager.shared.environment?.endpoints.indexers?.first?.api else {
+            TurnkeyBridgeManager.shared.appleSignInCompleted(encodedResponse: nil, error: "Indexer API not available")
+            return
+        }
+
+        appleSignIn.signInWithApple(nonce: nonce,
+                                    publicKey: publicKey,
+                                    restHost: restHost,
+                                    clientId: appleServiceId) { encodedResponse, error in
+            TurnkeyBridgeManager.shared.appleSignInCompleted(encodedResponse: encodedResponse, error: error?.localizedDescription)
         }
     }
 }

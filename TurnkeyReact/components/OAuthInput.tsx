@@ -2,7 +2,7 @@ import { useTurnkey } from "@turnkey/sdk-react-native";
 import { TurnkeyConfigs } from "../SharedConfigs";
 import { Button } from "./ui/button";
 import { View, DeviceEventEmitter, Image } from "react-native";
-import { OAuthRequest } from "../providers/authRelayProvider";
+import { AppleAuthRequest, OAuthRequest } from "../providers/authRelayProvider";
 import { EmbeddedKeyAndNonce } from "./useEmbeddedKeyAndNonce";
 import { AppleSignInCompletedEvent, TurnkeyNativeModule } from "../../TurnkeyModule";
 import { useEffect } from "react";
@@ -12,6 +12,7 @@ import { Platform } from 'react-native';
 
 type OAuthProps = {
   onSuccess: (params: OAuthRequest) => Promise<void>;
+  onAppleAuthSuccess: (params: AppleAuthRequest) => Promise<void>;
   configs: TurnkeyConfigs;
   embeddedKeyAndNonce: EmbeddedKeyAndNonce;
 }
@@ -67,7 +68,7 @@ export const GoogleAuthButton: React.FC<OAuthProps> = ({
 };
 
 export const AppleAuthButton: React.FC<OAuthProps> = ({
-  onSuccess,
+  onAppleAuthSuccess,
   configs,
   embeddedKeyAndNonce
 }: OAuthProps) => {
@@ -75,10 +76,10 @@ export const AppleAuthButton: React.FC<OAuthProps> = ({
     DeviceEventEmitter.removeAllListeners('AppleSignInCompleted');
     DeviceEventEmitter.addListener(
       'AppleSignInCompleted',
-      async ({ identityToken, error }: AppleSignInCompletedEvent) => {
-        if (identityToken !== null && embeddedKeyAndNonce.targetPublicKey) {
-          await onSuccess({
-            oidcToken: identityToken,
+      async ({ encodedResponse, error }: AppleSignInCompletedEvent) => {
+        if (encodedResponse !== null && embeddedKeyAndNonce.targetPublicKey) {
+          await onAppleAuthSuccess({
+            encodedResponse: encodedResponse,
             providerName: "apple",
             embeddedKeyAndNonce: embeddedKeyAndNonce,
             configs: configs,
@@ -98,8 +99,12 @@ export const AppleAuthButton: React.FC<OAuthProps> = ({
       console.error("Nonce is not ready");
       return;
     }
+    if (!embeddedKeyAndNonce.targetPublicKey) {
+      console.error("Target public key is not ready");
+      return;
+    }
 
-    TurnkeyNativeModule.onAppleAuthRequest(embeddedKeyAndNonce.nonce);
+    TurnkeyNativeModule.onAppleAuthRequest(embeddedKeyAndNonce.nonce, embeddedKeyAndNonce.targetPublicKey);
   };
 
   const styles = useThemedStyles(currentTheme);
@@ -123,19 +128,21 @@ export const AppleAuthButton: React.FC<OAuthProps> = ({
 };
 
 export const OAuthInput: React.FC<OAuthProps> = (props) => {
-  const { onSuccess, configs, embeddedKeyAndNonce } = props;
+  const { onSuccess, onAppleAuthSuccess, configs, embeddedKeyAndNonce } = props;
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: "space-evenly", gap: 16, width: '100%' }}>
       {Platform.OS === 'ios' && configs.enableAppleLoginIn && (
         <AppleAuthButton
           onSuccess={onSuccess}
+          onAppleAuthSuccess={onAppleAuthSuccess}
           configs={configs}
           embeddedKeyAndNonce={embeddedKeyAndNonce}
         />
       )}
       <GoogleAuthButton
         onSuccess={onSuccess}
+        onAppleAuthSuccess={onAppleAuthSuccess}
         configs={configs}
         embeddedKeyAndNonce={embeddedKeyAndNonce}
       />

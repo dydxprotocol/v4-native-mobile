@@ -41,6 +41,7 @@ const renderError = () => {
 export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
   const {
     loginWithOAuth,
+    loginWithAppleAuth,
     uploadDydxAddress,
     completeOtpAuth,
   } = useAuthRelay();
@@ -147,6 +148,12 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
                 setContinueModalProviderName(params.providerName);
                 setContinueModal(true);
                 const session = await loginWithOAuth(params);
+                registerDydxAddressReceivedHandler(session);
+              }}
+              onAppleAuthSuccess={ async (params) => {
+                setContinueModalProviderName(params.providerName);
+                setContinueModal(true);
+                const session = await loginWithAppleAuth(params);
                 registerDydxAddressReceivedHandler(session);
               }}
               configs={configs}

@@ -37,7 +37,8 @@ RCT_EXTERN_METHOD(onAuthCompleted
                   :(NSString) dydxAddress)
 
 RCT_EXTERN_METHOD(onAppleAuthRequest
-                  :(NSString) nonce)
+                  :(NSString) nonce
+                  :(NSString) publicKey)
 
 RCT_EXTERN_METHOD(onTrackingEvent
                   :(NSString) eventName

@@ -14,6 +14,7 @@ import {
 import { getValueWithKey, setValueWithKey } from "../lib/store";
 import { STORAGE_KEY } from "../lib/constants";
 import { jwtDecode } from 'jwt-decode';
+import { decodeBase64 } from "../lib/utils";
 
 type AuthActionType =
   | { type: "PASSKEY"; payload: User }
@@ -66,6 +67,13 @@ function authReducer(state: AuthState, action: AuthActionType): AuthState {
   }
 }
 
+export type AppleAuthRequest = {
+  encodedResponse: string;
+  providerName: string;
+  embeddedKeyAndNonce: EmbeddedKeyAndNonce;
+  configs: TurnkeyConfigs;
+};
+
 export type OAuthRequest = {
   oidcToken: string;
   providerName: string;
@@ -99,6 +107,7 @@ export interface AuthRelayProviderType {
   signUpWithPasskey: () => Promise<void>;
   loginWithPasskey: () => Promise<void>;
   loginWithOAuth: (params: OAuthRequest) => Promise<DydxTurnkeySession | undefined>;
+  loginWithAppleAuth: (params: AppleAuthRequest) => Promise<DydxTurnkeySession | undefined>;
   clearError: () => void;
   uploadDydxAddress: (params: UploadDydxAddressRequest) => Promise<void>;
 }
@@ -110,6 +119,7 @@ export const AuthRelayContext = createContext<AuthRelayProviderType>({
   signUpWithPasskey: async () => Promise.resolve(),
   loginWithPasskey: async () => Promise.resolve(),
   loginWithOAuth: async () => Promise.resolve(undefined),
+  loginWithAppleAuth: async () => Promise.resolve(undefined),
   clearError: () => { },
   uploadDydxAddress: async () => Promise.resolve(),
 });
@@ -235,6 +245,26 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
   const loginWithPasskey = async () => {
     console.debug("loginWithPasskey called");
   };
+
+  const loginWithAppleAuth = async ({
+    encodedResponse,
+    providerName,
+    embeddedKeyAndNonce,
+    configs,
+  }: AppleAuthRequest): Promise<DydxTurnkeySession | undefined> => {
+    dispatch({ type: "LOADING", payload: LoginMethod.OAuth });
+    try {
+      const response = decodeBase64(encodedResponse)
+      const result = await handleOauthResponse(response, embeddedKeyAndNonce, configs, providerName, undefined);
+      return Promise.resolve(result);
+    } catch (error: any) {
+      TurnkeyNativeModule.onTrackingEvent("TurnkeyLoginError", { "signinMethod": providerName, "error": error.message });
+      console.error("Error during sign-in: ", error, error.message);
+      dispatch({ type: "ERROR", payload: error.message });
+    } finally {
+      dispatch({ type: "LOADING", payload: null });
+    }
+  }
 
   const loginWithOAuth = async ({
     oidcToken,
@@ -489,6 +519,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
         signUpWithPasskey,
         loginWithPasskey,
         loginWithOAuth,
+        loginWithAppleAuth,
         clearError,
         uploadDydxAddress
       }}
