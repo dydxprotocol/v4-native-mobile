@@ -9,7 +9,7 @@ import Foundation
 import Utilities
 import Combine
 import Abacus
-import Cartera
+import dydxCartera
 import dydxFormatter
 import BigInt
 

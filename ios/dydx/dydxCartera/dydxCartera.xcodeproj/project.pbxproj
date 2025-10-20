@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		021A1DCA2AD34103008A3D73 /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 021A1DC92AD34103008A3D73 /* Cartera */; };
-		02308BF62DC441A000EECD8F /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 02669B922AD872A300A756AA /* Cartera */; };
-		02308BF72DC441A000EECD8F /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 029E51A22D08966E005D4DC5 /* Cartera */; };
-		02308BF82DC441A000EECD8F /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 0294C5FF2D790BD900F62FB5 /* Cartera */; };
-		02308BF92DC441A000EECD8F /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 0294C6022D790C3C00F62FB5 /* Cartera */; };
-		02308BFA2DC441A000EECD8F /* SolanaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02886C762D84B766005EF461 /* SolanaSwift */; };
 		02308D272DC4662F00EECD8F /* dydxPrivyWalletSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02308D262DC4662F00EECD8F /* dydxPrivyWalletSetup.swift */; };
 		023F7F082AD09725006CC4CD /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647D11422A9FF29100DA7815 /* Utilities.framework */; platformFilter = ios; };
 		023F7F0D2AD09732006CC4CD /* ParticlesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647D11D12AA0EE8D00DA7815 /* ParticlesKit.framework */; platformFilter = ios; };
@@ -21,7 +15,41 @@
 		02439C9B29B03E8A00A083FE /* dydxCarteraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02439C9A29B03E8A00A083FE /* dydxCarteraTests.swift */; };
 		02439C9C29B03E8A00A083FE /* dydxCartera.h in Headers */ = {isa = PBXBuildFile; fileRef = 02439C8E29B03E8A00A083FE /* dydxCartera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		02439E4429B04D2700A083FE /* dydxV4WalletSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02439E4329B04D2700A083FE /* dydxV4WalletSetup.swift */; };
-		024F0E622D88B9310001D799 /* SolanaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 024F0E612D88B9310001D799 /* SolanaSwift */; };
+		02446B892EA693A100AF6FF5 /* wallets_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02446B5E2EA693A100AF6FF5 /* wallets_config.json */; };
+		02446B8A2EA693A100AF6FF5 /* CarteraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B862EA693A100AF6FF5 /* CarteraProvider.swift */; };
+		02446B8B2EA693A100AF6FF5 /* PhantomWalletProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B762EA693A100AF6FF5 /* PhantomWalletProvider.swift */; };
+		02446B8C2EA693A100AF6FF5 /* EIP712TypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B612EA693A100AF6FF5 /* EIP712TypedData.swift */; };
+		02446B8F2EA693A100AF6FF5 /* WalletConnectUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B782EA693A100AF6FF5 /* WalletConnectUtils.swift */; };
+		02446B912EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B602EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift */; };
+		02446B942EA693A100AF6FF5 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B822EA693A100AF6FF5 /* WalletStatus.swift */; };
+		02446B952EA693A100AF6FF5 /* CarteraErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B852EA693A100AF6FF5 /* CarteraErrorCode.swift */; };
+		02446B9B2EA693A100AF6FF5 /* WalletTypedDataProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B632EA693A100AF6FF5 /* WalletTypedDataProtocols.swift */; };
+		02446B9C2EA693A100AF6FF5 /* DefaultCryptoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B742EA693A100AF6FF5 /* DefaultCryptoProvider.swift */; };
+		02446B9D2EA693A100AF6FF5 /* WalletProviderProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B812EA693A100AF6FF5 /* WalletProviderProtocols.swift */; };
+		02446B9F2EA693A100AF6FF5 /* MagicLinkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B752EA693A100AF6FF5 /* MagicLinkProvider.swift */; };
+		02446BA02EA693A100AF6FF5 /* WalletModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B5C2EA693A100AF6FF5 /* WalletModels.swift */; };
+		02446BA12EA693A100AF6FF5 /* SkippedWalletUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7D2EA693A100AF6FF5 /* SkippedWalletUserConsent.swift */; };
+		02446BA32EA693A100AF6FF5 /* SimpleWalletUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7C2EA693A100AF6FF5 /* SimpleWalletUserConsent.swift */; };
+		02446BA42EA693A100AF6FF5 /* CarteraResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B872EA693A100AF6FF5 /* CarteraResources.swift */; };
+		02446BA52EA693A100AF6FF5 /* WalletTypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B622EA693A100AF6FF5 /* WalletTypedData.swift */; };
+		02446BA62EA693A100AF6FF5 /* WalletError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B802EA693A100AF6FF5 /* WalletError.swift */; };
+		02446BA72EA693A100AF6FF5 /* WalletSegueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7A2EA693A100AF6FF5 /* WalletSegueProvider.swift */; };
+		02446BA82EA693A100AF6FF5 /* WalletConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B5B2EA693A100AF6FF5 /* WalletConfig.swift */; };
+		02446BA92EA693A100AF6FF5 /* CarteraConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B842EA693A100AF6FF5 /* CarteraConfig.swift */; };
+		02446BAB2EA693A100AF6FF5 /* WalletConnectV2Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B792EA693A100AF6FF5 /* WalletConnectV2Provider.swift */; };
+		02446BAC2EA693A100AF6FF5 /* DefaultSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */; };
+		02446BAD2EA693A100AF6FF5 /* WalletConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7F2EA693A100AF6FF5 /* WalletConsent.swift */; };
+		02446C4D2EA6974E00AF6FF5 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C4C2EA6974E00AF6FF5 /* Starscream */; };
+		02446C502EA6976400AF6FF5 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C4F2EA6976400AF6FF5 /* CryptoSwift */; };
+		02446C5A2EA697FB00AF6FF5 /* CoinbaseWalletSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C592EA697FB00AF6FF5 /* CoinbaseWalletSDK */; };
+		02446C5D2EA6983C00AF6FF5 /* Web3 in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C5C2EA6983C00AF6FF5 /* Web3 */; };
+		02446C602EA6988900AF6FF5 /* TweetNacl in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C5F2EA6988900AF6FF5 /* TweetNacl */; };
+		02446C632EA699BB00AF6FF5 /* SolanaSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C622EA699BB00AF6FF5 /* SolanaSwift */; };
+		02446C662EA69A5600AF6FF5 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C652EA69A5600AF6FF5 /* WalletConnect */; };
+		02446C682EA69A5600AF6FF5 /* WalletConnectIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C672EA69A5600AF6FF5 /* WalletConnectIdentity */; };
+		02446C6A2EA69A5600AF6FF5 /* WalletConnectModal in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C692EA69A5600AF6FF5 /* WalletConnectModal */; };
+		02446C6C2EA69A5600AF6FF5 /* WalletConnectNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C6B2EA69A5600AF6FF5 /* WalletConnectNetworking */; };
+		02446C6E2EA69A5600AF6FF5 /* WalletConnectNotify in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C6D2EA69A5600AF6FF5 /* WalletConnectNotify */; };
 		0274248429E74CA5004C89AE /* Parser+Eth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274248329E74CA5004C89AE /* Parser+Eth.swift */; };
 		0274248729E76718004C89AE /* EthConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274248629E76718004C89AE /* EthConversions.swift */; };
 		0274248929E78576004C89AE /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274248829E78576004C89AE /* ERC20Token.swift */; };
@@ -45,8 +73,6 @@
 		029E51BE2D08BC6B005D4DC5 /* HexUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029E51BD2D08BC6B005D4DC5 /* HexUtil.swift */; };
 		029E51C02D08BD4A005D4DC5 /* ByteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029E51BF2D08BD4A005D4DC5 /* ByteExtensions.swift */; };
 		029E51C22D08BE51005D4DC5 /* String+Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029E51C12D08BE51005D4DC5 /* String+Numeric.swift */; };
-		02A50EE12E3424E20086ED2C /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 02A50EE02E3424E20086ED2C /* Cartera */; };
-		02A50EE42E34252E0086ED2C /* Cartera in Frameworks */ = {isa = PBXBuildFile; productRef = 02A50EE32E34252E0086ED2C /* Cartera */; };
 		02DB5ECD29E602E5001EA0F1 /* EthereumInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DB5ECC29E602E5001EA0F1 /* EthereumInteractor.swift */; };
 		02DE2A6E2D0A0091007E1277 /* KeccakExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DE2A6D2D0A0091007E1277 /* KeccakExtensions.swift */; };
 		02DE2EAE2D0A05AE007E1277 /* keccak-tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 02DE2EAB2D0A05AE007E1277 /* keccak-tiny.c */; };
@@ -162,6 +188,30 @@
 		02439C9529B03E8A00A083FE /* dydxCarteraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dydxCarteraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02439C9A29B03E8A00A083FE /* dydxCarteraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxCarteraTests.swift; sourceTree = "<group>"; };
 		02439E4329B04D2700A083FE /* dydxV4WalletSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxV4WalletSetup.swift; sourceTree = "<group>"; };
+		02446B5B2EA693A100AF6FF5 /* WalletConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConfig.swift; sourceTree = "<group>"; };
+		02446B5C2EA693A100AF6FF5 /* WalletModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModels.swift; sourceTree = "<group>"; };
+		02446B5E2EA693A100AF6FF5 /* wallets_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = wallets_config.json; sourceTree = "<group>"; };
+		02446B602EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712DomainTypedDataProvider.swift; sourceTree = "<group>"; };
+		02446B612EA693A100AF6FF5 /* EIP712TypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712TypedData.swift; sourceTree = "<group>"; };
+		02446B622EA693A100AF6FF5 /* WalletTypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTypedData.swift; sourceTree = "<group>"; };
+		02446B632EA693A100AF6FF5 /* WalletTypedDataProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTypedDataProtocols.swift; sourceTree = "<group>"; };
+		02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSocketFactory.swift; sourceTree = "<group>"; };
+		02446B742EA693A100AF6FF5 /* DefaultCryptoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCryptoProvider.swift; sourceTree = "<group>"; };
+		02446B752EA693A100AF6FF5 /* MagicLinkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkProvider.swift; sourceTree = "<group>"; };
+		02446B762EA693A100AF6FF5 /* PhantomWalletProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhantomWalletProvider.swift; sourceTree = "<group>"; };
+		02446B782EA693A100AF6FF5 /* WalletConnectUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectUtils.swift; sourceTree = "<group>"; };
+		02446B792EA693A100AF6FF5 /* WalletConnectV2Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectV2Provider.swift; sourceTree = "<group>"; };
+		02446B7A2EA693A100AF6FF5 /* WalletSegueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSegueProvider.swift; sourceTree = "<group>"; };
+		02446B7C2EA693A100AF6FF5 /* SimpleWalletUserConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWalletUserConsent.swift; sourceTree = "<group>"; };
+		02446B7D2EA693A100AF6FF5 /* SkippedWalletUserConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkippedWalletUserConsent.swift; sourceTree = "<group>"; };
+		02446B7F2EA693A100AF6FF5 /* WalletConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConsent.swift; sourceTree = "<group>"; };
+		02446B802EA693A100AF6FF5 /* WalletError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletError.swift; sourceTree = "<group>"; };
+		02446B812EA693A100AF6FF5 /* WalletProviderProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletProviderProtocols.swift; sourceTree = "<group>"; };
+		02446B822EA693A100AF6FF5 /* WalletStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStatus.swift; sourceTree = "<group>"; };
+		02446B842EA693A100AF6FF5 /* CarteraConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteraConfig.swift; sourceTree = "<group>"; };
+		02446B852EA693A100AF6FF5 /* CarteraErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteraErrorCode.swift; sourceTree = "<group>"; };
+		02446B862EA693A100AF6FF5 /* CarteraProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteraProvider.swift; sourceTree = "<group>"; };
+		02446B872EA693A100AF6FF5 /* CarteraResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteraResources.swift; sourceTree = "<group>"; };
 		0274248329E74CA5004C89AE /* Parser+Eth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Parser+Eth.swift"; sourceTree = "<group>"; };
 		0274248629E76718004C89AE /* EthConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthConversions.swift; sourceTree = "<group>"; };
 		0274248829E78576004C89AE /* ERC20Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
@@ -205,20 +255,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02308BFA2DC441A000EECD8F /* SolanaSwift in Frameworks */,
-				02308BF92DC441A000EECD8F /* Cartera in Frameworks */,
-				02308BF82DC441A000EECD8F /* Cartera in Frameworks */,
-				02A50EE42E34252E0086ED2C /* Cartera in Frameworks */,
-				02308BF72DC441A000EECD8F /* Cartera in Frameworks */,
-				02A50EE12E3424E20086ED2C /* Cartera in Frameworks */,
-				02308BF62DC441A000EECD8F /* Cartera in Frameworks */,
+				02446C5A2EA697FB00AF6FF5 /* CoinbaseWalletSDK in Frameworks */,
+				02446C602EA6988900AF6FF5 /* TweetNacl in Frameworks */,
+				02446C682EA69A5600AF6FF5 /* WalletConnectIdentity in Frameworks */,
 				023F7F0D2AD09732006CC4CD /* ParticlesKit.framework in Frameworks */,
 				023F7F082AD09725006CC4CD /* Utilities.framework in Frameworks */,
 				380B90E0F0184BA5387AC70A /* Pods_iOS_dydxCartera.framework in Frameworks */,
 				0294C8912D7930EB00F62FB5 /* Base58Swift in Frameworks */,
-				024F0E622D88B9310001D799 /* SolanaSwift in Frameworks */,
 				02844D7D2DC187EF006F51CE /* Privy in Frameworks */,
-				021A1DCA2AD34103008A3D73 /* Cartera in Frameworks */,
+				02446C6A2EA69A5600AF6FF5 /* WalletConnectModal in Frameworks */,
+				02446C4D2EA6974E00AF6FF5 /* Starscream in Frameworks */,
+				02446C662EA69A5600AF6FF5 /* WalletConnect in Frameworks */,
+				02446C632EA699BB00AF6FF5 /* SolanaSwift in Frameworks */,
+				02446C5D2EA6983C00AF6FF5 /* Web3 in Frameworks */,
+				02446C502EA6976400AF6FF5 /* CryptoSwift in Frameworks */,
+				02446C6C2EA69A5600AF6FF5 /* WalletConnectNetworking in Frameworks */,
+				02446C6E2EA69A5600AF6FF5 /* WalletConnectNotify in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +310,7 @@
 		02439C8D29B03E8A00A083FE /* dydxCartera */ = {
 			isa = PBXGroup;
 			children = (
+				02446B882EA693A100AF6FF5 /* Cartera */,
 				02EF44D229F6F59A00C97746 /* WalletSetup */,
 				0274248529E766F6004C89AE /* Contracts */,
 				0274248229E74C9B004C89AE /* Utils */,
@@ -275,6 +328,93 @@
 				02439C9A29B03E8A00A083FE /* dydxCarteraTests.swift */,
 			);
 			path = dydxCarteraTests;
+			sourceTree = "<group>";
+		};
+		02446B5D2EA693A100AF6FF5 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				02446B5B2EA693A100AF6FF5 /* WalletConfig.swift */,
+				02446B5C2EA693A100AF6FF5 /* WalletModels.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		02446B5F2EA693A100AF6FF5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				02446B5E2EA693A100AF6FF5 /* wallets_config.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		02446B642EA693A100AF6FF5 /* TypedData */ = {
+			isa = PBXGroup;
+			children = (
+				02446B602EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift */,
+				02446B612EA693A100AF6FF5 /* EIP712TypedData.swift */,
+				02446B622EA693A100AF6FF5 /* WalletTypedData.swift */,
+				02446B632EA693A100AF6FF5 /* WalletTypedDataProtocols.swift */,
+			);
+			path = TypedData;
+			sourceTree = "<group>";
+		};
+		02446B732EA693A100AF6FF5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		02446B7B2EA693A100AF6FF5 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				02446B742EA693A100AF6FF5 /* DefaultCryptoProvider.swift */,
+				02446B752EA693A100AF6FF5 /* MagicLinkProvider.swift */,
+				02446B762EA693A100AF6FF5 /* PhantomWalletProvider.swift */,
+				02446B782EA693A100AF6FF5 /* WalletConnectUtils.swift */,
+				02446B792EA693A100AF6FF5 /* WalletConnectV2Provider.swift */,
+				02446B7A2EA693A100AF6FF5 /* WalletSegueProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		02446B7E2EA693A100AF6FF5 /* UserConsent */ = {
+			isa = PBXGroup;
+			children = (
+				02446B7C2EA693A100AF6FF5 /* SimpleWalletUserConsent.swift */,
+				02446B7D2EA693A100AF6FF5 /* SkippedWalletUserConsent.swift */,
+			);
+			path = UserConsent;
+			sourceTree = "<group>";
+		};
+		02446B832EA693A100AF6FF5 /* WalletProvider */ = {
+			isa = PBXGroup;
+			children = (
+				02446B7B2EA693A100AF6FF5 /* Providers */,
+				02446B7E2EA693A100AF6FF5 /* UserConsent */,
+				02446B7F2EA693A100AF6FF5 /* WalletConsent.swift */,
+				02446B802EA693A100AF6FF5 /* WalletError.swift */,
+				02446B812EA693A100AF6FF5 /* WalletProviderProtocols.swift */,
+				02446B822EA693A100AF6FF5 /* WalletStatus.swift */,
+			);
+			path = WalletProvider;
+			sourceTree = "<group>";
+		};
+		02446B882EA693A100AF6FF5 /* Cartera */ = {
+			isa = PBXGroup;
+			children = (
+				02446B5D2EA693A100AF6FF5 /* Entities */,
+				02446B5F2EA693A100AF6FF5 /* Resources */,
+				02446B642EA693A100AF6FF5 /* TypedData */,
+				02446B732EA693A100AF6FF5 /* Utilities */,
+				02446B832EA693A100AF6FF5 /* WalletProvider */,
+				02446B842EA693A100AF6FF5 /* CarteraConfig.swift */,
+				02446B852EA693A100AF6FF5 /* CarteraErrorCode.swift */,
+				02446B862EA693A100AF6FF5 /* CarteraProvider.swift */,
+				02446B872EA693A100AF6FF5 /* CarteraResources.swift */,
+			);
+			path = Cartera;
 			sourceTree = "<group>";
 		};
 		0274248229E74C9B004C89AE /* Utils */ = {
@@ -472,17 +612,20 @@
 			);
 			name = dydxCartera;
 			packageProductDependencies = (
-				021A1DC92AD34103008A3D73 /* Cartera */,
-				02669B922AD872A300A756AA /* Cartera */,
-				029E51A22D08966E005D4DC5 /* Cartera */,
-				0294C5FF2D790BD900F62FB5 /* Cartera */,
-				0294C6022D790C3C00F62FB5 /* Cartera */,
 				0294C8902D7930EB00F62FB5 /* Base58Swift */,
 				02886C762D84B766005EF461 /* SolanaSwift */,
-				024F0E612D88B9310001D799 /* SolanaSwift */,
 				02844D7C2DC187EF006F51CE /* Privy */,
-				02A50EE02E3424E20086ED2C /* Cartera */,
-				02A50EE32E34252E0086ED2C /* Cartera */,
+				02446C4C2EA6974E00AF6FF5 /* Starscream */,
+				02446C4F2EA6976400AF6FF5 /* CryptoSwift */,
+				02446C592EA697FB00AF6FF5 /* CoinbaseWalletSDK */,
+				02446C5C2EA6983C00AF6FF5 /* Web3 */,
+				02446C5F2EA6988900AF6FF5 /* TweetNacl */,
+				02446C622EA699BB00AF6FF5 /* SolanaSwift */,
+				02446C652EA69A5600AF6FF5 /* WalletConnect */,
+				02446C672EA69A5600AF6FF5 /* WalletConnectIdentity */,
+				02446C692EA69A5600AF6FF5 /* WalletConnectModal */,
+				02446C6B2EA69A5600AF6FF5 /* WalletConnectNetworking */,
+				02446C6D2EA69A5600AF6FF5 /* WalletConnectNotify */,
 			);
 			productName = dydxCartera;
 			productReference = 02439C8B29B03E8A00A083FE /* dydxCartera.framework */;
@@ -536,9 +679,14 @@
 			mainGroup = 02439C8129B03E8A00A083FE;
 			packageReferences = (
 				0294C88F2D7930EB00F62FB5 /* XCRemoteSwiftPackageReference "Base58Swift" */,
-				024F0E602D88B9310001D799 /* XCRemoteSwiftPackageReference "solana-swift" */,
 				02844D7B2DC187EF006F51CE /* XCRemoteSwiftPackageReference "privy-ios" */,
-				02A50EE22E34252E0086ED2C /* XCRemoteSwiftPackageReference "cartera-ios" */,
+				02446C4B2EA6974E00AF6FF5 /* XCRemoteSwiftPackageReference "Starscream" */,
+				02446C4E2EA6976400AF6FF5 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				02446C582EA697FB00AF6FF5 /* XCRemoteSwiftPackageReference "wallet-mobile-sdk" */,
+				02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */,
+				02446C5E2EA6988800AF6FF5 /* XCRemoteSwiftPackageReference "tweetnacl-swiftwrap" */,
+				02446C612EA699BB00AF6FF5 /* XCRemoteSwiftPackageReference "solana-swift" */,
+				02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 02439C8C29B03E8A00A083FE /* Products */;
@@ -639,6 +787,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02446B892EA693A100AF6FF5 /* wallets_config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,9 +831,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxCarteraTests/Pods-iOS-dydxCarteraTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxCarteraTests/Pods-iOS-dydxCarteraTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -739,6 +892,29 @@
 				02DE2EAE2D0A05AE007E1277 /* keccak-tiny.c in Sources */,
 				029E51AD2D08AD3B005D4DC5 /* ABIFunctionEncoder.swift in Sources */,
 				029E51C02D08BD4A005D4DC5 /* ByteExtensions.swift in Sources */,
+				02446B8A2EA693A100AF6FF5 /* CarteraProvider.swift in Sources */,
+				02446B8B2EA693A100AF6FF5 /* PhantomWalletProvider.swift in Sources */,
+				02446B8C2EA693A100AF6FF5 /* EIP712TypedData.swift in Sources */,
+				02446B8F2EA693A100AF6FF5 /* WalletConnectUtils.swift in Sources */,
+				02446B912EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift in Sources */,
+				02446B942EA693A100AF6FF5 /* WalletStatus.swift in Sources */,
+				02446B952EA693A100AF6FF5 /* CarteraErrorCode.swift in Sources */,
+				02446B9B2EA693A100AF6FF5 /* WalletTypedDataProtocols.swift in Sources */,
+				02446B9C2EA693A100AF6FF5 /* DefaultCryptoProvider.swift in Sources */,
+				02446B9D2EA693A100AF6FF5 /* WalletProviderProtocols.swift in Sources */,
+				02446B9F2EA693A100AF6FF5 /* MagicLinkProvider.swift in Sources */,
+				02446BA02EA693A100AF6FF5 /* WalletModels.swift in Sources */,
+				02446BA12EA693A100AF6FF5 /* SkippedWalletUserConsent.swift in Sources */,
+				02446BA32EA693A100AF6FF5 /* SimpleWalletUserConsent.swift in Sources */,
+				02446BA42EA693A100AF6FF5 /* CarteraResources.swift in Sources */,
+				02446BA52EA693A100AF6FF5 /* WalletTypedData.swift in Sources */,
+				02446BA62EA693A100AF6FF5 /* WalletError.swift in Sources */,
+				02446BA72EA693A100AF6FF5 /* WalletSegueProvider.swift in Sources */,
+				02446BA82EA693A100AF6FF5 /* WalletConfig.swift in Sources */,
+				02446BA92EA693A100AF6FF5 /* CarteraConfig.swift in Sources */,
+				02446BAB2EA693A100AF6FF5 /* WalletConnectV2Provider.swift in Sources */,
+				02446BAC2EA693A100AF6FF5 /* DefaultSocketFactory.swift in Sources */,
+				02446BAD2EA693A100AF6FF5 /* WalletConsent.swift in Sources */,
 				029E51B82D08AF01005D4DC5 /* ABITuple.swift in Sources */,
 				029E51AE2D08AD3B005D4DC5 /* ABIFunction.swift in Sources */,
 				029E51B62D08ADC2005D4DC5 /* ABIRawType.swift in Sources */,
@@ -851,10 +1027,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -928,10 +1101,7 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1076,11 +1246,59 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		024F0E602D88B9310001D799 /* XCRemoteSwiftPackageReference "solana-swift" */ = {
+		02446C4B2EA6974E00AF6FF5 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.2;
+			};
+		};
+		02446C4E2EA6976400AF6FF5 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+		02446C582EA697FB00AF6FF5 /* XCRemoteSwiftPackageReference "wallet-mobile-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/coinbase/wallet-mobile-sdk";
+			requirement = {
+				branch = 1.0.5;
+				kind = branch;
+			};
+		};
+		02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WalletConnect/Web3.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+		02446C5E2EA6988800AF6FF5 /* XCRemoteSwiftPackageReference "tweetnacl-swiftwrap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bitmark-inc/tweetnacl-swiftwrap.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		02446C612EA699BB00AF6FF5 /* XCRemoteSwiftPackageReference "solana-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dydxprotocol/solana-swift";
 			requirement = {
 				branch = main;
+				kind = branch;
+			};
+		};
+		02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dydxprotocol/WalletConnectSwiftV2.git";
+			requirement = {
+				branch = develop;
 				kind = branch;
 			};
 		};
@@ -1100,25 +1318,63 @@
 				minimumVersion = 2.1.15;
 			};
 		};
-		02A50EE22E34252E0086ED2C /* XCRemoteSwiftPackageReference "cartera-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dydxprotocol/cartera-ios";
-			requirement = {
-				branch = releases/0.1.14;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		021A1DC92AD34103008A3D73 /* Cartera */ = {
+		02446C4C2EA6974E00AF6FF5 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Cartera;
+			package = 02446C4B2EA6974E00AF6FF5 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
 		};
-		024F0E612D88B9310001D799 /* SolanaSwift */ = {
+		02446C4F2EA6976400AF6FF5 /* CryptoSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024F0E602D88B9310001D799 /* XCRemoteSwiftPackageReference "solana-swift" */;
+			package = 02446C4E2EA6976400AF6FF5 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+		02446C592EA697FB00AF6FF5 /* CoinbaseWalletSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C582EA697FB00AF6FF5 /* XCRemoteSwiftPackageReference "wallet-mobile-sdk" */;
+			productName = CoinbaseWalletSDK;
+		};
+		02446C5C2EA6983C00AF6FF5 /* Web3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */;
+			productName = Web3;
+		};
+		02446C5F2EA6988900AF6FF5 /* TweetNacl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C5E2EA6988800AF6FF5 /* XCRemoteSwiftPackageReference "tweetnacl-swiftwrap" */;
+			productName = TweetNacl;
+		};
+		02446C622EA699BB00AF6FF5 /* SolanaSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C612EA699BB00AF6FF5 /* XCRemoteSwiftPackageReference "solana-swift" */;
 			productName = SolanaSwift;
+		};
+		02446C652EA69A5600AF6FF5 /* WalletConnect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnect;
+		};
+		02446C672EA69A5600AF6FF5 /* WalletConnectIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnectIdentity;
+		};
+		02446C692EA69A5600AF6FF5 /* WalletConnectModal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnectModal;
+		};
+		02446C6B2EA69A5600AF6FF5 /* WalletConnectNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnectNetworking;
+		};
+		02446C6D2EA69A5600AF6FF5 /* WalletConnectNotify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02446C642EA69A5600AF6FF5 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnectNotify;
 		};
 		02669B922AD872A300A756AA /* Cartera */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1152,11 +1408,6 @@
 		};
 		02A50EE02E3424E20086ED2C /* Cartera */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Cartera;
-		};
-		02A50EE32E34252E0086ED2C /* Cartera */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 02A50EE22E34252E0086ED2C /* XCRemoteSwiftPackageReference "cartera-ios" */;
 			productName = Cartera;
 		};
 /* End XCSwiftPackageProductDependency section */

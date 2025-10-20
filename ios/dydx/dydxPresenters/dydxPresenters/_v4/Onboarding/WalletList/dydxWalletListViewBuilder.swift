@@ -13,7 +13,6 @@ import ParticlesKit
 import PlatformUI
 import dydxFormatter
 import dydxCartera
-import Cartera
 
 public class dydxWalletListViewBuilder: NSObject, ObjectBuilderProtocol {
     public func build<T>() -> T? {
