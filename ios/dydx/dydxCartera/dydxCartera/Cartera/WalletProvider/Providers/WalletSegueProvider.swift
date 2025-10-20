@@ -263,7 +263,8 @@ private extension Action {
                 maxFeePerGas: nil,
                 maxPriorityFeePerGas: nil,
                 gasLimit: nil,
-                chainId: chainIdText)
+                chainId: chainIdText,
+                actionSource: nil)
             )
         } else {
             return nil

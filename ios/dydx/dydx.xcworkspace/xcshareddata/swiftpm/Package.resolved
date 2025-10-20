@@ -1,5 +1,5 @@
 {
-  "originHash" : "f383129d4e5d2ce87d3cb34e690050bbe3cf0c785091724315dd059be884b1a9",
+  "originHash" : "3c629a845b69774be4a7f2a6eece7b4801a0ce36e41b880682b08e003775f813",
   "pins" : [
     {
       "identity" : "base58swift",
@@ -22,7 +22,7 @@
     {
       "identity" : "cryptoswift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzyzanowskim/CryptoSwift",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
       "state" : {
         "revision" : "e45a26384239e028ec87fbcc788f513b67e10d8f",
         "version" : "1.9.0"
@@ -71,6 +71,15 @@
       "state" : {
         "revision" : "263f280d2c8144adfb0b6676109846cfc8dd552b",
         "version" : "14.3.1"
+      }
+    },
+    {
+      "identity" : "reown-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/reown-com/reown-swift",
+      "state" : {
+        "revision" : "7590a3f421c0679dce49364ab44869a7c4d0290f",
+        "version" : "1.7.3"
       }
     },
     {
@@ -159,17 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/coinbase/wallet-mobile-sdk",
       "state" : {
-        "branch" : "1.0.5",
-        "revision" : "4aa89e682f8d7ab1515d85d0797f0d25306bb56a"
-      }
-    },
-    {
-      "identity" : "walletconnectswiftv2",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dydxprotocol/WalletConnectSwiftV2.git",
-      "state" : {
-        "branch" : "develop",
-        "revision" : "0d9a566b375a29fcc36e3ce66824c49925fa72aa"
+        "revision" : "4293df51d3500b8e876ca4bf0d7548adf097569a",
+        "version" : "1.1.2"
       }
     },
     {
@@ -179,6 +179,15 @@
       "state" : {
         "revision" : "569255adcfff0b37e4cb8004aea29d0e2d6266df",
         "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "yttrium",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/reown-com/yttrium",
+      "state" : {
+        "revision" : "ed8e8f5af2029406263be5993e484c3a69c1db7a",
+        "version" : "0.9.68"
       }
     }
   ],

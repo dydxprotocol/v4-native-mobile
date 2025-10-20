@@ -32,7 +32,7 @@ public enum dydxBoolFeatureFlag: String, CaseIterable {
         case .turnkey_ios:
             return true
         case .turnkey_ios_apple:
-            return false
+            return true
         case .rewards_sep_2025:
             return false
         case .fiat_deposit:

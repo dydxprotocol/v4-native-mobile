@@ -7,7 +7,7 @@
 
 import Foundation
 import Starscream
-import WalletConnectRelay
+import ReownAppKit
 
 extension Starscream.WebSocket: @retroactive WebSocketConnecting { }
 
