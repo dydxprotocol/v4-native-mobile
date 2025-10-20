@@ -14,7 +14,7 @@ import RoutingKit
 import dydxStateManager
 import Utilities
 import Combine
-import Cartera
+import dydxCartera
 
 public class Wallets2ViewBuilder: NSObject, ObjectBuilderProtocol {
     private enum WalletStatePublisherError: Error {

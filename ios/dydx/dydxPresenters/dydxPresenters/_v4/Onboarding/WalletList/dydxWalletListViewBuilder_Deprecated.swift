@@ -11,7 +11,7 @@ import PlatformParticles
 import RoutingKit
 import ParticlesKit
 import PlatformUI
-import Cartera
+import dydxCartera
 import dydxStateManager
 import dydxFormatter
 
@@ -113,7 +113,7 @@ class dydxWalletListViewPresenter_Deprecated: HostedViewPresenter<dydxWalletList
         var installedWalletViewModels = [dydxWalletViewModel]()
         var uninstalledWalletViewModels = [dydxWalletViewModel]()
 
-        for wallet: Cartera.Wallet in CarteraConfig.shared.wallets {
+        for wallet: dydxCartera.Wallet in CarteraConfig.shared.wallets {
             let viewModel = dydxWalletViewModel()
             viewModel.shortName = wallet.metadata?.shortName
             if let imageName = wallet.userFields?["imageName"],

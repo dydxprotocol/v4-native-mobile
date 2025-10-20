@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Cartera
+import dydxCartera
 
 public struct dydxWalletState: Codable, Equatable {
     private var _wallets: [dydxWalletInstance] = []

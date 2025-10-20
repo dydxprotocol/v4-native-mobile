@@ -8,7 +8,7 @@
 import Utilities
 import Combine
 import Abacus
-import Cartera
+import dydxCartera
 
 struct WalletSwitchChainStep: AsyncStep {
     typealias ProgressType = Void

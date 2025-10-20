@@ -10,7 +10,7 @@ import Combine
 import dydxStateManager
 import ParticlesKit
 import Utilities
-import Cartera
+import dydxCartera
 
 final class dydxCarteraConfigWorker: BaseWorker {
 

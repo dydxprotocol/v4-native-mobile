@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Cartera
 import Combine
 import Utilities
 
@@ -140,8 +139,7 @@ public class dydxWalletSetup: WalletStatusDelegate {
 
     // MARK: WalletStatusDelegate
 
-    public func statusChanged(_ status: Cartera.WalletStatusProtocol) {
+    public func statusChanged(_ status: WalletStatusProtocol) {
         debugLink = status.connectionDeeplink
     }
-
 }

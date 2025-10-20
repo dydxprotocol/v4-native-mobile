@@ -1,5 +1,5 @@
 {
-  "originHash" : "4b7ec2ab95c154649ce9c2cada6811ffaaed22a3be7a51e4af8ca1f7e3be396f",
+  "originHash" : "f383129d4e5d2ce87d3cb34e690050bbe3cf0c785091724315dd059be884b1a9",
   "pins" : [
     {
       "identity" : "base58swift",
@@ -20,21 +20,12 @@
       }
     },
     {
-      "identity" : "cartera-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dydxprotocol/cartera-ios",
-      "state" : {
-        "branch" : "releases/0.1.14",
-        "revision" : "c77801ca98e0579ef15ed62ba2aaca4cba306a5c"
-      }
-    },
-    {
       "identity" : "cryptoswift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift",
       "state" : {
-        "branch" : "main",
-        "revision" : "044dd7436914b5f3bb7267ef2685b13476e1bfab"
+        "revision" : "e45a26384239e028ec87fbcc788f513b67e10d8f",
+        "version" : "1.9.0"
       }
     },
     {
@@ -105,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daltoniam/Starscream.git",
       "state" : {
-        "branch" : "3.1.2",
-        "revision" : "a063fda2b8145a231953c20e7a646be254365396"
+        "revision" : "a063fda2b8145a231953c20e7a646be254365396",
+        "version" : "3.1.2"
       }
     },
     {
@@ -166,7 +157,7 @@
     {
       "identity" : "wallet-mobile-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MobileWalletProtocol/wallet-mobile-sdk",
+      "location" : "https://github.com/coinbase/wallet-mobile-sdk",
       "state" : {
         "branch" : "1.0.5",
         "revision" : "4aa89e682f8d7ab1515d85d0797f0d25306bb56a"

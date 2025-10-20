@@ -6,7 +6,6 @@
 //  Copyright © 2018 dYdX. All rights reserved.
 //
 
-import Cartera
 import CoinbaseWalletSDK
 import Combine
 import dydxFormatter
