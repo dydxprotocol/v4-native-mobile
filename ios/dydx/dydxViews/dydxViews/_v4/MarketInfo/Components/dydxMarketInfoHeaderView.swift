@@ -26,43 +26,26 @@ public class dydxMarketInfoHeaderViewModel: PlatformViewModel {
     }()
 
     private func createMarketSelectorView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> some View {
-        HStack(spacing: 15) {
-            HStack(spacing: 12) {
-                PlatformIconViewModel(type: .url(url: self.sharedMarketViewModel?.logoUrl),
-                                      clip: .defaultCircle,
-                                      size: CGSize(width: 40, height: 40),
-                                      backgroundColor: .colorWhite)
-                .createView(parentStyle: parentStyle, styleKey: styleKey)
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 4) {
-                        Text(sharedMarketViewModel?.assetName ?? "")
-                            .themeColor(foreground: .textSecondary)
-                            .themeFont(fontType: .base, fontSize: .large)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                        TokenTextViewModel(symbol: sharedMarketViewModel?.assetId ?? "")
-                            .createView(parentStyle: parentStyle.themeFont(fontSize: .smallest), styleKey: styleKey)
-                    }
-                    HStack(alignment: .center, spacing: 4) {
-                        Text(sharedMarketViewModel?.indexPrice ?? "")
-                            .themeColor(foreground: .textPrimary)
-                            .themeFont(fontType: .number, fontSize: .large)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                        sharedMarketViewModel?.priceChangePercent24H?
-                            .createView(parentStyle: parentStyle.themeFont(fontSize: .medium), styleKey: styleKey)
-                    }
-                }
+        HStack(spacing: 8) {
+            PlatformIconViewModel(type: .url(url: self.sharedMarketViewModel?.logoUrl),
+                                  clip: .defaultCircle,
+                                  size: CGSize(width: 24, height: 24),
+                                  backgroundColor: .colorWhite)
+            .createView(parentStyle: parentStyle, styleKey: styleKey)
+            HStack(spacing: 4) {
+                Text(sharedMarketViewModel?.assetName ?? "")
+                    .themeColor(foreground: .textSecondary)
+                    .themeFont(fontType: .base, fontSize: .large)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                sharedMarketViewModel?.priceChangePercent24H?
+                    .createView(parentStyle: parentStyle.themeFont(fontSize: .medium), styleKey: styleKey)
             }
             PlatformIconViewModel(type: .asset(name: "icon_dropdown", bundle: .dydxView),
                                   clip: .noClip,
                                   size: .init(width: 14, height: 8))
             .createView(parentStyle: parentStyle, styleKey: styleKey)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .themeColor(background: .layer3)
-        .borderAndClip(style: .cornerRadius(12), borderColor: .borderDefault, lineWidth: 1)
         .onTapGesture(perform: self.onMarketSelectorTap ?? {})
     }
 
