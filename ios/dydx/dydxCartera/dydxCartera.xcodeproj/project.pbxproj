@@ -19,27 +19,16 @@
 		02446B8A2EA693A100AF6FF5 /* CarteraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B862EA693A100AF6FF5 /* CarteraProvider.swift */; };
 		02446B8B2EA693A100AF6FF5 /* PhantomWalletProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B762EA693A100AF6FF5 /* PhantomWalletProvider.swift */; };
 		02446B8C2EA693A100AF6FF5 /* EIP712TypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B612EA693A100AF6FF5 /* EIP712TypedData.swift */; };
-		02446B8D2EA693A100AF6FF5 /* DispatchQueue+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6A2EA693A100AF6FF5 /* DispatchQueue+Utils.swift */; };
-		02446B8E2EA693A100AF6FF5 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B672EA693A100AF6FF5 /* Console.swift */; };
 		02446B8F2EA693A100AF6FF5 /* WalletConnectUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B782EA693A100AF6FF5 /* WalletConnectUtils.swift */; };
-		02446B902EA693A100AF6FF5 /* Installation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6C2EA693A100AF6FF5 /* Installation.swift */; };
 		02446B912EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B602EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift */; };
-		02446B922EA693A100AF6FF5 /* UrlHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B722EA693A100AF6FF5 /* UrlHandler.swift */; };
-		02446B932EA693A100AF6FF5 /* MotionHapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6E2EA693A100AF6FF5 /* MotionHapticFeedback.swift */; };
 		02446B942EA693A100AF6FF5 /* WalletStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B822EA693A100AF6FF5 /* WalletStatus.swift */; };
 		02446B952EA693A100AF6FF5 /* CarteraErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B852EA693A100AF6FF5 /* CarteraErrorCode.swift */; };
-		02446B962EA693A100AF6FF5 /* HapticFeedbackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6B2EA693A100AF6FF5 /* HapticFeedbackProtocol.swift */; };
-		02446B972EA693A100AF6FF5 /* LocalAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6D2EA693A100AF6FF5 /* LocalAuthenticator.swift */; };
-		02446B982EA693A100AF6FF5 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B6F2EA693A100AF6FF5 /* NotificationToken.swift */; };
-		02446B992EA693A100AF6FF5 /* SingletonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B702EA693A100AF6FF5 /* SingletonProtocol.swift */; };
 		02446B9B2EA693A100AF6FF5 /* WalletTypedDataProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B632EA693A100AF6FF5 /* WalletTypedDataProtocols.swift */; };
 		02446B9C2EA693A100AF6FF5 /* DefaultCryptoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B742EA693A100AF6FF5 /* DefaultCryptoProvider.swift */; };
 		02446B9D2EA693A100AF6FF5 /* WalletProviderProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B812EA693A100AF6FF5 /* WalletProviderProtocols.swift */; };
-		02446B9E2EA693A100AF6FF5 /* CarteraAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B662EA693A100AF6FF5 /* CarteraAppState.swift */; };
 		02446B9F2EA693A100AF6FF5 /* MagicLinkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B752EA693A100AF6FF5 /* MagicLinkProvider.swift */; };
 		02446BA02EA693A100AF6FF5 /* WalletModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B5C2EA693A100AF6FF5 /* WalletModels.swift */; };
 		02446BA12EA693A100AF6FF5 /* SkippedWalletUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7D2EA693A100AF6FF5 /* SkippedWalletUserConsent.swift */; };
-		02446BA22EA693A100AF6FF5 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B682EA693A100AF6FF5 /* CryptoUtils.swift */; };
 		02446BA32EA693A100AF6FF5 /* SimpleWalletUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7C2EA693A100AF6FF5 /* SimpleWalletUserConsent.swift */; };
 		02446BA42EA693A100AF6FF5 /* CarteraResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B872EA693A100AF6FF5 /* CarteraResources.swift */; };
 		02446BA52EA693A100AF6FF5 /* WalletTypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B622EA693A100AF6FF5 /* WalletTypedData.swift */; };
@@ -47,11 +36,9 @@
 		02446BA72EA693A100AF6FF5 /* WalletSegueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7A2EA693A100AF6FF5 /* WalletSegueProvider.swift */; };
 		02446BA82EA693A100AF6FF5 /* WalletConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B5B2EA693A100AF6FF5 /* WalletConfig.swift */; };
 		02446BA92EA693A100AF6FF5 /* CarteraConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B842EA693A100AF6FF5 /* CarteraConfig.swift */; };
-		02446BAA2EA693A100AF6FF5 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B712EA693A100AF6FF5 /* String+Utils.swift */; };
 		02446BAB2EA693A100AF6FF5 /* WalletConnectV2Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B792EA693A100AF6FF5 /* WalletConnectV2Provider.swift */; };
 		02446BAC2EA693A100AF6FF5 /* DefaultSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */; };
 		02446BAD2EA693A100AF6FF5 /* WalletConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B7F2EA693A100AF6FF5 /* WalletConsent.swift */; };
-		02446BAE2EA693A100AF6FF5 /* Bundle+UIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02446B652EA693A100AF6FF5 /* Bundle+UIBundle.swift */; };
 		02446C4D2EA6974E00AF6FF5 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C4C2EA6974E00AF6FF5 /* Starscream */; };
 		02446C502EA6976400AF6FF5 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C4F2EA6976400AF6FF5 /* CryptoSwift */; };
 		02446C5A2EA697FB00AF6FF5 /* CoinbaseWalletSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 02446C592EA697FB00AF6FF5 /* CoinbaseWalletSDK */; };
@@ -208,20 +195,7 @@
 		02446B612EA693A100AF6FF5 /* EIP712TypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712TypedData.swift; sourceTree = "<group>"; };
 		02446B622EA693A100AF6FF5 /* WalletTypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTypedData.swift; sourceTree = "<group>"; };
 		02446B632EA693A100AF6FF5 /* WalletTypedDataProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTypedDataProtocols.swift; sourceTree = "<group>"; };
-		02446B652EA693A100AF6FF5 /* Bundle+UIBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+UIBundle.swift"; sourceTree = "<group>"; };
-		02446B662EA693A100AF6FF5 /* CarteraAppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarteraAppState.swift; sourceTree = "<group>"; };
-		02446B672EA693A100AF6FF5 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		02446B682EA693A100AF6FF5 /* CryptoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
 		02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSocketFactory.swift; sourceTree = "<group>"; };
-		02446B6A2EA693A100AF6FF5 /* DispatchQueue+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Utils.swift"; sourceTree = "<group>"; };
-		02446B6B2EA693A100AF6FF5 /* HapticFeedbackProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackProtocol.swift; sourceTree = "<group>"; };
-		02446B6C2EA693A100AF6FF5 /* Installation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installation.swift; sourceTree = "<group>"; };
-		02446B6D2EA693A100AF6FF5 /* LocalAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticator.swift; sourceTree = "<group>"; };
-		02446B6E2EA693A100AF6FF5 /* MotionHapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionHapticFeedback.swift; sourceTree = "<group>"; };
-		02446B6F2EA693A100AF6FF5 /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
-		02446B702EA693A100AF6FF5 /* SingletonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonProtocol.swift; sourceTree = "<group>"; };
-		02446B712EA693A100AF6FF5 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
-		02446B722EA693A100AF6FF5 /* UrlHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlHandler.swift; sourceTree = "<group>"; };
 		02446B742EA693A100AF6FF5 /* DefaultCryptoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCryptoProvider.swift; sourceTree = "<group>"; };
 		02446B752EA693A100AF6FF5 /* MagicLinkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkProvider.swift; sourceTree = "<group>"; };
 		02446B762EA693A100AF6FF5 /* PhantomWalletProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhantomWalletProvider.swift; sourceTree = "<group>"; };
@@ -387,20 +361,7 @@
 		02446B732EA693A100AF6FF5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				02446B652EA693A100AF6FF5 /* Bundle+UIBundle.swift */,
-				02446B662EA693A100AF6FF5 /* CarteraAppState.swift */,
-				02446B672EA693A100AF6FF5 /* Console.swift */,
-				02446B682EA693A100AF6FF5 /* CryptoUtils.swift */,
 				02446B692EA693A100AF6FF5 /* DefaultSocketFactory.swift */,
-				02446B6A2EA693A100AF6FF5 /* DispatchQueue+Utils.swift */,
-				02446B6B2EA693A100AF6FF5 /* HapticFeedbackProtocol.swift */,
-				02446B6C2EA693A100AF6FF5 /* Installation.swift */,
-				02446B6D2EA693A100AF6FF5 /* LocalAuthenticator.swift */,
-				02446B6E2EA693A100AF6FF5 /* MotionHapticFeedback.swift */,
-				02446B6F2EA693A100AF6FF5 /* NotificationToken.swift */,
-				02446B702EA693A100AF6FF5 /* SingletonProtocol.swift */,
-				02446B712EA693A100AF6FF5 /* String+Utils.swift */,
-				02446B722EA693A100AF6FF5 /* UrlHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -940,27 +901,16 @@
 				02446B8A2EA693A100AF6FF5 /* CarteraProvider.swift in Sources */,
 				02446B8B2EA693A100AF6FF5 /* PhantomWalletProvider.swift in Sources */,
 				02446B8C2EA693A100AF6FF5 /* EIP712TypedData.swift in Sources */,
-				02446B8D2EA693A100AF6FF5 /* DispatchQueue+Utils.swift in Sources */,
-				02446B8E2EA693A100AF6FF5 /* Console.swift in Sources */,
 				02446B8F2EA693A100AF6FF5 /* WalletConnectUtils.swift in Sources */,
-				02446B902EA693A100AF6FF5 /* Installation.swift in Sources */,
 				02446B912EA693A100AF6FF5 /* EIP712DomainTypedDataProvider.swift in Sources */,
-				02446B922EA693A100AF6FF5 /* UrlHandler.swift in Sources */,
-				02446B932EA693A100AF6FF5 /* MotionHapticFeedback.swift in Sources */,
 				02446B942EA693A100AF6FF5 /* WalletStatus.swift in Sources */,
 				02446B952EA693A100AF6FF5 /* CarteraErrorCode.swift in Sources */,
-				02446B962EA693A100AF6FF5 /* HapticFeedbackProtocol.swift in Sources */,
-				02446B972EA693A100AF6FF5 /* LocalAuthenticator.swift in Sources */,
-				02446B982EA693A100AF6FF5 /* NotificationToken.swift in Sources */,
-				02446B992EA693A100AF6FF5 /* SingletonProtocol.swift in Sources */,
 				02446B9B2EA693A100AF6FF5 /* WalletTypedDataProtocols.swift in Sources */,
 				02446B9C2EA693A100AF6FF5 /* DefaultCryptoProvider.swift in Sources */,
 				02446B9D2EA693A100AF6FF5 /* WalletProviderProtocols.swift in Sources */,
-				02446B9E2EA693A100AF6FF5 /* CarteraAppState.swift in Sources */,
 				02446B9F2EA693A100AF6FF5 /* MagicLinkProvider.swift in Sources */,
 				02446BA02EA693A100AF6FF5 /* WalletModels.swift in Sources */,
 				02446BA12EA693A100AF6FF5 /* SkippedWalletUserConsent.swift in Sources */,
-				02446BA22EA693A100AF6FF5 /* CryptoUtils.swift in Sources */,
 				02446BA32EA693A100AF6FF5 /* SimpleWalletUserConsent.swift in Sources */,
 				02446BA42EA693A100AF6FF5 /* CarteraResources.swift in Sources */,
 				02446BA52EA693A100AF6FF5 /* WalletTypedData.swift in Sources */,
@@ -968,11 +918,9 @@
 				02446BA72EA693A100AF6FF5 /* WalletSegueProvider.swift in Sources */,
 				02446BA82EA693A100AF6FF5 /* WalletConfig.swift in Sources */,
 				02446BA92EA693A100AF6FF5 /* CarteraConfig.swift in Sources */,
-				02446BAA2EA693A100AF6FF5 /* String+Utils.swift in Sources */,
 				02446BAB2EA693A100AF6FF5 /* WalletConnectV2Provider.swift in Sources */,
 				02446BAC2EA693A100AF6FF5 /* DefaultSocketFactory.swift in Sources */,
 				02446BAD2EA693A100AF6FF5 /* WalletConsent.swift in Sources */,
-				02446BAE2EA693A100AF6FF5 /* Bundle+UIBundle.swift in Sources */,
 				029E51B82D08AF01005D4DC5 /* ABITuple.swift in Sources */,
 				029E51AE2D08AD3B005D4DC5 /* ABIFunction.swift in Sources */,
 				029E51B62D08ADC2005D4DC5 /* ABIRawType.swift in Sources */,

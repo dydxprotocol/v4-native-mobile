@@ -10,6 +10,7 @@ import CoinbaseWalletSDK
 import UIKit
 import WalletConnectSign
 import WalletConnectModal
+import Utilities
 
 public enum WalletConnectionType: Hashable {
     case walletConnectV2
@@ -121,7 +122,7 @@ public struct CarteraConfig: SingletonProtocol {
     public init(localAuthenticator: LocalAuthenticatorProtocol = TimedLocalAuthenticator(),
                 walletProvidersConfig: WalletProvidersConfig = WalletProvidersConfig()) {
         self.walletProvidersConfig = walletProvidersConfig
-        URLHandler.shared = UIApplication.shared
+        URLHandler.shared = UIApplication.shared as? any URLHandlerProtocol
         LocalAuthenticator.shared = localAuthenticator
         updateConfigs()
     }
@@ -305,9 +306,3 @@ public struct PhantomWalletConfig: Equatable {
 }
 
 class CarteraMarker: NSObject {}
-
-extension UIApplication: URLHandlerProtocol {
-    func open(_ url: URL, completionHandler completion: ((Bool) -> Void)?) {
-        open(url, options: [:], completionHandler: completion)
-    }
-}

@@ -9,6 +9,7 @@
 import Foundation
 import Web3
 import BigInt
+import Utilities
 
 public struct WalletRequest: Equatable, Hashable {
     public let wallet: Wallet?

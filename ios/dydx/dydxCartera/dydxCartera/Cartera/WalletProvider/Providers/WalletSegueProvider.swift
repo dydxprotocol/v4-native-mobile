@@ -10,6 +10,7 @@ import Foundation
 import CoinbaseWalletSDK
 import Web3
 import BigInt
+import Utilities
 
 final class WalletSegueProvider: NSObject, WalletOperationProviderProtocol {
 

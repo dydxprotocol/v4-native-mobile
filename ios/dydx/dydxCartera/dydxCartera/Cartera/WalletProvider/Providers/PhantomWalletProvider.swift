@@ -10,6 +10,7 @@ import TweetNacl
 import Base58Swift
 import UIKit
 import SolanaSwift
+import Utilities
 
 final class PhantomWalletProvider: NSObject, WalletOperationProviderProtocol {
 

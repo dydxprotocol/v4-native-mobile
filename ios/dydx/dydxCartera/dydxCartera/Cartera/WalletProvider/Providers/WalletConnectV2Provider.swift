@@ -11,6 +11,7 @@ import WalletConnectSign
 import UIKit
 import Combine
 import WalletConnectModal
+import Utilities
 
 final class WalletConnectV2Provider: NSObject, WalletOperationProviderProtocol {
     private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
