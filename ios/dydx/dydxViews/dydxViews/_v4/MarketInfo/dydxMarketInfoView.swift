@@ -13,7 +13,6 @@ import Utilities
 public class dydxMarketInfoViewModel: PlatformViewModel {
     @Published public var header = dydxMarketInfoHeaderViewModel()
     @Published public var paging: dydxMarketInfoPagingViewModel? = dydxMarketInfoPagingViewModel()
-    @Published public var stats: dydxMarketStatsViewModel? = dydxMarketStatsViewModel()
     @Published public var resources = dydxMarketResourcesViewModel()
     @Published public var configs: dydxMarketConfigsViewModel? = dydxMarketConfigsViewModel()
 
@@ -44,7 +43,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
         let vm = dydxMarketInfoViewModel()
         vm.header = .previewValue
         vm.paging = .previewValue
-        vm.stats = .previewValue
         vm.resources = .previewValue
         vm.configs = .previewValue
         vm.sections = .previewValue
@@ -70,8 +68,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
 
                         self.createPositionSection(parentStyle: style)
                         Spacer(minLength: 24)
-
-                        self.createStatsSection(parentStyle: style)
 
                         self.createDetailsSection(parentStyle: style)
 
@@ -126,13 +122,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
                 PlatformView.nilView
             }
         }
-    }
-
-    private func createStatsSection(parentStyle: ThemeStyle) -> some View {
-            stats?
-                .createView(parentStyle: parentStyle)
-                .frame(width: UIScreen.main.bounds.width)
-                .sectionHeader(path: "APP.GENERAL.STATISTICS")
     }
 
     private func createDetailsSection(parentStyle: ThemeStyle) -> some View {
