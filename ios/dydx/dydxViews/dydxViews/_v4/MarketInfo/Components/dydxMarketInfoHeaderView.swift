@@ -38,8 +38,6 @@ public class dydxMarketInfoHeaderViewModel: PlatformViewModel {
                     .themeFont(fontType: .base, fontSize: .large)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                sharedMarketViewModel?.priceChangePercent24H?
-                    .createView(parentStyle: parentStyle.themeFont(fontSize: .medium), styleKey: styleKey)
             }
             PlatformIconViewModel(type: .asset(name: "icon_dropdown", bundle: .dydxView),
                                   clip: .noClip,
@@ -49,26 +47,76 @@ public class dydxMarketInfoHeaderViewModel: PlatformViewModel {
         .onTapGesture(perform: self.onMarketSelectorTap ?? {})
     }
 
+    private func statLine<Value: View>(labelKey: String, valueType: ThemeFont.FontType? = .base, value: () -> Value) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(DataLocalizer.localize(path: labelKey))
+                .themeColor(foreground: .textTertiary)
+                .themeFont(fontType: .base, fontSize: .smallest)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+            value()
+                .themeColor(foreground: .textSecondary)
+                .themeFont(fontType: valueType, fontSize: .medium)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+        }
+    }
+
+    private func statLine(labelKey: String, value: String, valueType: ThemeFont.FontType? = .base) -> some View {
+        statLine(labelKey: labelKey) { Text(value) }
+    }
+
+    private func createMarketInfoView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> some View {
+        HStack(alignment: .center) {
+            statLine(labelKey: "APP.GENERAL.PRICE", value: sharedMarketViewModel?.indexPrice ?? "")
+                .padding(.horizontal, 16)
+                .overlay(
+                    Rectangle()
+                        .frame(width: 1)
+                        .themeColor(foreground: .layer3),
+                    alignment: .trailing
+                )
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    statLine(labelKey: "APP.GENERAL.MARKET_CAP", value: sharedMarketViewModel?.marketCap ?? "")
+                    statLine(labelKey: "APP.TRADE.CHANGE_24H") { sharedMarketViewModel?.priceChangePercent24H?.createView() }
+                    statLine(labelKey: "APP.TRADE.VOLUME_24H", value: sharedMarketViewModel?.volume24H ?? "")
+                    statLine(labelKey: "APP.TRADE.OPEN_INTEREST", value: sharedMarketViewModel?.openInterest ?? "")
+                    statLine(labelKey: "APP.TRADE.FUNDING_RATE_SHORT") { sharedMarketViewModel?.fundingRate?.createView() }
+                    statLine(labelKey: "APP.TRADE.NEXT_FUNDING") { sharedMarketViewModel?.nextFunding?.createView() }
+                    statLine(labelKey: "APP.GENERAL.BUYING_POWER", value: sharedMarketViewModel?.buyingPower ?? "")
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style  in
             guard let self = self, self.sharedMarketViewModel != nil else {
                 return AnyView(PlatformView.nilView)
             }
 
-            return HStack(spacing: 16) {
-                ChevronBackButtonModel(onBackButtonTap: self.onBackButtonTap ?? {})
-                    .createView(parentStyle: style)
-                    .frame(width: 32)
+            return VStack {
+                HStack(spacing: 16) {
+                    ChevronBackButtonModel(onBackButtonTap: self.onBackButtonTap ?? {})
+                        .createView(parentStyle: style)
+                        .frame(width: 32)
 
-                self.createMarketSelectorView(parentStyle: parentStyle, styleKey: styleKey)
+                    self.createMarketSelectorView(parentStyle: parentStyle, styleKey: styleKey)
+                        .frame(maxWidth: .infinity)
+
+                    self.favoriteViewModel?.createView(parentStyle: style)
+                        .frame(width: 32)
+                }
                     .frame(maxWidth: .infinity)
-
-                self.favoriteViewModel?.createView(parentStyle: style)
-                    .frame(width: 32)
+                    .padding(.horizontal, 12)
+                DividerModel().createView()
+                self.createMarketInfoView(parentStyle: parentStyle)
+                DividerModel().createView()
             }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 12)
-                .wrappedInAnyView()
+            .wrappedInAnyView()
         }
     }
 }
