@@ -260,12 +260,12 @@ dependencies {
 
 
     //
-    // https://github.com/WalletConnect/WalletConnectKotlinV2
+    // https://github.com/reown-com/reown-kotlin
     //
 
-    implementation platform("com.walletconnect:android-bom:$walletConnectVersion")
-    implementation('com.walletconnect:android-core')
-    implementation("com.walletconnect:walletconnect-modal")
+    implementation(platform("com.reown:android-bom:$walletConnectVersion"))
+    implementation("com.reown:android-core")
+    implementation("com.reown:appkit")
 
     //
     // https://docs.cloud.coinbase.com/wallet-sdk/docs/android-install

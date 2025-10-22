@@ -9,7 +9,6 @@ import exchange.dydx.dydxCartera.Utils
 import exchange.dydx.dydxCartera.WalletConnectionType
 import exchange.dydx.dydxCartera.toHexString
 import exchange.dydx.dydxCartera.walletprovider.EthereumTransactionRequest
-import okhttp3.internal.toHexString
 import org.json.JSONException
 import org.json.JSONObject
 

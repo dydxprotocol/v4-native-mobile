@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext.ktlintVersion = '0.48.0'
-    ext.kotlinVersion = '2.0.21'
+    ext.kotlinVersion = '2.2.0'
     ext.androidApplicationVersion = '8.13.0'
 
-    ext.navigationVersion = '2.9.1'
+    ext.navigationVersion = '2.8.4'
     ext.hiltVersion = '2.57.1'
     ext.googleServicesVersion = '4.3.12'
 
@@ -17,7 +17,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$androidApplicationVersion"
         classpath "com.squareup:javapoet:1.13.0"
-        classpath 'com.google.gms:google-services:4.4.3'
+        classpath 'com.google.gms:google-services:4.4.4'
 
         classpath 'com.facebook.react:react-native-gradle-plugin'
 
@@ -181,7 +181,7 @@ ext {
     flowExtVersion = '0.7.1'
     material3Version = '1.2.0-rc01'
     web3jVersion = '4.8.8-android'
-    walletConnectVersion = '1.35.2'
+    walletConnectVersion = '1.4.11'
     amplitudeVersion = '1.21.4'
 }
 
