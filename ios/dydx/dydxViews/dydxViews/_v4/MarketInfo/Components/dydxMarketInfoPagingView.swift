@@ -12,7 +12,7 @@ import Utilities
 
 public class dydxMarketInfoPagingViewModel: PlatformViewModel {
     @Published public var tiles = dydxMarketTilesViewModel()
-    @Published public var tileSelection: Int = 1
+    @Published public var tileSelection: Int = 0
     @Published public var account: dydxMarketAccountViewModel = dydxMarketAccountViewModel()
     @Published public var priceCandles: dydxMarketPriceCandlesViewModel? = dydxMarketPriceCandlesViewModel()
     @Published public var depth: dydxMarketDepthChartViewModel? = dydxMarketDepthChartViewModel()
@@ -42,19 +42,19 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
                     self.tiles.createView(parentStyle: style)
 
                     Group {
-                        if self.tileSelection == 1 {
+                        if self.tileSelection == 0 {
                             self.priceCandles?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 2 {
+                        } else if self.tileSelection == 1 {
                             self.depth?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 3 {
+                        } else if self.tileSelection == 2 {
                             self.trades?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 4 {
+                        } else if self.tileSelection == 3 {
                             self.funding?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 5 {
+                        } else if self.tileSelection == 4 {
                                 self.orderbook?
                                 .createView(parentStyle: style)
                         } else {

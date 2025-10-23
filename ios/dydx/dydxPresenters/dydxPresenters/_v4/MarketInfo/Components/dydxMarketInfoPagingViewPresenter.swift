@@ -29,15 +29,11 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     private let tradesViewPresenter = dydxMarketTradesViewPresenter()
     private let orderbookPresenter = dydxMarketOrderbookPresenter()
 
-    private var isAccountVisible = false
-
     private lazy var childPresenters: [HostedViewPresenterProtocol] = [
-        accountPresenter,
         candlesViewPresenter,
         depthViewPresenter,
-        fundingViewPresenter,
-        orderbookPresenter,
-        tradesViewPresenter
+        tradesViewPresenter,
+        fundingViewPresenter
     ]
 
     private var tiles: [MarketInfoPagingTile] {
@@ -88,12 +84,6 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
             }
             .store(in: &subscriptions)
 
-        AbacusStateManager.shared.state.currentWallet
-            .sink { [weak self] wallet in
-                self?.isAccountVisible = wallet != nil
-            }
-            .store(in: &subscriptions)
-
         resetPresentersForVisibilityChange()
     }
 
@@ -112,11 +102,12 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     private func updateTiles() {
         // Tiles
         viewModel?.tiles.allTiles = tiles.compactMap { $0.text }
-        viewModel?.tileSelection = 1
+        viewModel?.tileSelection = 0
         viewModel?.tiles.onSelectionChanged = { [weak self] index in
-            self?.viewModel?.tileSelection = index + 1
+            self?.viewModel?.tileSelection = index
             self?.resetPresentersForVisibilityChange()
         }
+        self.resetPresentersForVisibilityChange()
     }
 }
 
