@@ -58,7 +58,7 @@ struct dydxMarketTilesView: View {
 
         // Updates the apperance globally for all segmented displays
         UISegmentedControl.appearance().selectedSegmentTintColor = ThemeColor.SemanticColor.layer3.uiColor
-        UISegmentedControl.appearance().backgroundColor = ThemeColor.SemanticColor.colorBlack.uiColor
+        UISegmentedControl.appearance().backgroundColor = ThemeColor.SemanticColor.layer4.uiColor
         UISegmentedControl.appearance().setTitleTextAttributes(
             [.foregroundColor: ThemeColor.SemanticColor.textPrimary.uiColor],
             for: .selected
