@@ -57,7 +57,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style  in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let view = VStack(spacing: 0) {
+            let view = VStack {
                 self.header
                     .createView(parentStyle: style)
                     .frame(width: UIScreen.main.bounds.width)

@@ -39,32 +39,29 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
 
             return AnyView(
                 VStack {
+                    self.tiles.createView(parentStyle: style)
+
                     Group {
-                        if self.tileSelection == 0, self.isAccountVisible {
-                            self.account
-                                .createView(parentStyle: style)
-                        } else if self.tileSelection == 1 {
+                        if self.tileSelection == 1 {
                             self.priceCandles?
                                 .createView(parentStyle: style)
                         } else if self.tileSelection == 2 {
                             self.depth?
                                 .createView(parentStyle: style)
                         } else if self.tileSelection == 3 {
-                            self.funding?
+                            self.trades?
                                 .createView(parentStyle: style)
                         } else if self.tileSelection == 4 {
-                            self.orderbook?
+                            self.funding?
                                 .createView(parentStyle: style)
                         } else if self.tileSelection == 5 {
-                            self.trades?
+                                self.orderbook?
                                 .createView(parentStyle: style)
                         } else {
                             PlatformView.emptyView
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width, height: 310)
-
-                    self.tiles.createView(parentStyle: style)
                 }
             )
         }

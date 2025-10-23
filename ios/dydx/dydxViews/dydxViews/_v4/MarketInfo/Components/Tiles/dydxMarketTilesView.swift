@@ -7,83 +7,79 @@
 //
 
 import SwiftUI
+import UIKit
 import PlatformUI
 import Utilities
 
 public class dydxMarketTilesViewModel: PlatformViewModel {
-    public struct TileViewModel {
-        public init(text: String, icon: PlatformIconViewModel.IconType) {
-            self.text = text
-            self.icon = icon
-        }
-
-        let text: String
-        let icon: PlatformIconViewModel.IconType
-    }
-
-    @Published public var allTiles: [TileViewModel] = []
+    @Published public var allTiles: [String] = []
     @Published public var onSelectionChanged: ((Int) -> Void)?
-    @Published public var currentTile: Int = 0
 
     public init() { }
 
     public static var previewValue: dydxMarketTilesViewModel = {
         let vm = dydxMarketTilesViewModel()
         vm.allTiles = [
-            .init(text: "Account", icon: .system(name: "heart.fill")),
-            .init(text: "Price", icon: .system(name: "heart.fill"))
+            "Account",
+            "Price"
         ]
         return vm
     }()
 
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
-        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style  in
+        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] _  in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let items = self.allTiles.map { tile in
-                PlatformIconViewModel(type: tile.icon,
-                                      clip: .noClip,
-                                      size: CGSize(width: 24, height: 24),
-                                      templateColor: .textTertiary)
-                .createView(parentStyle: style)
-                .padding(8)
-                .themeColor(background: .transparent)
-                .border(borderWidth: 1, cornerRadius: 8, borderColor: ThemeColor.SemanticColor.borderDefault.color)
-                .wrappedViewModel
-            }
-            let selectedItems = self.allTiles.map { tile in
-                HStack {
-                    PlatformIconViewModel(type: tile.icon,
-                                          clip: .noClip,
-                                          size: CGSize(width: 24, height: 24),
-                                          templateColor: .textPrimary)
-                        .createView(parentStyle: style)
-                    Text(tile.text)
-                        .themeFont(fontSize: .smaller)
-                        .lineLimit(1)
-                        // the text is clipped here to improve selection animation
-                        .truncationMode(.noEllipsis)
-                }
-                .padding(8)
-                .themeColor(foreground: .textPrimary)
-                .themeColor(background: .layer5)
-                .border(borderWidth: 1, cornerRadius: 8, borderColor: ThemeColor.SemanticColor.borderDefault.color)
-                .wrappedViewModel
-            }
-            return AnyView(
-                ScrollView {
-                    TabGroupModel(items: items,
-                                  selectedItems: selectedItems,
-                                  currentSelection: self.currentTile,
-                                  selectionAnimation: .easeInOut(duration: 0.1),
-                                  onSelectionChanged: { [weak self] index in
-                        self?.currentTile = index
-                        self?.onSelectionChanged?(index)
-                    },
-                                  spacing: 8)
-                    .createView(parentStyle: style)
-                }
+            return dydxMarketTilesView(
+                tiles: allTiles,
+                onSelectedTileChange: { tile in
+                    if let selectedTileIndex = self.allTiles.firstIndex(of: tile) {
+                        self.onSelectionChanged?(selectedTileIndex)
+                    }
+                },
+                selectedTile: allTiles.first ?? ""
             )
+            .padding(.horizontal, 16)
+            .wrappedInAnyView()
+        }
+    }
+}
+
+struct dydxMarketTilesView: View {
+    let tiles: [String]
+    let onSelectedTileChange: ((String) -> Void)?
+
+    @State var selectedTile: String
+
+    init(tiles: [String], onSelectedTileChange: ((String) -> Void)?, selectedTile: String) {
+        self.tiles = tiles
+        self.onSelectedTileChange = onSelectedTileChange
+        self.selectedTile = selectedTile
+
+        // Updates the apperance globally for all segmented displays
+        UISegmentedControl.appearance().selectedSegmentTintColor = ThemeColor.SemanticColor.layer3.uiColor
+        UISegmentedControl.appearance().backgroundColor = ThemeColor.SemanticColor.colorBlack.uiColor
+        UISegmentedControl.appearance().setTitleTextAttributes(
+            [.foregroundColor: ThemeColor.SemanticColor.textPrimary.uiColor],
+            for: .selected
+        )
+        UISegmentedControl.appearance().setTitleTextAttributes(
+            [.foregroundColor: ThemeColor.SemanticColor.textTertiary.uiColor],
+            for: .normal
+        )
+    }
+
+    var body: some View {
+        Picker("Market Views", selection: $selectedTile) {
+            ForEach(self.tiles, id: \.self) { item in
+                Text(item)
+                    .themeFont(fontType: .base, fontSize: .small)
+                    .tag(item)
+            }
+        }
+        .pickerStyle(.segmented)
+        .onChange(of: selectedTile, initial: true) { _, new in
+            onSelectedTileChange?(new)
         }
     }
 }

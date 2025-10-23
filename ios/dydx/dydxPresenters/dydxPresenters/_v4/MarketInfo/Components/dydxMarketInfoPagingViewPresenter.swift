@@ -29,13 +29,7 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     private let tradesViewPresenter = dydxMarketTradesViewPresenter()
     private let orderbookPresenter = dydxMarketOrderbookPresenter()
 
-    private var isAccountVisible = false {
-        didSet {
-            if isAccountVisible != oldValue {
-                updateTiles()
-            }
-        }
-    }
+    private var isAccountVisible = false
 
     private lazy var childPresenters: [HostedViewPresenterProtocol] = [
         accountPresenter,
@@ -48,26 +42,10 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
 
     private var tiles: [MarketInfoPagingTile] {
         [
-            isAccountVisible ?
-                MarketInfoPagingTile(type: .account,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.ACCOUNT"),
-                                 icon: UIImage.named("icon_market_wallet", bundles: Bundle.particles) ?? UIImage()) :
-                nil,
-            MarketInfoPagingTile(type: .price,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.PRICE_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_price", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .depth,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.DEPTH_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_depth", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .funding,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.FUNDING_RATE_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_funding", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .orderbook,
-                                 text: DataLocalizer.localize(path: "APP.TRADE.ORDERBOOK_SHORT"),
-                                 icon: UIImage.named("icon_market_book", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .recent,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.RECENT"),
-                                 icon: UIImage.named("icon_market_recent", bundles: Bundle.particles) ?? UIImage())
+            MarketInfoPagingTile(type: .price, text: DataLocalizer.localize(path: "APP.GENERAL.PRICE_CHART_SHORT")),
+            MarketInfoPagingTile(type: .depth, text: DataLocalizer.localize(path: "APP.GENERAL.DEPTH_CHART_SHORT")),
+            MarketInfoPagingTile(type: .recent, text: DataLocalizer.localize(path: "APP.TRADE.TRADES")),
+            MarketInfoPagingTile(type: .funding, text: DataLocalizer.localize(path: "APP.GENERAL.FUNDING_RATE_CHART_SHORT"))
         ]
         .filterNils()
     }
@@ -133,18 +111,12 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
 
     private func updateTiles() {
         // Tiles
-        viewModel?.tiles.allTiles = tiles.compactMap { tile in
-            dydxMarketTilesViewModel.TileViewModel(text: tile.text,
-                                                   icon: .uiImage(image: tile.icon))
-        }
-        viewModel?.tiles.currentTile = isAccountVisible ? 1 : 0
+        viewModel?.tiles.allTiles = tiles.compactMap { $0.text }
         viewModel?.tileSelection = 1
         viewModel?.tiles.onSelectionChanged = { [weak self] index in
-            self?.viewModel?.tileSelection = (self?.isAccountVisible ?? false) ? index : index + 1
+            self?.viewModel?.tileSelection = index + 1
             self?.resetPresentersForVisibilityChange()
         }
-
-        viewModel?.isAccountVisible = isAccountVisible
     }
 }
 
@@ -162,5 +134,4 @@ private struct MarketInfoPagingTile {
 
     let type: TileType
     let text: String
-    let icon: UIImage
 }
