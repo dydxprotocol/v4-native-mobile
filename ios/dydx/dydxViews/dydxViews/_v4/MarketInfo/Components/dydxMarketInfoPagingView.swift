@@ -10,9 +10,17 @@ import SwiftUI
 import PlatformUI
 import Utilities
 
+public enum TileType: Int {
+    case price
+    case depth
+    case funding
+    case orderbook
+    case recent
+}
+
 public class dydxMarketInfoPagingViewModel: PlatformViewModel {
     @Published public var tiles = dydxMarketTilesViewModel()
-    @Published public var tileSelection: Int = 0
+    @Published public var tileSelection: TileType = .price
     @Published public var account: dydxMarketAccountViewModel = dydxMarketAccountViewModel()
     @Published public var priceCandles: dydxMarketPriceCandlesViewModel? = dydxMarketPriceCandlesViewModel()
     @Published public var depth: dydxMarketDepthChartViewModel? = dydxMarketDepthChartViewModel()
@@ -42,23 +50,22 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
                     self.tiles.createView(parentStyle: style)
 
                     Group {
-                        if self.tileSelection == 0 {
+                        switch self.tileSelection {
+                        case .price:
                             self.priceCandles?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 1 {
+                        case .depth:
                             self.depth?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 2 {
-                            self.trades?
-                                .createView(parentStyle: style)
-                        } else if self.tileSelection == 3 {
+                        case .funding:
                             self.funding?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 4 {
-                                self.orderbook?
+                        case .orderbook:
+                            self.orderbook?
+                            .createView(parentStyle: style)
+                        case .recent:
+                            self.trades?
                                 .createView(parentStyle: style)
-                        } else {
-                            PlatformView.emptyView
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width, height: 310)

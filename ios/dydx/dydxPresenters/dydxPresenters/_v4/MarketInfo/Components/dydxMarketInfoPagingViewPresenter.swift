@@ -29,11 +29,11 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     private let tradesViewPresenter = dydxMarketTradesViewPresenter()
     private let orderbookPresenter = dydxMarketOrderbookPresenter()
 
-    private lazy var childPresenters: [HostedViewPresenterProtocol] = [
-        candlesViewPresenter,
-        depthViewPresenter,
-        tradesViewPresenter,
-        fundingViewPresenter
+    private lazy var childPresenters: [TileType: HostedViewPresenterProtocol] = [
+        .price: candlesViewPresenter,
+        .depth: depthViewPresenter,
+        .recent: tradesViewPresenter,
+        .funding: fundingViewPresenter
     ]
 
     private var tiles: [MarketInfoPagingTile] {
@@ -88,23 +88,24 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     }
 
     private func resetPresentersForVisibilityChange() {
-        for i in 0..<childPresenters.count {
-            if i == viewModel?.tileSelection {
-                if childPresenters[i].isStarted == false {
-                    childPresenters[i].start()
-                }
-            } else if childPresenters[i].isStarted, i != 0 {
-                childPresenters[i].stop()
-           }
+        for presenter in childPresenters {
+            if presenter.key == viewModel?.tileSelection {
+                presenter.value.start()
+            } else {
+                presenter.value.stop()
+            }
         }
     }
 
     private func updateTiles() {
         // Tiles
-        viewModel?.tiles.allTiles = tiles.compactMap { $0.text }
-        viewModel?.tileSelection = 0
+        viewModel?.tiles.allTiles = tiles.map { $0.text }
+        viewModel?.tileSelection = .price
         viewModel?.tiles.onSelectionChanged = { [weak self] index in
-            self?.viewModel?.tileSelection = index
+            guard let tile = self?.tiles[index] else {
+                return
+            }
+            self?.viewModel?.tileSelection = tile.type
             self?.resetPresentersForVisibilityChange()
         }
         self.resetPresentersForVisibilityChange()
@@ -114,15 +115,6 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
 // MARK: Tiles
 
 private struct MarketInfoPagingTile {
-    enum TileType: Int {
-        case account
-        case price
-        case depth
-        case funding
-        case orderbook
-        case recent
-    }
-
     let type: TileType
     let text: String
 }
