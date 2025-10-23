@@ -29,18 +29,18 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
 
             let items = self.itemTitles?.compactMap {
                 Text($0)
-                    .themeFont(fontType: .plus, fontSize: .largest)
+                    .themeFont(fontType: .plus, fontSize: .large)
                     .themeColor(foreground: .textTertiary)
                     .padding(.bottom, 12)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 8)
                     .wrappedViewModel
             }
             let selectedItems = self.itemTitles?.compactMap {
                 Text($0)
-                    .themeFont(fontType: .plus, fontSize: .largest)
+                    .themeFont(fontType: .plus, fontSize: .large)
                     .themeColor(foreground: .textPrimary)
                     .padding(.bottom, 12)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 8)
                     .overlay(
                         Rectangle()
                             .frame(height: 3)

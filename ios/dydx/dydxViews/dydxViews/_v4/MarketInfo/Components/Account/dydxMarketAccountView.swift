@@ -28,7 +28,7 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
             return AnyView(
                 HStack {
                     PlatformIconViewModel(
-                        type: .system(name: "wallet.bifold.fill"),
+                        type: .asset(name: "account_wallet", bundle: .dydxView),
                         clip: .noClip,
                         size: .init(width: 16, height: 16),
                         templateColor: .textTertiary
