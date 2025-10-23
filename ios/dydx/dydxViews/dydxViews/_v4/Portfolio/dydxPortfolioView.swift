@@ -191,7 +191,7 @@ private struct dydxOverviewView: View {
                                 case .funding:
                                     viewModel.funding
                                         .createView()
-                                case .transfers, .fees:
+                                case .details:
                                     PlatformView.nilView
                                 }
                                 // add space to adjust for tab bar

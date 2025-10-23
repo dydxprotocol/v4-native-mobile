@@ -23,7 +23,7 @@ public class dydxMarketConfigsViewModel: PlatformViewModel {
         let token: TokenTextViewModel?
     }
 
-    @Published public var items: [Item]?
+    @Published public var items: [Item] = []
 
     public init() { }
 
@@ -42,8 +42,12 @@ public class dydxMarketConfigsViewModel: PlatformViewModel {
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
             return AnyView(
-                VStack {
-                    ForEach(self.items ?? [], id: \.self) { item in
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(DataLocalizer.localize(path: "APP.GENERAL.STATS"))
+                        .themeColor(foreground: .textPrimary)
+                        .themeFont(fontType: .plus, fontSize: .medium)
+                        .padding(.bottom, 12)
+                    ForEach(Array(self.items.enumerated()), id: \.element) { index, item in
                         HStack {
                             Text(item.title)
                                 .themeColor(foreground: .textTertiary)
@@ -52,11 +56,9 @@ public class dydxMarketConfigsViewModel: PlatformViewModel {
                                 Text(item.value)
                                 item.token?.createView(parentStyle: style.themeFont(fontSize: .smaller))
                             }
-                        }.padding(.horizontal, 8)
-
-                        if item != self.items?.last {
-                            DividerModel().createView(parentStyle: style)
                         }
+                        .padding(8)
+                        .themeColor(background: index % 2 == 0 ? .layer3 : .transparent)
                     }
                 }
                 .themeFont(fontSize: .medium)

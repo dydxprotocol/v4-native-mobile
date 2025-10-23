@@ -78,9 +78,7 @@ private class dydxPortfolioViewPresenter: HostedViewPresenter<dydxPortfolioViewM
         .positions: positionsPresenter,
         .orders: ordersPresenter,
         .trades: fillsPresenter,
-        .funding: fundingPresenter,
-        .fees: feesPresenter,
-        .transfers: transfersPresenter
+        .funding: fundingPresenter
     ]
 
     override init() {
@@ -164,11 +162,7 @@ private class dydxPortfolioViewPresenter: HostedViewPresenter<dydxPortfolioViewM
             resetDisplayContent(selection: .trades)
         case .funding:
             resetDisplayContent(selection: .funding)
-        case .fees:
-            resetDisplayContent(selection: .fees)
-        case .transfers:
-            resetDisplayContent(selection: .transfers)
-        case .none:
+        default:
             break
         }
     }

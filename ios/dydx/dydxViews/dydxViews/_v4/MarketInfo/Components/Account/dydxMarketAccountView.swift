@@ -36,11 +36,11 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
                     .createView()
                     Text(DataLocalizer.localize(path: "APP.TRADE.AVAILABLE_TO_TRADE"))
                         .themeColor(foreground: .textTertiary)
-                        .themeFont(fontType: .base, fontSize: .medium)
+                        .themeFont(fontType: .base, fontSize: .small)
                     Spacer()
                     Text(self.sharedAccountViewModel?.freeCollateral ?? "")
                         .themeColor(foreground: .textSecondary)
-                        .themeFont(fontType: .base, fontSize: .medium)
+                        .themeFont(fontType: .base, fontSize: .small)
                     // Moving to seperate ticket, to be re-added once deposit is added to this view model
 //                    PlatformIconViewModel(
 //                        type: .system(name: "plus.circle"),

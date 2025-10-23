@@ -64,17 +64,10 @@ class dydxMarketConfigsViewPresenter: HostedViewPresenter<dydxMarketConfigsViewM
             dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.STEP_SIZE"),
                                             value: marketConfigs?.stepSize?.doubleValue != nil ? "\(marketConfigs?.stepSize?.doubleValue ?? 0)" : "-",
                                             token: marketConfigs?.stepSize?.doubleValue != nil ? token : nil),
-            dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.MINIMUM_ORDER_SIZE"),
-                                            value: marketConfigs?.minOrderSize?.doubleValue != nil ? "\(marketConfigs?.minOrderSize?.doubleValue ?? 0)" : "-",
-                                            token: marketConfigs?.minOrderSize?.doubleValue != nil ? token : nil),
-            dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.MAXIMUM_LEVERAGE"),
-                                            value: maxLeverageText ?? "-"),
             dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.MAINTENANCE_MARGIN_FRACTION"),
                                             value: dydxFormatter.shared.percent(number: marketConfigs?.maintenanceMarginFraction?.doubleValue, digits: 4) ?? "-"),
             dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.INITIAL_MARGIN_FRACTION"),
-                                            value: dydxFormatter.shared.percent(number: marketConfigs?.initialMarginFraction?.doubleValue, digits: 4) ?? "-"),
-            dydxMarketConfigsViewModel.Item(title: DataLocalizer.localize(path: "APP.GENERAL.BASE_POSITION_NOTIONAL"),
-                                            value: dydxFormatter.shared.localFormatted(number: marketConfigs?.basePositionNotional?.doubleValue, digits: 0) ?? "-")
+                                            value: dydxFormatter.shared.percent(number: marketConfigs?.initialMarginFraction?.doubleValue, digits: 4) ?? "-")
         ]
     }
 }
