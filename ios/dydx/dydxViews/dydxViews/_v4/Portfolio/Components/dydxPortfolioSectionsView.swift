@@ -31,12 +31,22 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                 Text($0)
                     .themeFont(fontType: .plus, fontSize: .largest)
                     .themeColor(foreground: .textTertiary)
+                    .padding(.bottom, 12)
+                    .padding(.horizontal, 16)
                     .wrappedViewModel
             }
             let selectedItems = self.itemTitles?.compactMap {
                 Text($0)
                     .themeFont(fontType: .plus, fontSize: .largest)
                     .themeColor(foreground: .textPrimary)
+                    .padding(.bottom, 12)
+                    .padding(.horizontal, 16)
+                    .overlay(
+                        Rectangle()
+                            .frame(height: 3)
+                            .themeColor(foreground: .colorPurple),
+                        alignment: .bottom
+                    )
                     .wrappedViewModel
             }
             return AnyView(
@@ -55,6 +65,12 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                             },
                                           spacing: 16)
                             .createView(parentStyle: style)
+                            .overlay(
+                                Rectangle()
+                                    .frame(height: 1)
+                                    .themeColor(foreground: .layer3),
+                                alignment: .bottom
+                            )
                         }
                     }
                 }

@@ -88,6 +88,7 @@ public class dydxPortfolioViewModel: PlatformViewModel {
                 }
                 .frame(height: 48)
                 .padding(.bottom, 8)
+                .padding(.horizontal, 16)
 
                 switch self.displayContent {
                 case .overview:
@@ -115,6 +116,7 @@ public class dydxPortfolioViewModel: PlatformViewModel {
                 case .fees:
                     self.fees
                         .createView(parentStyle: style)
+                        .padding(.horizontal, 16)
                 case .transfers:
                     self.createItemListView(style: style) { [weak self] in
                         self?.transfers
@@ -124,7 +126,6 @@ public class dydxPortfolioViewModel: PlatformViewModel {
 
                 Spacer()
             }
-                .padding(.horizontal, 16)
                 .themeColor(background: .layer2)
 
             // make it visible under the tabbar
@@ -147,6 +148,7 @@ public class dydxPortfolioViewModel: PlatformViewModel {
                     }
                 }
             }
+            .padding(.horizontal, 16)
         )
     }
 }
@@ -172,6 +174,7 @@ private struct dydxOverviewView: View {
                             Spacer()
                         }
                     }
+                    .padding(.horizontal, 16)
                     .buttonStyle(PlainButtonStyle())
                     .animateHeight(height: viewModel.expanded ? 460 : 332)
                     .animation(.easeIn(duration: 0.2), value: viewModel.expanded)
@@ -197,10 +200,11 @@ private struct dydxOverviewView: View {
                                 // add space to adjust for tab bar
                             }
                         }
+                        .padding(.horizontal, 16)
                         Spacer(minLength: 100)
                     } header: {
                         viewModel.sections.createView()
-                            .onChange(of: viewModel.sectionSelection) { _ in
+                            .onChange(of: viewModel.sectionSelection, initial: true) { _, _ in
                                 withAnimation {
                                     proxy.scrollTo(topID)
                                 }

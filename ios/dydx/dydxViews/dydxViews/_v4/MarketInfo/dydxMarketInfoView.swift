@@ -95,7 +95,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
     private func createPositionSection(parentStyle: ThemeStyle) -> some View {
         let header = Group {
              sections.createView(parentStyle: parentStyle)
-                 .padding(.horizontal, 16)
          }
              .frame(width: UIScreen.main.bounds.width)
              .themeColor(background: .layer2)
