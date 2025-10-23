@@ -22,73 +22,35 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
     }
 
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
-        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
+        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] _ in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
             return AnyView(
-                VStack {
-                    GeometryReader { container in
-                        VStack(spacing: 0) {
-                            DividerModel().createView(parentStyle: style)
-
-                            HStack(alignment: .top, spacing: 8) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.BUYING_POWER"),
-                                               value: Text(self.sharedAccountViewModel?.buyingPower ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-                                    .padding(.top, 6)
-
-                                let value = HStack {
-                                    Text(self.sharedAccountViewModel?.marginUsage ?? "-")
-                                    self.sharedAccountViewModel?.marginUsageIcon?.createView(parentStyle: style)
-                                }
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.MARGIN_USAGE"),
-                                                    value: value)
-                                .padding(.vertical, 8)
-                             }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-
-                            HStack(alignment: .top, spacing: 8) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.EQUITY"),
-                                               value: Text(self.sharedAccountViewModel?.equity ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.FREE_COLLATERAL"),
-                                               value: Text(self.sharedAccountViewModel?.freeCollateral ?? "-"))
-                                .padding(.vertical, 8)
-                            }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-
-                            HStack(alignment: .top) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.TRADE.OPEN_INTEREST"),
-                                               value: Text(self.sharedAccountViewModel?.openInterest ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-                                    .padding(.bottom, -6)
-
-                                let value = HStack {
-                                    Text(self.sharedAccountViewModel?.leverage ?? "-")
-                                    self.sharedAccountViewModel?.leverageIcon?.createView(parentStyle: style)
-                                }
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.LEVERAGE"),
-                                               value: value)
-                                .padding(.vertical, 8)
-                            }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-                        }
-                    }
-                    .padding(.vertical, 24)
+                HStack {
+                    PlatformIconViewModel(
+                        type: .system(name: "wallet.bifold.fill"),
+                        clip: .noClip,
+                        size: .init(width: 16, height: 16),
+                        templateColor: .textTertiary
+                    )
+                    .createView()
+                    Text(DataLocalizer.localize(path: "APP.TRADE.AVAILABLE_TO_TRADE"))
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontType: .base, fontSize: .medium)
+                    Spacer()
+                    Text(self.sharedAccountViewModel?.freeCollateral ?? "")
+                        .themeColor(foreground: .textSecondary)
+                        .themeFont(fontType: .base, fontSize: .medium)
+                    // Moving to seperate ticket, to be re-added once deposit is added to this view model
+//                    PlatformIconViewModel(
+//                        type: .system(name: "plus.circle"),
+//                        size: .init(width: 16, height: 16),
+//                        templateColor: .textTertiary
+//                    ).createView()
                 }
+                .padding(12)
+                .themeColor(background: .layer3)
+                .border(borderWidth: 1, cornerRadius: 12, borderColor: ThemeColor.SemanticColor.layer3.color)
             )
         }
     }

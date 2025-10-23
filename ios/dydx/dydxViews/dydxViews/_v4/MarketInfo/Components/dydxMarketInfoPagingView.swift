@@ -62,6 +62,10 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width, height: 310)
+
+                    self.account.createView(parentStyle: style)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
                 }
             )
         }

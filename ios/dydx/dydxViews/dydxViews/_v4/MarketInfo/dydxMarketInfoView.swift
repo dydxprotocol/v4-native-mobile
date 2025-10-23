@@ -92,7 +92,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
     private func createChartPagesSection(parentStyle: ThemeStyle) -> some View {
         paging?
             .createView(parentStyle: parentStyle)
-            .frame(height: 360)
     }
 
     private func createPositionSection(parentStyle: ThemeStyle) -> some View {
