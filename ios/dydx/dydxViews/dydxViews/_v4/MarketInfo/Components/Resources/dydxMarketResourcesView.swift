@@ -62,9 +62,11 @@ public class dydxMarketResourcesViewModel: PlatformViewModel {
                             .themeColor(foreground: .textPrimary)
                             .themeFont(fontType: .plus, fontSize: .medium)
                         Spacer()
-                        createIconButton(url: sharedMarketViewModel.coinMarketPlaceUrl, iconAssetName: "icon_coinmarketcap")
-                        createIconButton(url: sharedMarketViewModel.whitepaperUrl, iconAssetName: "icon_whitepaper")
-                        createIconButton(url: sharedMarketViewModel.websiteUrl, iconAssetName: "icon_web")
+                        HStack(spacing: 16) {
+                            createIconButton(url: sharedMarketViewModel.coinMarketPlaceUrl, iconAssetName: "icon_coinmarketcap")
+                            createIconButton(url: sharedMarketViewModel.whitepaperUrl, iconAssetName: "icon_whitepaper")
+                            createIconButton(url: sharedMarketViewModel.websiteUrl, iconAssetName: "icon_web")
+                        }
                     }
 
                     Group {

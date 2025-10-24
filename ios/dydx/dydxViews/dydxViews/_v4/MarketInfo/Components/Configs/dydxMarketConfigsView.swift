@@ -58,7 +58,7 @@ public class dydxMarketConfigsViewModel: PlatformViewModel {
                             }
                         }
                         .padding(8)
-                        .themeColor(background: index % 2 == 0 ? .layer3 : .transparent)
+                        .themeColor(background: index % 2 == 0 ? .layer1 : .transparent)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                 }

@@ -32,7 +32,7 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                     .themeFont(fontType: .plus, fontSize: .large)
                     .themeColor(foreground: .textTertiary)
                     .padding(.bottom, 12)
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, 16)
                     .wrappedViewModel
             }
             let selectedItems = self.itemTitles?.compactMap {
@@ -40,7 +40,7 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                     .themeFont(fontType: .plus, fontSize: .large)
                     .themeColor(foreground: .textPrimary)
                     .padding(.bottom, 12)
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, 16)
                     .overlay(
                         Rectangle()
                             .frame(height: 3)
@@ -62,8 +62,7 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                                     proxy.scrollTo(idx, anchor: .center)
                                 }
                                 self?.onSelectionChanged?(idx)
-                            },
-                                          spacing: 16)
+                            })
                             .createView(parentStyle: style)
                             .overlay(
                                 Rectangle()

@@ -55,7 +55,7 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
 
                 }
                 .padding(12)
-                .themeColor(background: .layer3)
+                .themeColor(background: .layer1)
                 .border(borderWidth: 1, cornerRadius: 12, borderColor: ThemeColor.SemanticColor.layer3.color)
             )
         }
