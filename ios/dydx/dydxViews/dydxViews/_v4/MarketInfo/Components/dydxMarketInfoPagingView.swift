@@ -10,14 +10,6 @@ import SwiftUI
 import PlatformUI
 import Utilities
 
-public enum TileType: Int {
-    case price
-    case depth
-    case funding
-    case orderbook
-    case recent
-}
-
 public class dydxMarketInfoPagingViewModel: PlatformViewModel {
     @Published public var tiles = dydxMarketTilesViewModel()
     @Published public var tileSelection: TileType = .price

@@ -32,3 +32,11 @@ public enum PortfolioSection: String {
     case orders
     case funding
 }
+
+public enum TileType: Int {
+    case price
+    case depth
+    case funding
+    case orderbook
+    case recent
+}
