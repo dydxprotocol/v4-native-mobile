@@ -25,6 +25,13 @@ public class dydxMarketInfoHeaderViewModel: PlatformViewModel {
         return vm
     }()
 
+    var priceChangePercent24HViewModel: SignedAmountViewModel? {
+        guard let viewModel = sharedMarketViewModel?.priceChangePercent24H else {
+            return nil
+        }
+        return viewModel.copy(coloringOption: .textOnly) { text in "(\(text ?? ""))"}
+    }
+
     private func createMarketSelectorView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> some View {
         HStack(spacing: 8) {
             PlatformIconViewModel(type: .url(url: self.sharedMarketViewModel?.logoUrl),
@@ -78,12 +85,18 @@ public class dydxMarketInfoHeaderViewModel: PlatformViewModel {
                 )
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
+                    let statStyle = parentStyle.themeFont(fontType: .base, fontSize: .medium)
                     statLine(labelKey: "APP.GENERAL.MARKET_CAP", value: sharedMarketViewModel?.marketCap ?? "")
-                    statLine(labelKey: "APP.TRADE.CHANGE_24H") { sharedMarketViewModel?.priceChangePercent24H?.createView() }
+                    statLine(labelKey: "APP.TRADE.CHANGE_24H") {
+                        HStack(spacing: 2) {
+                            sharedMarketViewModel?.priceChange24H?.createView(parentStyle: statStyle)
+                            priceChangePercent24HViewModel?.createView(parentStyle: statStyle)
+                        }
+                    }
                     statLine(labelKey: "APP.TRADE.VOLUME_24H", value: sharedMarketViewModel?.volume24H ?? "")
                     statLine(labelKey: "APP.TRADE.OPEN_INTEREST", value: sharedMarketViewModel?.openInterest ?? "")
-                    statLine(labelKey: "APP.TRADE.FUNDING_RATE_SHORT") { sharedMarketViewModel?.fundingRate?.createView() }
-                    statLine(labelKey: "APP.TRADE.NEXT_FUNDING") { sharedMarketViewModel?.nextFunding?.createView() }
+                    statLine(labelKey: "APP.TRADE.FUNDING_RATE_SHORT") { sharedMarketViewModel?.fundingRate?.createView(parentStyle: statStyle) }
+                    statLine(labelKey: "APP.TRADE.NEXT_FUNDING") { sharedMarketViewModel?.nextFunding?.createView(parentStyle: statStyle) }
                     statLine(labelKey: "APP.GENERAL.BUYING_POWER", value: sharedMarketViewModel?.buyingPower ?? "")
                 }
                 .padding(.horizontal, 16)

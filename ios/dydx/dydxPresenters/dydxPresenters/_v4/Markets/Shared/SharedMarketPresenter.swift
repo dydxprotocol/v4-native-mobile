@@ -61,6 +61,12 @@ class SharedMarketPresenter: HostedViewPresenter<SharedMarketViewModel>, SharedM
         let tickSize = market.configs?.displayTickSizeDecimals?.intValue ?? 2
         let price = market.oraclePrice?.doubleValue
         viewModel.indexPrice = dydxFormatter.shared.dollar(number: price, digits: tickSize)
+        if let priceChange24H = dydxFormatter.shared.dollar(number: abs(market.priceChange24H?.doubleValue ?? 0), digits: tickSize) {
+            viewModel.priceChange24H = SignedAmountViewModel(
+                text: priceChange24H,
+                sign: market.priceChange24H?.doubleValue ?? 0 >= 0 ? .plus : .minus,
+                coloringOption: .allText)
+        }
         if let priceChangePercent24H = dydxFormatter.shared.percent(number: abs(market.priceChange24HPercent?.doubleValue ?? 0), digits: 2) {
             viewModel.priceChangePercent24H = SignedAmountViewModel(text: priceChangePercent24H,
                                                                     sign: market.priceChange24HPercent?.doubleValue ?? 0 >= 0 ? .plus : .minus,

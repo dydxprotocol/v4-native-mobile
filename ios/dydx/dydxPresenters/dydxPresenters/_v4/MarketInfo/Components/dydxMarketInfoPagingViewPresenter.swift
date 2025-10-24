@@ -22,7 +22,7 @@ protocol dydxMarketInfoPagingViewPresenterProtocol: HostedViewPresenterProtocol 
 class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagingViewModel>, dydxMarketInfoPagingViewPresenterProtocol {
     @Published var marketId: String?
 
-    private let accountPresenter = SharedAccountPresenter()
+    private let accountPresenter = dydxMarketAccountPresenter()
     private let candlesViewPresenter = dydxMarketPriceCandlesViewPresenter()
     private let depthViewPresenter = dydxMarketDepthChartViewPresenter()
     private let fundingViewPresenter = dydxMarketFundingChartViewPresenter()
@@ -30,44 +30,26 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     private let orderbookPresenter = dydxMarketOrderbookPresenter()
 
     private var isAccountVisible = false {
-        didSet {
-            if isAccountVisible != oldValue {
-                updateTiles()
+            didSet {
+                if isAccountVisible != oldValue {
+                    updateTiles()
+                }
             }
         }
-    }
 
-    private lazy var childPresenters: [HostedViewPresenterProtocol] = [
-        accountPresenter,
-        candlesViewPresenter,
-        depthViewPresenter,
-        fundingViewPresenter,
-        orderbookPresenter,
-        tradesViewPresenter
+    private lazy var childPresenters: [TileType: HostedViewPresenterProtocol] = [
+        .price: candlesViewPresenter,
+        .depth: depthViewPresenter,
+        .recent: tradesViewPresenter,
+        .funding: fundingViewPresenter
     ]
 
     private var tiles: [MarketInfoPagingTile] {
         [
-            isAccountVisible ?
-                MarketInfoPagingTile(type: .account,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.ACCOUNT"),
-                                 icon: UIImage.named("icon_market_wallet", bundles: Bundle.particles) ?? UIImage()) :
-                nil,
-            MarketInfoPagingTile(type: .price,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.PRICE_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_price", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .depth,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.DEPTH_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_depth", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .funding,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.FUNDING_RATE_CHART_SHORT"),
-                                 icon: UIImage.named("icon_market_funding", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .orderbook,
-                                 text: DataLocalizer.localize(path: "APP.TRADE.ORDERBOOK_SHORT"),
-                                 icon: UIImage.named("icon_market_book", bundles: Bundle.particles) ?? UIImage()),
-            MarketInfoPagingTile(type: .recent,
-                                 text: DataLocalizer.localize(path: "APP.GENERAL.RECENT"),
-                                 icon: UIImage.named("icon_market_recent", bundles: Bundle.particles) ?? UIImage())
+            MarketInfoPagingTile(type: .price, text: DataLocalizer.localize(path: "APP.GENERAL.PRICE_CHART_SHORT")),
+            MarketInfoPagingTile(type: .depth, text: DataLocalizer.localize(path: "APP.GENERAL.DEPTH_CHART_SHORT")),
+            MarketInfoPagingTile(type: .recent, text: DataLocalizer.localize(path: "APP.TRADE.TRADES")),
+            MarketInfoPagingTile(type: .funding, text: DataLocalizer.localize(path: "APP.GENERAL.FUNDING_RATE_CHART_SHORT"))
         ]
         .filterNils()
     }
@@ -76,7 +58,7 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
         let viewModel = dydxMarketInfoPagingViewModel()
 
         // Account
-        accountPresenter.$viewModel.assign(to: &viewModel.account.$sharedAccountViewModel)
+        accountPresenter.$viewModel.assign(to: &viewModel.$account)
         // Candle
         candlesViewPresenter.$viewModel.assign(to: &viewModel.$priceCandles)
         // Depth
@@ -120,47 +102,35 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
     }
 
     private func resetPresentersForVisibilityChange() {
-        for i in 0..<childPresenters.count {
-            if i == viewModel?.tileSelection {
-                if childPresenters[i].isStarted == false {
-                    childPresenters[i].start()
-                }
-            } else if childPresenters[i].isStarted, i != 0 {
-                childPresenters[i].stop()
-           }
+        for presenter in childPresenters {
+            if presenter.key == viewModel?.tileSelection {
+                presenter.value.start()
+            } else {
+                presenter.value.stop()
+            }
         }
     }
 
     private func updateTiles() {
         // Tiles
-        viewModel?.tiles.allTiles = tiles.compactMap { tile in
-            dydxMarketTilesViewModel.TileViewModel(text: tile.text,
-                                                   icon: .uiImage(image: tile.icon))
-        }
-        viewModel?.tiles.currentTile = isAccountVisible ? 1 : 0
-        viewModel?.tileSelection = 1
+        viewModel?.tiles.allTiles = tiles.map { $0.text }
+        viewModel?.tileSelection = .price
         viewModel?.tiles.onSelectionChanged = { [weak self] index in
-            self?.viewModel?.tileSelection = (self?.isAccountVisible ?? false) ? index : index + 1
+            guard let tile = self?.tiles[index] else {
+                return
+            }
+            self?.viewModel?.tileSelection = tile.type
             self?.resetPresentersForVisibilityChange()
         }
 
         viewModel?.isAccountVisible = isAccountVisible
+        self.resetPresentersForVisibilityChange()
     }
 }
 
 // MARK: Tiles
 
 private struct MarketInfoPagingTile {
-    enum TileType: Int {
-        case account
-        case price
-        case depth
-        case funding
-        case orderbook
-        case recent
-    }
-
     let type: TileType
     let text: String
-    let icon: UIImage
 }

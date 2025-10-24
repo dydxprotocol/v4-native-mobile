@@ -55,6 +55,25 @@ public class SignedAmountViewModel: PlatformViewModel, Hashable {
     }
 
     public static var previewValue = SignedAmountViewModel(text: "2.02", sign: .plus, coloringOption: .allText, positiveTextStyleKey: "signed-plus", negativeTextStyleKey: "signed-minus")
+    
+    public func copy(
+        sign: PlatformUISign? = nil,
+        coloringOption: ColoringOption? = nil,
+        textMap: ((String?) -> String?)? = nil
+    ) -> SignedAmountViewModel {
+        var newText = self.text
+        if let foundTextMap = textMap {
+            newText = foundTextMap(newText)
+        }
+        return SignedAmountViewModel(
+            text: newText,
+            sign: sign ?? self.sign,
+            coloringOption: coloringOption ?? self.coloringOption,
+            noneColor: noneColor,
+            positiveTextStyleKey: positiveTextStyleKey,
+            negativeTextStyleKey: negativeTextStyleKey
+        )
+    }
 
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style  in

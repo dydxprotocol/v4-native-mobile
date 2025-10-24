@@ -233,6 +233,7 @@ private struct Section: Equatable {
     let key: PortfolioSection
 
     static let allSections: [Self] = [
+        Self(text: DataLocalizer.localize(path: "APP.GENERAL.DETAILS"), key: .details),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.POSITION"), key: .positions),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.ORDERS"), key: .orders),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.TRADES"), key: .trades),

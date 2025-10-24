@@ -235,6 +235,7 @@
 		27DB2EA32AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DB2EA22AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift */; };
 		27E0735C2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0735B2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift */; };
 		314BBDE9F332ECA910BC414E /* Pods_iOS_dydxPresenters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1551C00FFF41C29CFC5BD94 /* Pods_iOS_dydxPresenters.framework */; };
+		48D8EBDF2EABD35B007630A1 /* dydxMarketAccountViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D8EBD12EABD34A007630A1 /* dydxMarketAccountViewPresenter.swift */; };
 		6448800B2AA248340068DD87 /* dydxAlertsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64487FFE2AA248340068DD87 /* dydxAlertsWorker.swift */; };
 		645299EF2AE86FB1000810E6 /* dydxUpdateViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645299E22AE86FB1000810E6 /* dydxUpdateViewPresenter.swift */; };
 		64529A4C2AE8705E000810E6 /* dydxUpdateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64529A4B2AE8705E000810E6 /* dydxUpdateWorker.swift */; };
@@ -724,6 +725,7 @@
 		27C027522AFD761300E92CCB /* dydxProfileSecondaryButtonsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxProfileSecondaryButtonsViewPresenter.swift; sourceTree = "<group>"; };
 		27DB2EA22AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxTradeRestrictedViewPresenter.swift; sourceTree = "<group>"; };
 		27E0735B2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxCancelPendingIsolatedOrdersViewBuilder.swift; sourceTree = "<group>"; };
+		48D8EBD12EABD34A007630A1 /* dydxMarketAccountViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxMarketAccountViewPresenter.swift; sourceTree = "<group>"; };
 		64487FFE2AA248340068DD87 /* dydxAlertsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dydxAlertsWorker.swift; sourceTree = "<group>"; };
 		645299E22AE86FB1000810E6 /* dydxUpdateViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dydxUpdateViewPresenter.swift; sourceTree = "<group>"; };
 		64529A4B2AE8705E000810E6 /* dydxUpdateWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxUpdateWorker.swift; sourceTree = "<group>"; };
@@ -1354,6 +1356,7 @@
 		0274B34328F113FD005AF69E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				48D8EBD12EABD34A007630A1 /* dydxMarketAccountViewPresenter.swift */,
 				0274B34728F1140D005AF69E /* dydxMarketPriceCandlesViewPresenter.swift */,
 				0208632428F51EC400C9D3A0 /* dydxMarketDepthChartViewPresenter.swift */,
 				029CBE7028F5FDF600259C1D /* dydxMarketFundingChartViewPresenter.swift */,
@@ -2548,6 +2551,7 @@
 				02048B122D35E3DF00394CBE /* dydxSimpleUIPositionListViewPresenter.swift in Sources */,
 				02CA62872A7EBE08006067DB /* dydxPortfolioFeesViewPresenter.swift in Sources */,
 				276FE4B42CC1A02E00607646 /* SettingsStore+Ext.swift in Sources */,
+				48D8EBDF2EABD35B007630A1 /* dydxMarketAccountViewPresenter.swift in Sources */,
 				0208632528F51EC400C9D3A0 /* dydxMarketDepthChartViewPresenter.swift in Sources */,
 				026BB3F02E418225009F33AB /* dydxWalletSecurityViewBuilder.swift in Sources */,
 				02F99F3B29E4CB300009B3E8 /* dydxTransferSearchViewBuilder.swift in Sources */,
@@ -2869,10 +2873,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -2946,10 +2947,7 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
