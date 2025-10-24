@@ -18,6 +18,7 @@ public final class ThemeSettings: ObservableObject, SingletonProtocol {
             if themeConfig != oldValue {
                 ThemeColorCache.shared.clear()
                 ThemeFontCache.shared.clear()
+                configureUIKitAppearance()
             }
         }
     }

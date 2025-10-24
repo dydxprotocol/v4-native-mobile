@@ -55,18 +55,6 @@ struct dydxMarketTilesView: View {
         self.tiles = tiles
         self.onSelectedTileChange = onSelectedTileChange
         self.selectedTile = selectedTile
-
-        // Updates the apperance globally for all segmented displays
-        UISegmentedControl.appearance().selectedSegmentTintColor = ThemeColor.SemanticColor.layer4.uiColor
-        UISegmentedControl.appearance().backgroundColor = ThemeColor.SemanticColor.layer1.uiColor
-        UISegmentedControl.appearance().setTitleTextAttributes(
-            [.foregroundColor: ThemeColor.SemanticColor.textPrimary.uiColor],
-            for: .selected
-        )
-        UISegmentedControl.appearance().setTitleTextAttributes(
-            [.foregroundColor: ThemeColor.SemanticColor.textTertiary.uiColor],
-            for: .normal
-        )
     }
 
     var body: some View {
