@@ -22,12 +22,20 @@ protocol dydxMarketInfoPagingViewPresenterProtocol: HostedViewPresenterProtocol 
 class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagingViewModel>, dydxMarketInfoPagingViewPresenterProtocol {
     @Published var marketId: String?
 
-    private let accountPresenter = SharedAccountPresenter()
+    private let accountPresenter = dydxMarketAccountPresenter()
     private let candlesViewPresenter = dydxMarketPriceCandlesViewPresenter()
     private let depthViewPresenter = dydxMarketDepthChartViewPresenter()
     private let fundingViewPresenter = dydxMarketFundingChartViewPresenter()
     private let tradesViewPresenter = dydxMarketTradesViewPresenter()
     private let orderbookPresenter = dydxMarketOrderbookPresenter()
+
+    private var isAccountVisible = false {
+            didSet {
+                if isAccountVisible != oldValue {
+                    updateTiles()
+                }
+            }
+        }
 
     private lazy var childPresenters: [TileType: HostedViewPresenterProtocol] = [
         .price: candlesViewPresenter,
@@ -50,7 +58,7 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
         let viewModel = dydxMarketInfoPagingViewModel()
 
         // Account
-        accountPresenter.$viewModel.assign(to: &viewModel.account.$sharedAccountViewModel)
+        accountPresenter.$viewModel.assign(to: &viewModel.$account)
         // Candle
         candlesViewPresenter.$viewModel.assign(to: &viewModel.$priceCandles)
         // Depth
@@ -84,6 +92,12 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
             }
             .store(in: &subscriptions)
 
+        AbacusStateManager.shared.state.currentWallet
+            .sink { [weak self] wallet in
+                self?.isAccountVisible = wallet != nil
+            }
+            .store(in: &subscriptions)
+
         resetPresentersForVisibilityChange()
     }
 
@@ -108,6 +122,8 @@ class dydxMarketInfoPagingViewPresenter: HostedViewPresenter<dydxMarketInfoPagin
             self?.viewModel?.tileSelection = tile.type
             self?.resetPresentersForVisibilityChange()
         }
+
+        viewModel?.isAccountVisible = isAccountVisible
         self.resetPresentersForVisibilityChange()
     }
 }

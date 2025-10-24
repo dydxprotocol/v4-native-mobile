@@ -21,7 +21,7 @@ public enum TileType: Int {
 public class dydxMarketInfoPagingViewModel: PlatformViewModel {
     @Published public var tiles = dydxMarketTilesViewModel()
     @Published public var tileSelection: TileType = .price
-    @Published public var account: dydxMarketAccountViewModel = dydxMarketAccountViewModel()
+    @Published public var account: dydxMarketAccountViewModel? = dydxMarketAccountViewModel()
     @Published public var priceCandles: dydxMarketPriceCandlesViewModel? = dydxMarketPriceCandlesViewModel()
     @Published public var depth: dydxMarketDepthChartViewModel? = dydxMarketDepthChartViewModel()
     @Published public var funding: dydxMarketFundingChartViewModel? = dydxMarketFundingChartViewModel()
@@ -70,9 +70,11 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
                     }
                     .frame(width: UIScreen.main.bounds.width, height: 310)
 
-                    self.account.createView(parentStyle: style)
-                        .padding(.horizontal, 16)
-                        .padding(.top, 16)
+                    if self.isAccountVisible {
+                        self.account?.createView(parentStyle: style)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 16)
+                    }
                 }
             )
         }

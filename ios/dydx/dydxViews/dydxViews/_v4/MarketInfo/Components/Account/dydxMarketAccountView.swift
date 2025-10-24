@@ -12,6 +12,7 @@ import Utilities
 
 public class dydxMarketAccountViewModel: PlatformViewModel {
     @Published public var sharedAccountViewModel: SharedAccountViewModel? = SharedAccountViewModel()
+    @Published public var depositAction: (() -> Void)?
 
     public init() { }
 
@@ -41,30 +42,23 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
                     Text(self.sharedAccountViewModel?.freeCollateral ?? "")
                         .themeColor(foreground: .textSecondary)
                         .themeFont(fontType: .base, fontSize: .small)
-                    // Moving to seperate ticket, to be re-added once deposit is added to this view model
-//                    PlatformIconViewModel(
-//                        type: .system(name: "plus.circle"),
-//                        size: .init(width: 16, height: 16),
-//                        templateColor: .textTertiary
-//                    ).createView()
+                    PlatformButtonViewModel(
+                        content: PlatformIconViewModel(
+                            type: .system(name: "plus.circle"),
+                            size: .init(width: 16, height: 16),
+                            templateColor: .colorPurple
+                        ),
+                        type: .iconType,
+                        action: { self.depositAction?() }
+                    )
+                    .createView()
+
                 }
                 .padding(12)
                 .themeColor(background: .layer3)
                 .border(borderWidth: 1, cornerRadius: 12, borderColor: ThemeColor.SemanticColor.layer3.color)
             )
         }
-    }
-
-    private func createCellView<Content: View>(title: String, value: Content) -> some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text(title)
-                .themeColor(foreground: .textTertiary)
-                .themeFont(fontSize: .small)
-
-            value
-        }
-        .leftAligned()
-        .padding(8)
     }
 }
 
