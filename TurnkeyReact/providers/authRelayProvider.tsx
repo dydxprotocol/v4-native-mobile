@@ -358,6 +358,10 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
   ): Promise<DydxTurnkeySession | undefined> => {
     const salt = response.salt;
     if (!salt) {
+      const alreadyExists = response.alreadyExists;
+      if (alreadyExists) {
+        throw new Error(configs.strings["ERRORS.TURNKEY_ONBOARDING.USER_ALREADY_HAS_TURNKEY"],);
+      }
       throw new Error("No salt provided in response");
     }
     const session = response.session;

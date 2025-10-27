@@ -61,6 +61,7 @@
 		27673BBE2C8FD24400689E3F /* AttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27673BBD2C8FD24400689E3F /* AttributedString+Ext.swift */; };
 		277E7AC62BBF3BE8009F95DE /* InlineAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277E7AC52BBF3BE8009F95DE /* InlineAlert.swift */; };
 		27E6A7322AB8D5F600026CB5 /* SwipeActionsViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6A7312AB8D5F600026CB5 /* SwipeActionsViewModifier.swift */; };
+		48D8EBF02EABDA74007630A1 /* UIKitAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D8EBEF2EABDA71007630A1 /* UIKitAppearance.swift */; };
 		6488BBDC296F6AEA0096502F /* TabItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6488BBDB296F6AEA0096502F /* TabItemViewModel.swift */; };
 		64A4DC5F29677BCB008D8E20 /* PlatformOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A4DC5E29677BCB008D8E20 /* PlatformOutput.swift */; };
 		CEE5B6E4D97A1CD73E8B2718 /* Pods_iOS_PlatformUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418D5C02425B3C680BF32DA4 /* Pods_iOS_PlatformUI.framework */; };
@@ -175,6 +176,7 @@
 		27E6A7312AB8D5F600026CB5 /* SwipeActionsViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionsViewModifier.swift; sourceTree = "<group>"; };
 		366BD14FE1ED4F2AF21D924E /* Pods-iOS-PlatformUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-PlatformUI.release.xcconfig"; path = "Target Support Files/Pods-iOS-PlatformUI/Pods-iOS-PlatformUI.release.xcconfig"; sourceTree = "<group>"; };
 		418D5C02425B3C680BF32DA4 /* Pods_iOS_PlatformUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_PlatformUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48D8EBEF2EABDA71007630A1 /* UIKitAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAppearance.swift; sourceTree = "<group>"; };
 		6488BBDB296F6AEA0096502F /* TabItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemViewModel.swift; sourceTree = "<group>"; };
 		64A4DC5E29677BCB008D8E20 /* PlatformOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformOutput.swift; sourceTree = "<group>"; };
 		7900D7C9D4E7016DDF14E98A /* Pods-iOS-PlatformUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-PlatformUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-PlatformUITests/Pods-iOS-PlatformUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 		02E2C92D28A1C8A400F7C3BE /* PlatformUI */ = {
 			isa = PBXGroup;
 			children = (
+				48D8EBEA2EABDA61007630A1 /* Extensions */,
 				0243990E2D45B0770073DCF3 /* ShimmerView */,
 				0207FCA42D2BCECD004C2C9F /* KeyboardObserving */,
 				02F16FDA28B491EE0085DC58 /* PlatformUI.swift */,
@@ -495,6 +498,14 @@
 				27E6A7312AB8D5F600026CB5 /* SwipeActionsViewModifier.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		48D8EBEA2EABDA61007630A1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				48D8EBEF2EABDA71007630A1 /* UIKitAppearance.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		50951D95B8B38B407429BEF2 /* Pods */ = {
@@ -770,6 +781,7 @@
 				02DE89A628A2F10A00728FF3 /* SampleThemeInput.swift in Sources */,
 				023788F528B9924D00F212E1 /* PlatformButton.swift in Sources */,
 				02E2C9C128A2C22B00F7C3BE /* SampleThemeLabel.swift in Sources */,
+				48D8EBF02EABDA74007630A1 /* UIKitAppearance.swift in Sources */,
 				02DDB6512DCBE05C00FFFF2C /* OTPFieldView.swift in Sources */,
 				0243A73729BB8DBB00A083FE /* PlatformListViewModel.swift in Sources */,
 				277E7AC62BBF3BE8009F95DE /* InlineAlert.swift in Sources */,
@@ -887,10 +899,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -964,10 +973,7 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

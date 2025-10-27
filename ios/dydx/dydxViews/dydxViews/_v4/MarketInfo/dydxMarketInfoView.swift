@@ -13,7 +13,6 @@ import Utilities
 public class dydxMarketInfoViewModel: PlatformViewModel {
     @Published public var header = dydxMarketInfoHeaderViewModel()
     @Published public var paging: dydxMarketInfoPagingViewModel? = dydxMarketInfoPagingViewModel()
-    @Published public var stats: dydxMarketStatsViewModel? = dydxMarketStatsViewModel()
     @Published public var resources = dydxMarketResourcesViewModel()
     @Published public var configs: dydxMarketConfigsViewModel? = dydxMarketConfigsViewModel()
 
@@ -22,7 +21,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
     @Published public var position = dydxMarketPositionViewModel()
     @Published public var orders = dydxPortfolioOrdersViewModel()
     @Published public var funding = dydxPortfolioFundingViewModel()
-    @Published public var sectionSelection: PortfolioSection = .positions
+    @Published public var sectionSelection: PortfolioSection = .details
 
     public init() {
         super.init()
@@ -44,7 +43,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
         let vm = dydxMarketInfoViewModel()
         vm.header = .previewValue
         vm.paging = .previewValue
-        vm.stats = .previewValue
         vm.resources = .previewValue
         vm.configs = .previewValue
         vm.sections = .previewValue
@@ -59,7 +57,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style  in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let view = VStack(spacing: 0) {
+            let view = VStack {
                 self.header
                     .createView(parentStyle: style)
                     .frame(width: UIScreen.main.bounds.width)
@@ -71,11 +69,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
                         self.createPositionSection(parentStyle: style)
                         Spacer(minLength: 24)
 
-                        self.createStatsSection(parentStyle: style)
-
-                        self.createDetailsSection(parentStyle: style)
-
-                        self.createConfigsSection(parentStyle: style)
+//                        self.createConfigsSection(parentStyle: style)
 
                         // for tab bar scroll adjstment overlap
                         Spacer(minLength: 128)
@@ -96,13 +90,11 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
     private func createChartPagesSection(parentStyle: ThemeStyle) -> some View {
         paging?
             .createView(parentStyle: parentStyle)
-            .frame(height: 360)
     }
 
     private func createPositionSection(parentStyle: ThemeStyle) -> some View {
         let header = Group {
              sections.createView(parentStyle: parentStyle)
-                 .padding(.horizontal, 16)
          }
              .frame(width: UIScreen.main.bounds.width)
              .themeColor(background: .layer2)
@@ -110,6 +102,8 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
         return VStack {
             header
             switch sectionSelection {
+            case .details:
+                self.createDetailsSection(parentStyle: parentStyle)
             case .trades:
                 fills
                     .createView(parentStyle: parentStyle)
@@ -122,31 +116,16 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
             case .funding:
                 funding
                     .createView(parentStyle: parentStyle)
-            case .transfers, .fees:
-                PlatformView.nilView
             }
         }
     }
 
-    private func createStatsSection(parentStyle: ThemeStyle) -> some View {
-            stats?
-                .createView(parentStyle: parentStyle)
-                .frame(width: UIScreen.main.bounds.width)
-                .sectionHeader(path: "APP.GENERAL.STATISTICS")
-    }
-
     private func createDetailsSection(parentStyle: ThemeStyle) -> some View {
-        resources
-            .createView(parentStyle: parentStyle)
-            .frame(width: UIScreen.main.bounds.width)
-            .sectionHeader(path: "APP.GENERAL.DETAILS")
-    }
-
-    private func createConfigsSection(parentStyle: ThemeStyle) -> some View {
-        configs?
-            .createView(parentStyle: parentStyle)
-            .padding(.horizontal, 8)
-            .frame(width: UIScreen.main.bounds.width)
+        VStack(spacing: 12) {
+            resources.createView(parentStyle: parentStyle)
+            configs?.createView(parentStyle: parentStyle)
+        }
+        .padding(.horizontal, 16)
     }
 }
 

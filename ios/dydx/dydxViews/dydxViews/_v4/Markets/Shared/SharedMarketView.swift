@@ -17,6 +17,7 @@ public final class SharedMarketViewModel: PlatformViewModel, Equatable {
     @Published public var indexPrice: String?
     @Published public var marketCap: String?
     @Published public var spotVolume24H: String?
+    @Published public var priceChange24H: SignedAmountViewModel?
     @Published public var priceChangePercent24H: SignedAmountViewModel?
 
     @Published public var primaryDescription: String?
@@ -44,6 +45,8 @@ public final class SharedMarketViewModel: PlatformViewModel, Equatable {
         vm.spotVolume24H = "$111M"
         vm.priceChangePercent24H = SignedAmountViewModel(text: "0.2%",
                                                          sign: .plus, coloringOption: .allText)
+        vm.priceChange24H = SignedAmountViewModel(text: "$0.02",
+                                                         sign: .plus, coloringOption: .allText)
         vm.primaryDescription = "Ethereum is a global, open-source platform for decentralized applications."
         vm.secondaryDescription = "Ethereum is a decentralized blockchain platform founded in 2014. Ethereum is an open-source project that is not owned or operated by a single individual. This means that anyone, anywhere can download the software and begin interacting with the network. Ethereum allows developers to make and operate 'smart contracts', a core piece of infrastructure for any decentralized application."
         vm.websiteUrl = URL(string: "https://www.getmonero.org/")
@@ -68,6 +71,7 @@ public final class SharedMarketViewModel: PlatformViewModel, Equatable {
         lhs.indexPrice == rhs.indexPrice &&
         lhs.marketCap == rhs.marketCap &&
         lhs.spotVolume24H == rhs.spotVolume24H &&
+        lhs.priceChange24H == rhs.priceChange24H &&
         lhs.priceChangePercent24H == rhs.priceChangePercent24H &&
         lhs.primaryDescription == rhs.primaryDescription &&
         lhs.secondaryDescription == rhs.secondaryDescription &&
