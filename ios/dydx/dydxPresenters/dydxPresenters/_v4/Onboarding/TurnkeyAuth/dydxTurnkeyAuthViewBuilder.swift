@@ -93,6 +93,7 @@ private class dydxTurnkeyAuthViewConntroller: ReactNativeHostingController, Turn
             .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_APPLE"),
             .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_EMAIL"),
             .init(path: "APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_DESCRIPTION"),
+            .init(path: "ERRORS.TURNKEY_ONBOARDING.USER_ALREADY_HAS_TURNKEY"),
             .init(path: "APP.GENERAL.OR"),
             .init(path: "APP.ONBOARDING.TOS_SHORT", localized: terms)
         ]
