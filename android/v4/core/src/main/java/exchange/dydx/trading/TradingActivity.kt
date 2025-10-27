@@ -46,6 +46,7 @@ import exchange.dydx.trading.core.biometric.DydxBiometricView
 import exchange.dydx.trading.feature.shared.PreferenceKeys
 import exchange.dydx.trading.feature.shared.analytics.AnalyticsEvent
 import exchange.dydx.trading.integration.fcm.PushPermissionRequesterProtocol
+import exchange.dydx.trading.integration.react.SharedReactBridge
 import exchange.dydx.trading.integration.react.TurnkeyReactBridge
 import exchange.dydx.utilities.utils.SharedPreferencesStore
 import kotlinx.coroutines.launch
@@ -70,6 +71,8 @@ class TradingActivity : FragmentActivity(), DefaultHardwareBackBtnHandler {
     @Inject lateinit var pushPermissionRequester: PushPermissionRequesterProtocol
 
     @Inject lateinit var turnkeyReactBridge: TurnkeyReactBridge
+
+    @Inject lateinit var sharedReactBridge: SharedReactBridge
 
     @Inject lateinit var moonPayRamp: DydxMoonPayRamp
 
@@ -136,6 +139,7 @@ class TradingActivity : FragmentActivity(), DefaultHardwareBackBtnHandler {
             object : com.facebook.react.ReactInstanceEventListener {
                 override fun onReactContextInitialized(context: com.facebook.react.bridge.ReactContext) {
                     turnkeyReactBridge.updateContext(context)
+                    sharedReactBridge.updateContext(context)
                 }
             },
         )

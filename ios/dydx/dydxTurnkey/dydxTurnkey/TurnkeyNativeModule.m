@@ -40,8 +40,4 @@ RCT_EXTERN_METHOD(onAppleAuthRequest
                   :(NSString) nonce
                   :(NSString) publicKey)
 
-RCT_EXTERN_METHOD(onTrackingEvent
-                  :(NSString) eventName
-                  :(NSDictionary *)eventParams)
-
 @end

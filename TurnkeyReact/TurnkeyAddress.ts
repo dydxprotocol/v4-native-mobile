@@ -1,6 +1,7 @@
 
-import { DeviceEventEmitter, NativeModules } from 'react-native';
-import { FetchDepositAddressesEvent, NativeToJsRequestEvent, TurnkeyNativeModule } from '../TurnkeyModule';
+import { DeviceEventEmitter } from 'react-native';
+import { FetchDepositAddressesEvent, TurnkeyNativeModule } from '../TurnkeyModule';
+import { SharedNativeModule } from '../SharedNativeModule';
 
 DeviceEventEmitter.addListener(
   'FetchDepositAddresses',
@@ -31,7 +32,7 @@ DeviceEventEmitter.addListener(
       TurnkeyNativeModule.onJsResponse(callbackId, rawResponse);
 
     } catch (error: any) {
-      TurnkeyNativeModule.onTrackingEvent("TurnkeyFetchDepositAddressError", { "dydxAddress": dydxAddress, "error": error.message });
+      SharedNativeModule.onTrackingEvent("TurnkeyFetchDepositAddressError", { "dydxAddress": dydxAddress, "error": error.message });
       console.error("Error during sign-in: ", error, error.message);
       TurnkeyNativeModule.onJsResponse(callbackId, error.message);
     }

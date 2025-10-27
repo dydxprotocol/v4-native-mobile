@@ -63,6 +63,7 @@ import exchange.dydx.trading.integration.analytics.tracking.Tracking
 import exchange.dydx.trading.integration.cosmos.CosmosV4ClientProtocol
 import exchange.dydx.trading.integration.cosmos.CosmosV4ClientWebview
 import exchange.dydx.trading.integration.cosmos.CosmosV4WebviewClientProtocol
+import exchange.dydx.trading.integration.react.SharedReactBridge
 import exchange.dydx.trading.integration.react.TurnkeyReactBridge
 import exchange.dydx.utilities.utils.JsonUtils
 import exchange.dydx.utilities.utils.Logging
@@ -111,9 +112,17 @@ interface AppModule {
         @Singleton
         fun provideTurnkeyReactBridge(
             logger: Logging,
-            tracker: Tracking,
         ): TurnkeyReactBridge = TurnkeyReactBridge(
-            logger = logger,
+            logger = logger
+        )
+
+        @Provides
+        @Singleton
+        fun provideSharedReactBridge(
+            logger: Logging,
+            tracker: Tracking,
+        ): SharedReactBridge = SharedReactBridge(
+            logger,
             tracker = tracker
         )
 
