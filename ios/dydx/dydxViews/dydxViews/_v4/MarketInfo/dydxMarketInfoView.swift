@@ -69,8 +69,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
                         self.createPositionSection(parentStyle: style)
                         Spacer(minLength: 24)
 
-//                        self.createConfigsSection(parentStyle: style)
-
                         // for tab bar scroll adjstment overlap
                         Spacer(minLength: 128)
                     }

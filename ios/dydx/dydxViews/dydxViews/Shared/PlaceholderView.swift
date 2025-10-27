@@ -11,9 +11,20 @@ import Utilities
 
 public class PlaceholderViewModel: PlatformViewModel {
     @Published public var text: String?
+    @Published public var subText: String?
+    @Published public var icon: PlatformIconViewModel.IconType?
+    private let useUpdatedStyle: Bool
 
-    public init(text: String? = nil) {
+    public init(
+        text: String? = nil,
+        subText: String? = nil,
+        icon: PlatformIconViewModel.IconType? = nil,
+        useUpdatedStyle: Bool = false
+    ) {
         self.text = text
+        self.subText = subText
+        self.icon = icon
+        self.useUpdatedStyle = useUpdatedStyle
     }
 
     public static var previewValue: PlaceholderViewModel {
@@ -25,6 +36,28 @@ public class PlaceholderViewModel: PlatformViewModel {
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
             guard let self = self else { return AnyView(PlatformView.nilView) }
+
+            if useUpdatedStyle {
+                return VStack(alignment: .center) {
+                    if let icon = self.icon {
+                        PlatformIconViewModel(
+                            type: icon,
+                            size: .init(width: 24, height: 24),
+                            templateColor: .textTertiary
+                        )
+                            .createView(parentStyle: parentStyle)
+                            .opacity(0.75)
+                    }
+                    Text(self.text ?? "")
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontType: .plus, fontSize: .small)
+                    Text(self.subText ?? "")
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontSize: .smaller)
+                        .opacity(0.75)
+                }
+                .wrappedInAnyView()
+            }
 
             let main = Text(self.text ?? "")
                .themeFont(fontSize: .small)
