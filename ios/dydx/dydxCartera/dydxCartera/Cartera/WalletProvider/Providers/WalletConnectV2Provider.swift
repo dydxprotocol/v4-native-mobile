@@ -7,11 +7,10 @@
 
 import BigInt
 import CryptoKit
-import WalletConnectSign
 import UIKit
 import Combine
-import WalletConnectModal
 import Utilities
+@preconcurrency import ReownAppKit
 
 final class WalletConnectV2Provider: NSObject, WalletOperationProviderProtocol {
     private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
@@ -114,7 +113,7 @@ final class WalletConnectV2Provider: NSObject, WalletOperationProviderProtocol {
                     connectCompletions.append(completion)
 
                     if request.useModal {
-                        WalletConnectModal.present()
+                        AppKit.present()
                     }
                 }
 
@@ -187,7 +186,7 @@ final class WalletConnectV2Provider: NSObject, WalletOperationProviderProtocol {
                     if success {
                         self?.reallySign(typedDataProvider: typedDataProvider,
                                          accountAddress: request.address,
-                                         chainId: request.chainId) { [weak self] signed, error in
+                                         chainId: request.chainId) { signed, error in
                             LocalAuthenticator.shared?.paused = false
                             completion(signed, error)
                         }
@@ -223,7 +222,7 @@ final class WalletConnectV2Provider: NSObject, WalletOperationProviderProtocol {
                     if success {
                         self?.reallySend(transaction: transaction,
                                          accountAddress: request.walletRequest.address,
-                                         chainId: request.walletRequest.chainId) { [weak self] response, error in
+                                         chainId: request.walletRequest.chainId) { response, error in
                             LocalAuthenticator.shared?.paused = false
                             completion(response, error)
                         }

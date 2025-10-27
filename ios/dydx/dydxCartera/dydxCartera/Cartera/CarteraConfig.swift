@@ -8,8 +8,7 @@
 import Foundation
 import CoinbaseWalletSDK
 import UIKit
-import WalletConnectSign
-import WalletConnectModal
+import ReownAppKit
 import Utilities
 
 public enum WalletConnectionType: Hashable {
@@ -183,12 +182,17 @@ public struct CarteraConfig: SingletonProtocol {
 
             Sign.configure(crypto: DefaultCryptoProvider())
 
-            WalletConnectModal.configure(
+            AppKit.configure(
                 projectId: walletConnectV2Config.projectId,
                 metadata: metadata,
+                crypto: DefaultCryptoProvider(),
+                authRequestParams: nil,
+                includeWebWallets: false,
                 recommendedWalletIds: wcModalWallets,
+                includedWalletIds: wcModalWallets,
                 excludedWalletIds: [
-                ]
+                ],
+                coinbaseEnabled: false  // we manage Coinbase ourselves
             )
         }
 

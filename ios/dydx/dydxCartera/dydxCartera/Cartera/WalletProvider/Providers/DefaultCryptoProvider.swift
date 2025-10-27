@@ -1,7 +1,7 @@
 import Foundation
 import Web3
 import CryptoSwift
-import WalletConnectSigner
+import ReownAppKit
 
 struct DefaultCryptoProvider: CryptoProvider {
 
