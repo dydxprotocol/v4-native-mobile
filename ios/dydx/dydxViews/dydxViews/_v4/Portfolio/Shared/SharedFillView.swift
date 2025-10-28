@@ -105,8 +105,10 @@ public class SharedFillViewModel: PlatformViewModel {
             HStack(spacing: 2) {
                 sideText.createView(parentStyle: parentStyle)
                 Text(size ?? "")
+                    .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
                 Text(token?.symbol ?? "")
+                    .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
             }
             Text(date?.englishDatetimeString ?? "")

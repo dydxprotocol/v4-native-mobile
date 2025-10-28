@@ -116,8 +116,10 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
         VStack(alignment: .leading) {
             HStack(spacing: 2) {
                 Text(position ?? "")
+                    .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
                 Text(token?.symbol ?? "")
+                    .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
                 sideText.createView(parentStyle: parentStyle.themeFont(fontSize: .medium))
             }
