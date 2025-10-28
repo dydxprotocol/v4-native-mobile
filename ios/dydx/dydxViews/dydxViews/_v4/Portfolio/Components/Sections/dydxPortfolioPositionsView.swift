@@ -403,6 +403,7 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
                     action: { self.onboardAction?() }
                 )
                 .createView(parentStyle: parentStyle)
+                .frame(width: UIScreen.main.bounds.width - 16)
                 .wrappedInAnyView()
             }
 

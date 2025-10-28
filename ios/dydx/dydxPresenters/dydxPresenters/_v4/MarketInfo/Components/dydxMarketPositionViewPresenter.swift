@@ -45,6 +45,11 @@ class dydxMarketPositionViewPresenter: HostedViewPresenter<dydxMarketPositionVie
             }
         }
 
+        viewModel?.onboardAction = {
+            Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
+            })
+        }
+
         attachChildren(workers: childPresenters)
     }
 

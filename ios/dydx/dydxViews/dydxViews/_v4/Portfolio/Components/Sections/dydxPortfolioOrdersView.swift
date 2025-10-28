@@ -192,6 +192,9 @@ public class dydxPortfolioOrdersViewModel: PlatformListViewModel {
                 content: Text(DataLocalizer.localize(path: "APP.GENERAL.SIGN_IN_TO_VIEW")).wrappedViewModel,
                 action: { self.onboardAction?() }
             )
+            .createView()
+            .frame(width: UIScreen.main.bounds.width - 16)
+            .wrappedViewModel
         }
         return PlaceholderViewModel(
             text: DataLocalizer.localize(path: "APP.TRADE.ORDER_EMPTY_STATE")
