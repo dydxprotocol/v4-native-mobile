@@ -80,9 +80,9 @@ class dydxPortfolioOrdersViewPresenter: HostedViewPresenter<dydxPortfolioOrdersV
         item.id = order.id
         item.type = DataLocalizer.localize(path: order.resources.typeStringKey ?? "-")
         if order.side == Abacus.OrderSide.buy {
-            item.sideText.side = .buy
+            item.sideText = SideTextViewModel(side: .buy, coloringOption: .withBackground)
         } else {
-            item.sideText.side = .sell
+            item.sideText = SideTextViewModel(side: .sell, coloringOption: .withBackground)
         }
         item.status = DataLocalizer.localize(path: order.resources.statusStringKey ?? "-")
         item.canCancel = order.status.canCancel

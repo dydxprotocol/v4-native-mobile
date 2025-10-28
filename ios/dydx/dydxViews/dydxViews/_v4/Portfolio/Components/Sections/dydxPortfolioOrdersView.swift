@@ -71,114 +71,81 @@ public class dydxPortfolioOrderItemViewModel: PlatformViewModel {
         return vm
     }
 
+    private func headerView(style: ThemeStyle = ThemeStyle.defaultStyle) -> some View {
+        HStack(spacing: 8) {
+            Text(DataLocalizer.localize(path: "APP.TRADE.LIMIT_ORDER"))
+                .themeFont(fontSize: .small)
+            self.sideText.createView(parentStyle: style.themeFont(fontSize: .small))
+            Spacer()
+            HStack(spacing: 16) {
+                PlatformButtonViewModel(
+                    content: PlatformIconViewModel(
+                        type: .system(name: "pencil"),
+                        size: .init(width: 16, height: 16),
+                        templateColor: .textTertiary
+                    ),
+                    type: .iconType,
+                    action: self.handler?.onTapAction ?? {}
+                ).createView(parentStyle: style)
+                PlatformButtonViewModel(
+                    content: PlatformIconViewModel(
+                        type: .system(name: "xmark"),
+                        size: .init(width: 16, height: 16),
+                        templateColor: .colorRed
+                    ),
+                    type: .iconType,
+                    action: self.handler?.onCloseAction ?? {}
+                ).createView(parentStyle: style)
+            }
+        }
+        .padding(16)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .frame(maxWidth: .infinity, minHeight: 2, maxHeight: 2)
+                .themeColor(foreground: .layer2)
+        }
+    }
+
+    private func detailView<Content: View>(_ labelKey: String, _ value: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(DataLocalizer.localize(path: labelKey))
+                .themeColor(foreground: .textTertiary)
+                .themeFont(fontSize: .smaller)
+            value()
+        }
+    }
+
+    private func orderDetailsView(style: ThemeStyle = ThemeStyle.defaultStyle) -> some View {
+        HStack(alignment: .center, spacing: 16) {
+            detailView("APP.TRADE.LIMIT_PRICE") {
+                Text(triggerPrice ?? "").themeFont(fontSize: .medium)
+            }
+            detailView("APP.TRADE.ORDERBOOK_ORDER_SIZE") {
+                Text(size ?? "").themeFont(fontSize: .medium)
+            }
+            detailView("APP.TRADE.AMOUNT_FILLED") {
+                HStack {
+                    Text(filledSize ?? "").themeFont(fontSize: .medium)
+                    orderStatus.createView()
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+    }
+
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let icon = self.createLogo(parentStyle: style)
-
-            let main = self.createMain(parentStyle: style)
-
-            let cell = PlatformTableViewCellViewModel(logo: icon.wrappedViewModel,
-                                                      main: main.wrappedViewModel,
-                                                      trailing: PlatformView.nilViewModel,
-                                                      edgeInsets: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        .createView(parentStyle: parentStyle)
-                        .onTapGesture { [weak self] in
-                            self?.handler?.onTapAction?()
-                        }
-
-            if self.canCancel {
-                let rightCellSwipeAccessoryView = PlatformIconViewModel(type: .asset(name: "action_cancel", bundle: Bundle.dydxView), size: .init(width: 16, height: 16))
-                    .createView(parentStyle: style, styleKey: styleKey)
-                    .tint(ThemeColor.SemanticColor.layer2.color)
-
-                let rightCellSwipeAccessory = CellSwipeAccessory(accessoryView: AnyView(rightCellSwipeAccessoryView)) {
-                    self.handler?.onCloseAction?()
-                }
-                return AnyView(cell.swipeActions(leftCellSwipeAccessory: nil, rightCellSwipeAccessory: rightCellSwipeAccessory))
-            } else {
-                return AnyView(cell)
+            return VStack(alignment: .leading) {
+                self.headerView(style: style)
+                self.orderDetailsView(style: style)
             }
+            .themeColor(background: .layer1)
+            .cornerRadius(16, corners: .allCorners)
+            .wrappedInAnyView()
         }
-    }
-
-    private func createLogo(parentStyle: ThemeStyle) -> some View {
-        HStack(spacing: 4) {
-            if let date = date {
-                IntervalTextModel(date: date)
-                    .createView(parentStyle: parentStyle
-                        .themeFont(fontSize: .smaller)
-                        .themeColor(foreground: .textTertiary))
-                    .frame(width: 32)
-            } else {
-                Text("-")
-                    .themeFont(fontSize: .smaller)
-                    .themeColor(foreground: .textTertiary)
-                    .frame(width: 32)
-            }
-
-            ZStack {
-                PlatformIconViewModel(type: .url(url: logoUrl),
-                                      clip: .defaultCircle,
-                                      size: CGSize(width: 32, height: 32),
-                                      backgroundColor: .colorWhite)
-                .createView(parentStyle: parentStyle)
-
-                Group {
-                    orderStatus.createView(parentStyle: parentStyle)
-                        .rightAligned()
-                        .topAligned()
-                }
-                .frame(width: 42, height: 42)
-            }
-        }
-
-    }
-
-    private func createMain(parentStyle: ThemeStyle) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Text(status ?? "")
-                    .themeFont(fontSize: .small)
-
-                Spacer()
-
-                HStack(spacing: 2) {
-                    sideText
-                        .createView(parentStyle: parentStyle.themeFont(fontSize: .small))
-
-                    Text("@")
-                        .themeFont(fontSize: .small)
-                        .themeColor(foreground: .textTertiary)
-
-                    Text(price ?? "")
-                        .themeFont(fontType: .number, fontSize: .small)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                }
-            }
-
-            HStack {
-                HStack(spacing: 2) {
-                    Text(filledSize ?? "")
-                    Text("/")
-                    Text(size ?? "")
-                    token?.createView(parentStyle: parentStyle.themeFont(fontSize: .smallest))
-                }
-                .themeFont(fontType: .number, fontSize: .smaller)
-                .themeColor(foreground: .textTertiary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-
-                Spacer()
-
-                Text(type ?? "")
-                    .themeFont(fontSize: .smaller)
-                    .themeColor(foreground: .textTertiary)
-            }
-        }
-
     }
 }
 
@@ -197,15 +164,18 @@ public class dydxPortfolioOrdersViewModel: PlatformListViewModel {
             .wrappedViewModel
         }
         return PlaceholderViewModel(
-            text: DataLocalizer.localize(path: "APP.TRADE.ORDER_EMPTY_STATE")
+            text: DataLocalizer.localize(path: "APP.TRADE.ORDER_EMPTY_STATE"),
+            subText: DataLocalizer.localize(path: "APP.TRADE.ORDER_SHOW_HERE"),
+            icon: .system(name: "square.stack.fill"),
+            useUpdatedStyle: true
         )
     }
 
     public init(items: [PlatformViewModel] = [], contentChanged: (() -> Void)? = nil) {
         super.init(items: items,
-                   intraItemSeparator: true,
-                   firstListItemTopSeparator: true,
-                   lastListItemBottomSeparator: true,
+                   intraItemSeparator: false,
+                   firstListItemTopSeparator: false,
+                   lastListItemBottomSeparator: false,
                    contentChanged: contentChanged)
     }
 
@@ -216,20 +186,6 @@ public class dydxPortfolioOrdersViewModel: PlatformListViewModel {
             dydxPortfolioOrderItemViewModel.previewValue
         ]
         return vm
-    }
-
-    public override var header: PlatformViewModel? {
-        guard items.count > 0 else { return nil }
-        return HStack {
-            Text(DataLocalizer.localize(path: "APP.GENERAL.STATUS_FILL"))
-            Spacer()
-            Text(DataLocalizer.localize(path: "APP.GENERAL.PRICE_TYPE"))
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-        .themeFont(fontSize: .small)
-        .themeColor(foreground: .textTertiary)
-        .wrappedViewModel
     }
 }
 

@@ -56,6 +56,9 @@ public class PlaceholderViewModel: PlatformViewModel {
                         .themeFont(fontSize: .smaller)
                         .opacity(0.75)
                 }
+                .padding(.vertical, 20)
+                .frame(maxWidth: .infinity)
+                .border(borderWidth: 1, cornerRadius: 12, borderColor: ThemeColor.SemanticColor.layer3.color)
                 .wrappedInAnyView()
             }
 

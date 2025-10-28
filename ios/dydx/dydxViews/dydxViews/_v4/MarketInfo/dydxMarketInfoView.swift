@@ -111,6 +111,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
             case .orders:
                 orders
                     .createView(parentStyle: parentStyle)
+                    .padding(.horizontal, 16)
             case .funding:
                 funding
                     .createView(parentStyle: parentStyle)
