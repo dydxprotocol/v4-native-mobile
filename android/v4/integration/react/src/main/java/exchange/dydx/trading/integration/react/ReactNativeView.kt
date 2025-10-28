@@ -18,7 +18,6 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactRootView
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler
 import exchange.dydx.abacus.protocols.LocalizerProtocol
-import exchange.dydx.abacus.protocols.localizeWithParams
 
 @Composable
 fun ReactNativeView(

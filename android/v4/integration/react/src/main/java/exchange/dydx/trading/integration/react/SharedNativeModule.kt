@@ -39,7 +39,8 @@ internal class SharedNativeModule(
     @ReactMethod
     fun trackEvent(
         eventName: String,
-        eventParams: ReadableMap) {
+        eventParams: ReadableMap
+    ) {
         val params: Map<String, String> = eventParams.toHashMap()
             .mapValues { it.value.toString() }
         delegate?.trackEvent(eventName = eventName, eventParams = params)
@@ -49,7 +50,8 @@ internal class SharedNativeModule(
     fun localize(
         path: String,
         params: ReadableMap,
-        promise: Promise) {
+        promise: Promise
+    ) {
         val paramsMap: Map<String, String> = params.toHashMap()
             .mapValues { it.value.toString() }
         delegate?.localize(path = path, params = paramsMap, promise = promise)

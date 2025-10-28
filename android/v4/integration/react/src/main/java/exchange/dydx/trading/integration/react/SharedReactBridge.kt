@@ -1,6 +1,5 @@
 package exchange.dydx.trading.integration.react
 
-import android.R.id.message
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.Promise
 import exchange.dydx.abacus.protocols.LocalizerProtocol
