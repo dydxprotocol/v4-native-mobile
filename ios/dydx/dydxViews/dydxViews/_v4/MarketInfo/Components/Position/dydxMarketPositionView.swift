@@ -114,45 +114,34 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
     }
 
     private func defaultStat(_ textKey: String, _ value: String?) -> some View {
-        VStack(alignment: .leading) {
-            headerText(textKey)
-            valueText(value)
+        defaultStat(headerText(textKey), valueText(value))
+    }
+
+    private func defaultStat<Header: View, Value: View>(_ header: Header, _ value: Value) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            header
+            value
         }
     }
 
     private func createCollection(parentStyle: ThemeStyle) -> some View {
         VStack(spacing: 16) {
             LazyVGrid(columns: columns, spacing: 16) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading) {
-                        headerText("APP.GENERAL.LEVERAGE")
-                        valueText(leverage)
-                    }
+                let leverageHeader = HStack {
+                    headerText("APP.GENERAL.LEVERAGE")
                     side?.createView(
                         parentStyle: parentStyle.themeFont(fontType: .plus, fontSize: .smallest)
                     )
                 }
+                defaultStat(leverageHeader, valueText(leverage))
                 closeButton
                     .wrappedInAnyView()
                 defaultStat("APP.GENERAL.VALUE", amount)
                 defaultStat("APP.GENERAL.SIZE", "\(size ?? "-") \(token?.symbol ?? "")")
-                VStack(alignment: .leading) {
-                    headerText("APP.TRADE.UNREALIZED_PNL")
-                    unrealizedPNLAmount?
-                        .createView()
-                        .themeFont(fontSize: .medium)
-                }
-                VStack(alignment: .leading) {
-                    headerText("APP.TRADE.REALIZED_PNL")
-                    realizedPNLAmount?
-                        .createView()
-                        .themeFont(fontSize: .medium)
-                }
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading) {
-                        headerText("APP.GENERAL.MARGIN")
-                        valueText(margin)
-                    }
+                defaultStat(headerText("APP.TRADE.UNREALIZED_PNL"), unrealizedPNLAmount?.createView().themeFont(fontSize: .medium))
+                defaultStat(headerText("APP.TRADE.REALIZED_PNL"), realizedPNLAmount?.createView().themeFont(fontSize: .medium))
+                let marginHeader = HStack {
+                    headerText("APP.GENERAL.MARGIN")
                     Text(marginMode ?? "")
                         .themeColor(foreground: .textSecondary)
                         .themeFont(fontType: .plus, fontSize: .smallest)
@@ -160,15 +149,11 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
                         .padding(.vertical, 2)
                         .border(borderWidth: 1, cornerRadius: 6, borderColor: ThemeColor.SemanticColor.layer4.color)
                 }
+                defaultStat(marginHeader, valueText(margin))
                 defaultStat("APP.TRADE.LIQUIDATION", liquidationPrice)
                 defaultStat("APP.GENERAL.AVG_ENTRY", openPrice)
                 defaultStat("APP.TRADE.AVG_CLOSE", closePrice)
-                VStack(alignment: .leading) {
-                    headerText("APP.TRADE.FUNDING_PAYMENTS_SHORT")
-                    funding?
-                        .createView()
-                        .themeFont(fontSize: .medium)
-                }
+                defaultStat(headerText("APP.TRADE.FUNDING_PAYMENTS_SHORT"), funding?.createView().themeFont(fontSize: .medium))
             }
         }
     }

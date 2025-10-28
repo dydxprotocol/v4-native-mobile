@@ -72,7 +72,7 @@ public class SharedFillViewModel: PlatformViewModel {
                 PlatformTableViewCellViewModel(logo: icon.wrappedViewModel,
                                                main: main.wrappedViewModel,
                                                trailing: trailing.wrappedViewModel,
-                                               edgeInsets: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                                               edgeInsets: EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                 .createView(parentStyle: parentStyle)
                 .onTapGesture { [weak self] in
                     self?.handler?.onTapAction?()

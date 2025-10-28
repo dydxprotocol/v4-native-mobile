@@ -74,6 +74,7 @@ public class dydxPortfolioOrderItemViewModel: PlatformViewModel {
     private func headerView(style: ThemeStyle = ThemeStyle.defaultStyle) -> some View {
         HStack(spacing: 8) {
             Text(DataLocalizer.localize(path: "APP.TRADE.LIMIT_ORDER"))
+                .themeColor(foreground: .textPrimary)
                 .themeFont(fontSize: .small)
             self.sideText.createView(parentStyle: style.themeFont(fontSize: .small))
             Spacer()
@@ -119,14 +120,20 @@ public class dydxPortfolioOrderItemViewModel: PlatformViewModel {
     private func orderDetailsView(style: ThemeStyle = ThemeStyle.defaultStyle) -> some View {
         HStack(alignment: .center, spacing: 16) {
             detailView("APP.TRADE.LIMIT_PRICE") {
-                Text(triggerPrice ?? "").themeFont(fontSize: .medium)
+                Text(triggerPrice ?? "")
+                    .themeColor(foreground: .textPrimary)
+                    .themeFont(fontSize: .medium)
             }
             detailView("APP.TRADE.ORDERBOOK_ORDER_SIZE") {
-                Text(size ?? "").themeFont(fontSize: .medium)
+                Text("\(size ?? "") \(token?.symbol ?? "")")
+                    .themeColor(foreground: .textPrimary)
+                    .themeFont(fontSize: .medium)
             }
             detailView("APP.TRADE.AMOUNT_FILLED") {
                 HStack {
-                    Text(filledSize ?? "").themeFont(fontSize: .medium)
+                    Text(filledSize ?? "")
+                        .themeColor(foreground: .textPrimary)
+                        .themeFont(fontSize: .medium)
                     orderStatus.createView()
                 }
             }

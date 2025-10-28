@@ -34,10 +34,10 @@ public class dydxMarketTpSlGroupViewModel: PlatformViewModel {
                         PlatformIconViewModel(
                             type: .system(name: "plus"),
                             size: .init(width: 16, height: 16),
-                            templateColor: .textTertiary
+                            templateColor: .textSecondary
                         ).createView()
                         Text(DataLocalizer.localize(path: "APP.TRADE.SET_TAKE_PROFIT_STOP_LOSS_TRIGGERS"))
-                            .themeColor(foreground: .textTertiary)
+                            .themeColor(foreground: .textSecondary)
                             .themeFont(fontSize: .small)
                     }
                 }

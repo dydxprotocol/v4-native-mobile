@@ -44,7 +44,7 @@ public enum FundingStatus {
 
 public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
 
-    public init(amount: SignedAmountViewModel? = nil, rate: SignedAmountViewModel? = nil, time: String? = nil, sideText: SideTextViewModel = SideTextViewModel(), status: FundingStatus = .paid, position: String? = nil, token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
+    public init(amount: SignedAmountViewModel? = nil, rate: SignedAmountViewModel? = nil, time: Date? = nil, sideText: SideTextViewModel = SideTextViewModel(), status: FundingStatus = .paid, position: String? = nil, token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
         self.amount = amount
         self.rate = rate
         self.time = time
@@ -58,7 +58,7 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
 
     public var amount: SignedAmountViewModel?
     public var rate: SignedAmountViewModel?
-    public var time: String?
+    public var time: Date?
     public var sideText = SideTextViewModel()
     public var status: FundingStatus = .paid
     public var position: String?
@@ -69,7 +69,7 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
     public static var previewValue: dydxPortfolioFundingItemViewModel {
         let item = dydxPortfolioFundingItemViewModel(amount: .previewValue,
                                                      rate: .previewValue,
-                                                     time: "2mo",
+                                                     time: Date(),
                                                      sideText: .previewValue,
                                                      status: .paid,
                                                      position: "$2300.0",
@@ -97,43 +97,33 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
                 .onTapGesture { [weak self] in
                     self?.onTapAction?()
                 }
-            //    .padding(.vertical, -4)
             )
         }
     }
 
     private func createLogo(parentStyle: ThemeStyle) -> some View {
-        HStack {
-            Text(time ?? "")
-                .themeFont(fontSize: .smaller)
-                .themeColor(foreground: .textTertiary)
-                .frame(width: 32)
-
-            let mainIcon = PlatformIconViewModel(type: .url(url: logoUrl), clip: .defaultCircle)
-            let overlayIcon = PlatformIconViewModel(type: .asset(name: status.statusIcon, bundle: Bundle.dydxView),
-                                                    clip: .circle(background: .layer0, spacing: 4),
-                                                    size: CGSize(width: 12, height: 12),
-                                                    templateColor: status.templateColor)
-            PlatformOverlayIconViewModel(mainIcon: mainIcon,
-                                         overlayIcon: overlayIcon)
-            .createView(parentStyle: parentStyle)
-        }
+        let mainIcon = PlatformIconViewModel(type: .url(url: logoUrl), clip: .defaultCircle)
+        let overlayIcon = PlatformIconViewModel(type: .asset(name: status.statusIcon, bundle: Bundle.dydxView),
+                                                clip: .circle(background: .layer0, spacing: 4),
+                                                size: CGSize(width: 12, height: 12),
+                                                templateColor: status.templateColor)
+        return PlatformOverlayIconViewModel(mainIcon: mainIcon,
+                                     overlayIcon: overlayIcon)
+        .createView(parentStyle: parentStyle)
     }
 
     private func createMain(parentStyle: ThemeStyle) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(status.directionText)
-                .themeFont(fontSize: .small)
-
-            HStack {
-                sideText.createView(parentStyle: parentStyle.themeFont(fontSize: .smaller))
-
+        VStack(alignment: .leading) {
+            HStack(spacing: 2) {
                 Text(position ?? "")
-                    .themeFont(fontType: .number, fontSize: .smaller)
-                    .themeColor(foreground: .textTertiary)
-
-                token?.createView(parentStyle: parentStyle.themeFont(fontSize: .smallest))
+                    .themeFont(fontSize: .medium)
+                Text(token?.symbol ?? "")
+                    .themeFont(fontSize: .medium)
+                sideText.createView(parentStyle: parentStyle.themeFont(fontSize: .medium))
             }
+            Text(time?.englishDatetimeString ?? "")
+                .themeColor(foreground: .textTertiary)
+                .themeFont(fontSize: .smallest)
         }
     }
 
@@ -161,14 +151,17 @@ public class dydxPortfolioFundingViewModel: PlatformListViewModel {
             .wrappedViewModel
         }
         return PlaceholderViewModel(
-            text: DataLocalizer.localize(path: "APP.TRADE.FUNDING_EMPTY_STATE")
+            text: DataLocalizer.localize(path: "APP.TRADE.FUNDING_EMPTY_STATE"),
+            subText: DataLocalizer.localize(path: "APP.TRADE.FUNDING_SHOW_HERE"),
+            icon: .system(name: "xmark.rectangle.portrait.fill"),
+            useUpdatedStyle: true
         )
     }
 
     public init(items: [PlatformViewModel] = [], contentChanged: (() -> Void)? = nil) {
         super.init(items: items,
                    intraItemSeparator: true,
-                   firstListItemTopSeparator: true,
+                   firstListItemTopSeparator: false,
                    lastListItemBottomSeparator: true,
                    contentChanged: contentChanged)
         self.width = UIScreen.main.bounds.width - 16
@@ -181,27 +174,6 @@ public class dydxPortfolioFundingViewModel: PlatformListViewModel {
             dydxPortfolioFundingItemViewModel.previewValue
         ]
         return vm
-    }
-
-    public override var header: PlatformViewModel? {
-        guard items.count > 0 else { return nil }
-        return HStack {
-            HStack {
-                Text(DataLocalizer.localize(path: "APP.GENERAL.TIME"))
-                Spacer()
-            }
-            .frame(width: 80)
-            Text(DataLocalizer.localize(path: "APP.GENERAL.TYPE") + " / " +
-                 DataLocalizer.localize(path: "APP.GENERAL.POSITION"))
-            Spacer()
-            Text(DataLocalizer.localize(path: "APP.GENERAL.AMOUNT") + " / " +
-                 DataLocalizer.localize(path: "APP.TRADE.RATE"))
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-        .themeFont(fontSize: .small)
-        .themeColor(foreground: .textTertiary)
-        .wrappedViewModel
     }
 }
 
