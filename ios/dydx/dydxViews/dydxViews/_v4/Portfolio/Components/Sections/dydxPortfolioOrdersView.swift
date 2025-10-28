@@ -98,7 +98,8 @@ public class dydxPortfolioOrderItemViewModel: PlatformViewModel {
                 ).createView(parentStyle: style)
             }
         }
-        .padding(16)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
         .overlay(alignment: .bottom) {
             Rectangle()
                 .frame(maxWidth: .infinity, minHeight: 2, maxHeight: 2)

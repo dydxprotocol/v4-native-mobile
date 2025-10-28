@@ -72,7 +72,7 @@ public class SharedFillViewModel: PlatformViewModel {
                 PlatformTableViewCellViewModel(logo: icon.wrappedViewModel,
                                                main: main.wrappedViewModel,
                                                trailing: trailing.wrappedViewModel,
-                                               edgeInsets: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                               edgeInsets: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                 .createView(parentStyle: parentStyle)
                 .onTapGesture { [weak self] in
                     self?.handler?.onTapAction?()
@@ -82,74 +82,58 @@ public class SharedFillViewModel: PlatformViewModel {
     }
 
     private func createLogo(parentStyle: ThemeStyle) -> some View {
-        HStack {
-            IntervalTextModel(date: date)
-                .createView(parentStyle: parentStyle
-                                            .themeFont(fontSize: .smaller)
-                                            .themeColor(foreground: .textTertiary))
-                .frame(width: 32)
+        ZStack {
+            PlatformIconViewModel(type: .url(url: logoUrl),
+                                  clip: .defaultCircle,
+                                  size: CGSize(width: 32, height: 32),
+                                  backgroundColor: .colorWhite)
+            .createView(parentStyle: parentStyle)
 
-            ZStack {
-                PlatformIconViewModel(type: .url(url: logoUrl),
-                                      clip: .defaultCircle,
-                                      size: CGSize(width: 32, height: 32),
-                                      backgroundColor: .colorWhite)
-                .createView(parentStyle: parentStyle)
-
-                Group {
-                    OrderStatusModel(status: .green)
-                        .createView(parentStyle: parentStyle)
-                        .rightAligned()
-                        .topAligned()
-                }
-                .frame(width: 42, height: 42)
+            Group {
+                OrderStatusModel(status: .green)
+                    .createView(parentStyle: parentStyle)
+                    .rightAligned()
+                    .topAligned()
             }
+            .frame(width: 42, height: 42)
         }
         .layoutPriority(1)
     }
 
     private func createMain(parentStyle: ThemeStyle) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(type ?? "")
-                .themeFont(fontSize: .small)
-                .lineLimit(1)
-
-            HStack {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 2) {
+                sideText.createView(parentStyle: parentStyle)
                 Text(size ?? "")
-                    .themeFont(fontType: .number, fontSize: .smaller)
-                    .themeColor(foreground: .textTertiary)
-                    .lineLimit(1)
-
-                token?.createView(parentStyle: parentStyle.themeFont(fontSize: .smallest))
+                    .themeFont(fontSize: .medium)
+                Text(token?.symbol ?? "")
+                    .themeFont(fontSize: .medium)
             }
+            Text(date?.englishDatetimeString ?? "")
+                .themeColor(foreground: .textTertiary)
+                .themeFont(fontSize: .smallest)
         }
         .layoutPriority(1)
     }
 
     private func createTrailing(parentStyle: ThemeStyle) -> some View {
-        VStack(alignment: .trailing) {
-            HStack(spacing: 2) {
-                sideText.createView(parentStyle: parentStyle.themeFont(fontSize: .small))
-
-                Text("@")
-                    .themeFont(fontSize: .small)
-                    .themeColor(foreground: .textTertiary)
-
+        HStack {
+            VStack(alignment: .trailing, spacing: 2) {
                 Text(price ?? "")
-                    .themeFont(fontType: .number, fontSize: .small)
-                    .lineLimit(1)
-            }
-
-            HStack(spacing: 2) {
-                Text(feeLiquidity ?? "")
+                    .themeFont(fontSize: .small)
+                    .themeColor(foreground: .textPrimary)
+                Text(type ?? "")
                     .themeFont(fontSize: .smaller)
-
-                Text(fee ?? "")
-                    .themeFont(fontType: .number, fontSize: .smaller)
                     .themeColor(foreground: .textTertiary)
-                    .lineLimit(1)
             }
-
+            if handler?.onTapAction != nil {
+                PlatformIconViewModel(
+                    type: .system(name: "square.and.arrow.up"),
+                    size: .init(width: 16, height: 16),
+                    templateColor: .textTertiary
+                )
+                .createView(parentStyle: parentStyle)
+            }
         }
         .minimumScaleFactor(0.5)
     }

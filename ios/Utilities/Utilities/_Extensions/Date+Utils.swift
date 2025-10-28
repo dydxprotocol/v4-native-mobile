@@ -163,8 +163,7 @@ public extension Date {
 
     var englishDatetimeString: String {
         let formatter = type(of: self).localFormatter
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
+        formatter.dateFormat = "HH:mm MMMM dd, yyyy"
         return formatter.string(from: self)
     }
 
