@@ -123,9 +123,14 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
     private func createCollection(parentStyle: ThemeStyle) -> some View {
         VStack(spacing: 16) {
             LazyVGrid(columns: columns, spacing: 16) {
-                VStack(alignment: .leading) {
-                    headerText("APP.GENERAL.LEVERAGE")
-                    valueText(leverage)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        headerText("APP.GENERAL.LEVERAGE")
+                        valueText(leverage)
+                    }
+                    side?.createView(
+                        parentStyle: parentStyle.themeFont(fontType: .plus, fontSize: .smallest)
+                    )
                 }
                 closeButton
                     .wrappedInAnyView()
@@ -143,7 +148,18 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
                         .createView()
                         .themeFont(fontSize: .medium)
                 }
-                defaultStat("APP.GENERAL.MARGIN", margin)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        headerText("APP.GENERAL.MARGIN")
+                        valueText(margin)
+                    }
+                    Text(marginMode ?? "")
+                        .themeColor(foreground: .textSecondary)
+                        .themeFont(fontType: .plus, fontSize: .smallest)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .border(borderWidth: 1, cornerRadius: 6, borderColor: ThemeColor.SemanticColor.layer4.color)
+                }
                 defaultStat("APP.TRADE.LIQUIDATION", liquidationPrice)
                 defaultStat("APP.GENERAL.AVG_ENTRY", openPrice)
                 defaultStat("APP.TRADE.AVG_CLOSE", closePrice)
@@ -184,7 +200,7 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
                             PlaceholderViewModel(
                                 text: emptyText,
                                 subText: DataLocalizer.localize(path: "APP.TRADE.POSITIONS_SHOW_HERE"),
-                                icon: .system(name: "briefcase.fill"),
+                                icon: .asset(name: "circle_stack", bundle: .dydxView),
                                 useUpdatedStyle: true
                             )
                                 .createView()
