@@ -11,10 +11,13 @@ import PlatformUI
 import Utilities
 
 public class dydxMarketPositionViewModel: PlatformViewModel {
-    @Published public var emptyText: String?
-
     @Published public var closeAction: (() -> Void)?
     @Published public var editMarginAction: (() -> Void)?
+    @Published public var onboardAction: (() -> Void)?
+
+    @Published public var isSignedIn: Bool = false
+    @Published public var hasOpenPosition: Bool = false
+
     @Published public var unrealizedPNLAmount: SignedAmountViewModel?
     @Published public var unrealizedPNLPercent: String = ""
     @Published public var realizedPNLAmount: SignedAmountViewModel?
@@ -72,18 +75,27 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
             guard let self = self else { return AnyView(PlatformView.nilView) }
+            guard self.isSignedIn else {
+                return PlatformButtonViewModel(
+                    content: Text(DataLocalizer.localize(path: "APP.GENERAL.SIGN_IN_TO_VIEW")).wrappedViewModel,
+                    action: { self.onboardAction?() }
+                )
+                .createView(parentStyle: parentStyle)
+                .frame(width: UIScreen.main.bounds.width - 16)
+                .wrappedInAnyView()
+            }
 
             return AnyView(
                 VStack(spacing: 24) {
                     // check size to determine if there is current position data to display
                     VStack {
-                        if let emptyText = self.emptyText {
-                            PlaceholderViewModel(text: emptyText)
-                                .createView()
-                        } else {
+                        if self.hasOpenPosition {
                             self.createCollection(parentStyle: style)
                             self.createButtons(parentStyle: style)
                             self.createList(parentStyle: style)
+                        } else {
+                            PlaceholderViewModel(text: DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS"))
+                                .createView()
                         }
                     }
 

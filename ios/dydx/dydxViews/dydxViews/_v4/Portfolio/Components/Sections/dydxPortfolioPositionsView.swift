@@ -244,7 +244,6 @@ public class dydxPortfolioPositionItemViewModel: PlatformViewModel {
 }
 
 public class dydxPortfolioPositionsViewModel: PlatformViewModel {
-    @Published public var emptyText: String?
     @Published public var positionItems: [dydxPortfolioPositionItemViewModel] {
         didSet {
             contentChanged?()
@@ -259,6 +258,8 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
     @Published public var vaultBalance: String?
     @Published public var vaultApy: Double?
     @Published public var vaultTapAction: (() -> Void)?
+    @Published public var isSignedIn: Bool = false
+    @Published public var onboardAction: (() -> Void)?
 
     public var contentChanged: (() -> Void)?
 
@@ -266,12 +267,10 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
         positionItems: [dydxPortfolioPositionItemViewModel] = [],
         pendingPositionItems: [dydxPortfolioPendingPositionsItemViewModel] = [],
         vaultBalance: String? = nil,
-        vaultApy: String? = nil,
-        emptyText: String? = nil
+        vaultApy: String? = nil
     ) {
         self.positionItems = positionItems
         self.pendingPositionItems = pendingPositionItems
-        self.emptyText = emptyText
     }
 
     public static var previewValue: dydxPortfolioPositionsViewModel {
@@ -283,8 +282,8 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
             pendingPositionItems: [
                 .previewValue
             ],
-            vaultBalance: "324.320",
-            emptyText: "empty")
+            vaultBalance: "324.320"
+        )
     }
 
     public var pendingPositionsHeader: PlatformViewModel? {
@@ -309,9 +308,9 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
 
     private var openPositionsView: some View {
         LazyVStack {
-            if let emptyText = self.emptyText, positionItems.isEmpty {
+            if positionItems.isEmpty {
                 AnyView(
-                    PlaceholderViewModel(text: emptyText)
+                    PlaceholderViewModel(text: DataLocalizer.localize(path: "APP.TRADE.POSITIONS_EMPTY_STATE"))
                         .createView()
                 )
             } else {
@@ -398,6 +397,15 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] _ in
             guard let self = self else { return AnyView(PlatformView.nilView) }
+            guard self.isSignedIn else {
+                return PlatformButtonViewModel(
+                    content: Text(DataLocalizer.localize(path: "APP.GENERAL.SIGN_IN_TO_VIEW")).wrappedViewModel,
+                    action: { self.onboardAction?() }
+                )
+                .createView(parentStyle: parentStyle)
+                .frame(width: UIScreen.main.bounds.width - 16)
+                .wrappedInAnyView()
+            }
 
             return AnyView(
                 ScrollView {

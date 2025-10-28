@@ -183,12 +183,22 @@ public class dydxPortfolioOrderItemViewModel: PlatformViewModel {
 }
 
 public class dydxPortfolioOrdersViewModel: PlatformListViewModel {
-    @Published public var placeholderText: String?
+    @Published public var isSignedIn: Bool = false
+    @Published public var onboardAction: (() -> Void)?
 
     public override var placeholder: PlatformViewModel? {
-        let vm = PlaceholderViewModel()
-        vm.text = placeholderText
-        return vm
+        guard self.isSignedIn else {
+            return PlatformButtonViewModel(
+                content: Text(DataLocalizer.localize(path: "APP.GENERAL.SIGN_IN_TO_VIEW")).wrappedViewModel,
+                action: { self.onboardAction?() }
+            )
+            .createView()
+            .frame(width: UIScreen.main.bounds.width - 16)
+            .wrappedViewModel
+        }
+        return PlaceholderViewModel(
+            text: DataLocalizer.localize(path: "APP.TRADE.ORDER_EMPTY_STATE")
+        )
     }
 
     public init(items: [PlatformViewModel] = [], contentChanged: (() -> Void)? = nil) {
