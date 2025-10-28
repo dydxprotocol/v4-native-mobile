@@ -310,7 +310,7 @@ public class dydxPortfolioPositionsViewModel: PlatformViewModel {
         LazyVStack {
             if positionItems.isEmpty {
                 AnyView(
-                    PlaceholderViewModel(text: DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS"))
+                    PlaceholderViewModel(text: DataLocalizer.localize(path: "APP.TRADE.POSITIONS_EMPTY_STATE"))
                         .createView()
                 )
             } else {

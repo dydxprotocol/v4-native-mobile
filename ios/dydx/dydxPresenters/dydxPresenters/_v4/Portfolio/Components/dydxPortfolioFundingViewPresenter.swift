@@ -29,6 +29,11 @@ class dydxPortfolioFundingViewPresenter: HostedViewPresenter<dydxPortfolioFundin
         super.init()
 
         self.viewModel = viewModel
+        
+        viewModel?.onboardAction = {
+            Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
+            })
+        }
     }
 
     override func start() {
@@ -36,11 +41,7 @@ class dydxPortfolioFundingViewPresenter: HostedViewPresenter<dydxPortfolioFundin
 
         AbacusStateManager.shared.state.onboarded
             .sink { [weak self] onboarded in
-                if onboarded {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_FUNDING")
-                } else {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_FUNDING_LOG_IN")
-                }
+                self?.viewModel?.isSignedIn = onboarded
             }
             .store(in: &subscriptions)
 
