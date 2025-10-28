@@ -110,8 +110,18 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
   const showContinueModal = continueModal && hasError === false;
 
   const { width } = useWindowDimensions();
-  const source = {
-    html: useLocalizedString("APP.ONBOARDING.TOS_SHORT") ?? "",
+
+  const tos =  useLocalizedString("APP.HEADER.TERMS_OF_USE");
+  const tosLink = `<a href="${configs.tosUrl}">${tos}</a>`;
+  const privacy = useLocalizedString("APP.ONBOARDING.PRIVACY_POLICY");
+  const privacyLink = `<a href="${configs.privacyUrl}">${privacy}</a>`;
+
+  const tosText = useLocalizedString("APP.ONBOARDING.TOS_SHORT", {
+    "TERMS_LINK": tosLink,
+    "PRIVACY_POLICY_LINK": privacyLink,
+  }) ?? "";
+  const tosHtml = {
+    html: tosText
   };
 
   const MemoizedRenderHTML = React.memo(RenderHTML);
@@ -240,8 +250,8 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
 
           <MemoizedRenderHTML
             contentWidth={width * 0.9} // 90% of screen width
-            source={source}
-            baseStyle={{ textAlign: "center" }} // center text inside
+            source={tosHtml}
+            baseStyle={{ textAlign: "center", paddingBottom: 20 }} // center text inside
 
             tagsStyles={{
               body: { fontFamily: "Satoshi-Regular", fontSize: 11, color: currentTheme.colors.textTertiary },
@@ -278,19 +288,19 @@ const ContinueSignInModal = ({
   styles,
   providerName,
 }: ContinueSignInModalProps) => {
-  var signInTitle: string
+  var signInTitle: string | null = null;
   switch (providerName?.toLowerCase()) {
     case "google":
-      signInTitle = configs.strings['APP.TURNKEY_ONBOARD.SIGN_IN_GOOGLE'];
+      signInTitle = useLocalizedString('APP.TURNKEY_ONBOARD.SIGN_IN_GOOGLE');
       break;
     case "apple":
-      signInTitle = configs.strings['APP.TURNKEY_ONBOARD.SIGN_IN_APPLE'];
+      signInTitle = useLocalizedString('APP.TURNKEY_ONBOARD.SIGN_IN_APPLE');
       break;
-    case "email":
-      signInTitle = configs.strings['APP.TURNKEY_ONBOARD.SIGN_IN_EMAIL'];
+    case "email": 
+      signInTitle = useLocalizedString('APP.TURNKEY_ONBOARD.SIGN_IN_EMAIL');
       break;
     default:
-      signInTitle = configs.strings['APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_TITLE'];
+      signInTitle = useLocalizedString('APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_TITLE');
   }
   return (
     <Modal

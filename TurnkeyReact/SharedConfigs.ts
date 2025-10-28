@@ -7,6 +7,8 @@ export type TurnkeyConfigs = {
   turnkeyOrgId: string,
   backendApiUrl: string,
   deploymentUri: string,
+  tosUrl: string,
+  privacyUrl: string,
   theme: "light" | "dark" | "classicDark" | undefined,
   enableAppleLoginIn: boolean,
   isSamsungDevice: boolean,
