@@ -1,6 +1,10 @@
 package exchange.dydx.trading.integration.react
 
+import android.R.id.message
 import com.facebook.react.ReactPackage
+import com.facebook.react.bridge.Promise
+import exchange.dydx.abacus.protocols.LocalizerProtocol
+import exchange.dydx.abacus.protocols.localizeWithParams
 import exchange.dydx.trading.integration.analytics.tracking.Tracking
 import exchange.dydx.utilities.utils.Logging
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +15,7 @@ import javax.inject.Inject
 class SharedReactBridge @Inject constructor(
     private val logger: Logging,
     private val tracker: Tracking,
+    private val localizer: LocalizerProtocol
 ) : SharedNativeModuleDelegate {
     companion object {
         val reactPackage: ReactPackage = SharedReactPackage()
@@ -34,5 +39,14 @@ class SharedReactBridge @Inject constructor(
         eventParams: Map<String, String>
     ) {
         tracker.log(event = eventName, data = eventParams)
+    }
+
+    override fun localize(
+        path: String,
+        params: Map<String, String>,
+        promise: Promise
+    ) {
+        val localized = localizer.localizeWithParams(path, params)
+        promise.resolve(localized)
     }
 }

@@ -36,7 +36,6 @@ object DydxTurnkeyAuthView : DydxComponent {
     data class ViewState(
         val localizer: LocalizerProtocol,
         val initialProperties: Map<String, Any>?,
-        val localizerEntries: List<LocalizerEntry> = emptyList(), // Optional, for localization
         val closeAction: (() -> Unit)? = null,
     ) {
         companion object {
@@ -69,7 +68,6 @@ object DydxTurnkeyAuthView : DydxComponent {
                     .fillMaxWidth(),
                 moduleName = "TurnkeyLogin",
                 initialProps = state.initialProperties,
-                localizerEntries = state.localizerEntries,
                 localizer = state.localizer,
             )
 

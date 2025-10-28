@@ -121,9 +121,11 @@ interface AppModule {
         fun provideSharedReactBridge(
             logger: Logging,
             tracker: Tracking,
+            localizer: LocalizerProtocol,
         ): SharedReactBridge = SharedReactBridge(
-            logger,
-            tracker = tracker
+            logger = logger,
+            tracker = tracker,
+            localizer = localizer
         )
 
         @Provides

@@ -25,7 +25,6 @@ fun ReactNativeView(
     modifier: Modifier = Modifier,
     moduleName: String, // matches AppRegistry.registerComponent(...)
     initialProps: Map<String, Any>? = null, // Optional, initial properties for the RN app
-    localizerEntries: List<LocalizerEntry> = emptyList(), // Optional, for localization
     localizer: LocalizerProtocol,
 ) {
     val context = LocalContext.current
@@ -58,12 +57,6 @@ fun ReactNativeView(
                     else -> error("Unsupported prop type: ${value?.let { it::class.java }} for key: $key")
                 }
             }
-            val localizedValues = Bundle()
-            localizerEntries.forEach { entry ->
-                val localized = entry.localized ?: localizer.localizeWithParams(path = entry.path, params = entry.params)
-                localizedValues.putString(entry.path, localized)
-            }
-            initialPropsWithLocalizationData.putBundle("strings", localizedValues)
 
             startReactApplication(reactInstanceManager, moduleName, initialPropsWithLocalizationData)
         }
