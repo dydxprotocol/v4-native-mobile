@@ -77,13 +77,8 @@ class dydxMarketPositionViewPresenter: HostedViewPresenter<dydxMarketPositionVie
             .CombineLatest(AbacusStateManager.shared.state.onboarded,
                             $position.removeDuplicates())
             .sink { [weak self] (onboarded, position) in
-                if !onboarded {
-                    self?.viewModel?.emptyText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS_LOG_IN")
-                } else if position == nil {
-                    self?.viewModel?.emptyText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS")
-                } else {
-                    self?.viewModel?.emptyText = nil
-                }
+                self?.viewModel?.isSignedIn = onboarded
+                self?.viewModel?.hasOpenPosition = position != nil
             }
             .store(in: &subscriptions)
 

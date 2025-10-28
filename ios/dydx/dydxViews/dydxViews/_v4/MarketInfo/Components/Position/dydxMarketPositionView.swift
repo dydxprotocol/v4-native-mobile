@@ -11,10 +11,13 @@ import PlatformUI
 import Utilities
 
 public class dydxMarketPositionViewModel: PlatformViewModel {
-    @Published public var emptyText: String?
-
     @Published public var closeAction: (() -> Void)?
     @Published public var editMarginAction: (() -> Void)?
+    @Published public var onboardAction: (() -> Void)?
+
+    @Published public var isSignedIn: Bool = false
+    @Published public var hasOpenPosition: Bool = false
+
     @Published public var unrealizedPNLAmount: SignedAmountViewModel?
     @Published public var unrealizedPNLPercent: String = ""
     @Published public var realizedPNLAmount: SignedAmountViewModel?
@@ -77,13 +80,21 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
                 VStack(spacing: 24) {
                     // check size to determine if there is current position data to display
                     VStack {
-                        if let emptyText = self.emptyText {
-                            PlaceholderViewModel(text: emptyText)
-                                .createView()
+                        if self.isSignedIn {
+                            if self.hasOpenPosition {
+                                self.createCollection(parentStyle: style)
+                                self.createButtons(parentStyle: style)
+                                self.createList(parentStyle: style)
+                            } else {
+                                PlaceholderViewModel(text: DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS"))
+                                    .createView()
+                            }
                         } else {
-                            self.createCollection(parentStyle: style)
-                            self.createButtons(parentStyle: style)
-                            self.createList(parentStyle: style)
+                            PlatformButtonViewModel(
+                                content: Text(DataLocalizer.localize(path: "APP.GENERAL.SIGN_IN_TO_VIEW")).wrappedViewModel,
+                                action: { self.onboardAction?() }
+                            )
+                            .createView(parentStyle: parentStyle)
                         }
                     }
 
