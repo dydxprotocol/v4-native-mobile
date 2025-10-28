@@ -3,14 +3,15 @@ import { Input } from "../components/ui/input";
 import { useThemedStyles } from '../turnkeyStyle';
 import { Image, Modal, View, TouchableOpacity } from "react-native";
 import { Text } from './ui/text';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthRelay } from "../hooks/useAuthRelay";
 import { TurnkeyConfigs } from "../sharedConfigs";
 import { EmbeddedKeyAndNonce } from "./useEmbeddedKeyAndNonce";
 import { Button } from "./ui/button";
 import { OtpType } from "../lib/types";
 import { currentTheme } from "../../rn_style/themes/currentTheme";
-import { TurnkeyNativeModule } from "../../TurnkeyModule";
+import { SharedNativeModule } from "../../SharedNativeModule";
+import { useLocalizedString } from '../../useLocalizedString';
 
 interface EmailInputProps {
   embeddedKeyAndNonce: EmbeddedKeyAndNonce;
@@ -23,7 +24,7 @@ export const EmailInput = ({
   configs,
   focusChanged,
 }: EmailInputProps) => {
-  const { initOtpLogin, completeOtpAuth, state } = useAuthRelay();
+  const { initOtpLogin, state } = useAuthRelay();
   const [email, setEmail] = useState<string>('');
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const styles = useThemedStyles(currentTheme);
@@ -31,9 +32,12 @@ export const EmailInput = ({
   const [checkEmailModalVisible, setCheckEmailModalVisible] = useState(false);
   const [showResendButton, setShowResendButton] = useState(false);
 
+  const emailPlaceholder = useLocalizedString("APP.TURNKEY_ONBOARD.EMAIL_PLACEHOLDER");
+  const emailLabel = useLocalizedString("APP.GENERAL.EMAIL");
+
   const handleEmailSubmit = () => {
     if (isValidEmail) {
-      TurnkeyNativeModule.onTrackingEvent("TurnkeyLoginInitiated", { "signinMethod": "email" });
+      SharedNativeModule.trackEvent("TurnkeyLoginInitiated", { "signinMethod": "email" });
       initOtpLogin({
         otpType: OtpType.Email,
         contact: email,
@@ -56,7 +60,7 @@ export const EmailInput = ({
         visible={checkEmailModalVisible}
         onClose={() => setCheckEmailModalVisible(false)}
         onResend={() => {
-          TurnkeyNativeModule.onTrackingEvent("TurnkeyResendEMailClick", {});
+          SharedNativeModule.trackEvent("TurnkeyResendEMailClick", {});
           handleEmailSubmit();
         }}
         showResendButton={showResendButton}
@@ -70,7 +74,7 @@ export const EmailInput = ({
           fontSize: currentTheme.fontSizes.medium,
           color: currentTheme.colors.textTertiary,
         }}>
-          {configs.strings["APP.GENERAL.EMAIL"] + ":"}
+          {emailLabel + ":"}
         </Text>
       ) : (
         <Image
@@ -91,7 +95,7 @@ export const EmailInput = ({
         autoCorrect={false}
         keyboardType="email-address"
         placeholderTextColor={currentTheme.colors.textTertiary}
-        placeholder={configs.strings["APP.TURNKEY_ONBOARD.EMAIL_PLACEHOLDER"]}
+        placeholder={emailPlaceholder || "Email"}
         value={email && email.length > 0 ? email : defaultEmail} // Workaround for a React Native bug on Samsung devices
         onChangeText={(text: string) => {
           const trimmedText = text.trim();
@@ -143,6 +147,9 @@ const CheckEmailModal = ({
   currentTheme,
   styles,
 }: CheckEmailModalProps) => {
+  const checkEmailTitle = useLocalizedString('APP.TURNKEY_ONBOARD.CHECK_EMAIL_TITLE');
+  const checkEmailDescription = useLocalizedString('APP.TURNKEY_ONBOARD.CHECK_EMAIL_DESCRIPTION');
+  const resendText = useLocalizedString('APP.TURNKEY_ONBOARD.RESEND');
   return (
     <Modal
       visible={visible}
@@ -183,7 +190,7 @@ const CheckEmailModal = ({
                 marginBottom: 8,
               }}
             >
-              {configs.strings['APP.TURNKEY_ONBOARD.CHECK_EMAIL_TITLE']}
+              {checkEmailTitle}
             </Text>
             <Text
               style={{
@@ -193,7 +200,7 @@ const CheckEmailModal = ({
                 marginBottom: 24,
               }}
             >
-              {configs.strings['APP.TURNKEY_ONBOARD.CHECK_EMAIL_DESCRIPTION']}
+              {checkEmailDescription}
             </Text>
 
             {showResendButton && (
@@ -224,7 +231,7 @@ const CheckEmailModal = ({
                       fontSize: currentTheme.fontSizes.small,
                     }}
                   >
-                    {configs.strings['APP.TURNKEY_ONBOARD.RESEND']}
+                    {resendText}
                   </Text>
                 </View>
               </Button>

@@ -21,8 +21,18 @@ class SharedNativeModule: NSObject, RCTBridgeModule {
 
     private var pendingCompletions: [String: (String) -> Void] = [:]
 
-    @objc(onTrackingEvent::)
-    func onTrackingEvent(eventName: String, eventParams: [String: String]) {
+    @objc(trackEvent::)
+    func trackEvent(eventName: String, eventParams: [String: String]) {
         Tracking.shared?.log(event: eventName, data: eventParams)
+    }
+
+    @objc(localize::::)
+    func localize(path: String,
+                  params: Any?,
+                  resolver: RCTPromiseResolveBlock,
+                  rejecter: RCTPromiseRejectBlock) {
+        let dict = params as? [String: String] ?? [:]
+        let localizedString = DataLocalizer.localize(path: path, params: dict)
+        resolver(localizedString)
     }
 }

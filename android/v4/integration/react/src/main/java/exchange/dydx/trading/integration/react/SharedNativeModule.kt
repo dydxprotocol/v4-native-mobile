@@ -8,7 +8,7 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
 
 interface SharedNativeModuleDelegate {
-    fun onTrackingEvent(
+    fun trackEvent(
         eventName: String,
         eventParams: Map<String, String>
     )
@@ -31,10 +31,10 @@ internal class SharedNativeModule(
     }
 
     @ReactMethod
-    fun onTrackingEvent(eventName: String, eventParams: ReadableMap) {
+    fun trackEvent(eventName: String, eventParams: ReadableMap) {
         val params: Map<String, String> = eventParams.toHashMap()
             .mapValues { it.value.toString() }
-        delegate?.onTrackingEvent(eventName = eventName, eventParams = params)
+        delegate?.trackEvent(eventName = eventName, eventParams = params)
     }
 
     override fun onHostDestroy() {

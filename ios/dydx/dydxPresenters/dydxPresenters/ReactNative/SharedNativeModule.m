@@ -12,8 +12,13 @@
 
 @interface RCT_EXTERN_MODULE(SharedNativeModule, RCTEventEmitter)
 
-RCT_EXTERN_METHOD(onTrackingEvent
+RCT_EXTERN_METHOD(trackEvent
                   :(NSString) eventName
                   :(NSDictionary *)eventParams)
 
+RCT_EXTERN_METHOD(localize
+                  :(NSString *)path
+                  :(id)params
+                  :(RCTPromiseResolveBlock)resolve
+                  :(RCTPromiseRejectBlock)reject)
 @end

@@ -29,7 +29,7 @@ class SharedReactBridge @Inject constructor(
         sharedNativeModule?.delegate = this
     }
 
-    override fun onTrackingEvent(
+    override fun trackEvent(
         eventName: String,
         eventParams: Map<String, String>
     ) {

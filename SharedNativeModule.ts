@@ -2,7 +2,8 @@ import { NativeModules } from 'react-native';
 
 // Define type for native module
 interface SharedNativeModuleType {
-  onTrackingEvent: (eventName: string, eventParams: Record<string, string>) => void;
+  trackEvent: (eventName: string, eventParams: Record<string, string>) => void;
+  localize: (path: string, params?: Record<string, string>) => Promise<string>;
 }
 
 // Safely cast NativeModules

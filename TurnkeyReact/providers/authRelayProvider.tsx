@@ -229,7 +229,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
       return Promise.resolve(dydxSession);
 
     } catch (error: any) {
-      SharedNativeModule.onTrackingEvent("TurnkeyLoginError", { "signinMethod": "email", "error": error.message });
+      SharedNativeModule.trackEvent("TurnkeyLoginError", { "signinMethod": "email", "error": error.message });
   
       console.error("Error decrypting credential bundle:", error);
       dispatch({ type: "ERROR", payload: error.message });
@@ -259,7 +259,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
       const result = await handleOauthResponse(response, embeddedKeyAndNonce, configs, providerName, undefined);
       return Promise.resolve(result);
     } catch (error: any) {
-      SharedNativeModule.onTrackingEvent("TurnkeyLoginError", { "signinMethod": providerName, "error": error.message });
+      SharedNativeModule.trackEvent("TurnkeyLoginError", { "signinMethod": providerName, "error": error.message });
       console.error("Error during sign-in: ", error, error.message);
       dispatch({ type: "ERROR", payload: error.message });
     } finally {
@@ -342,7 +342,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
       } else if (loginMethod === LoginMethod.Email) {
         signInMethod = "email";
       }
-      SharedNativeModule.onTrackingEvent("TurnkeyLoginError", { "signinMethod": signInMethod, "error": error.message });
+      SharedNativeModule.trackEvent("TurnkeyLoginError", { "signinMethod": signInMethod, "error": error.message });
       console.error("Error during sign-in: ", error, error.message);
       dispatch({ type: "ERROR", payload: error.message });
     } finally {
@@ -361,7 +361,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
     if (!salt) {
       const alreadyExists = response.alreadyExists;
       if (alreadyExists) {
-        throw new Error(configs.strings["ERRORS.TURNKEY_ONBOARDING.USER_ALREADY_HAS_TURNKEY"]);
+        throw new Error(await SharedNativeModule.localize("ERRORS.TURNKEY_ONBOARDING.USER_ALREADY_HAS_TURNKEY"));
       }
       throw new Error("No salt provided in response");
     }
@@ -411,7 +411,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
       throw new Error("Unable to export wallet mnemonics");
     }
 
-    SharedNativeModule.onTrackingEvent("TurnkeyLoginCompleted", { "signinMethod": loginMethod });
+    SharedNativeModule.trackEvent("TurnkeyLoginCompleted", { "signinMethod": loginMethod });
 
     TurnkeyNativeModule.onAuthCompleted(
       signed,
@@ -506,7 +506,7 @@ export const AuthRelayProvider: React.FC<AuthRelayProviderProps> = ({
       // TODO(turnkey): handle policy returned in response
 
     } catch (error: any) {
-      SharedNativeModule.onTrackingEvent("UploadAddressError", { dydxAddress, "error": error.message });
+      SharedNativeModule.trackEvent("UploadAddressError", { dydxAddress, "error": error.message });
       console.error("Error during sign-in: ", error, error.message);
       dispatch({ type: "ERROR", payload: error.message });
       throw error;

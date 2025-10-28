@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -22,6 +22,7 @@ import { currentTheme } from '../../rn_style/themes/currentTheme';
 import { DydxTurnkeySession } from '../providers/dydxTurnkeySession';
 import RenderHTML from "react-native-render-html";
 import { useWindowDimensions } from "react-native";
+import { useLocalizedString } from '../../useLocalizedString';
 
 const renderError = () => {
   const {
@@ -110,10 +111,16 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
 
   const { width } = useWindowDimensions();
   const source = {
-    html: configs.strings["APP.ONBOARDING.TOS_SHORT"],
+    html: useLocalizedString("APP.ONBOARDING.TOS_SHORT") ?? "",
   };
 
   const MemoizedRenderHTML = React.memo(RenderHTML);
+
+  const signInTitle = useLocalizedString("APP.TURNKEY_ONBOARD.SIGN_IN_TITLE");
+  const signInDescription = useLocalizedString("APP.TURNKEY_ONBOARD.SIGN_IN_DESCRIPTION");
+  const orText = useLocalizedString("APP.GENERAL.OR") ?? "Or";
+  const signInDesktopText = useLocalizedString("APP.TURNKEY_ONBOARD.SIGN_IN_DESKTOP");
+  const signInWalletText = useLocalizedString("APP.TURNKEY_ONBOARD.SIGN_IN_WALLET");
 
   return (
     <ScrollView
@@ -136,9 +143,9 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
           <View style={styles.dragHandle} />
 
           {/* Header */}
-          <Text style={styles.title}>{configs.strings["APP.TURNKEY_ONBOARD.SIGN_IN_TITLE"]}</Text>
+          <Text style={styles.title}>{signInTitle}</Text>
           <Text style={styles.subtitle}>
-            {configs.strings["APP.TURNKEY_ONBOARD.SIGN_IN_DESCRIPTION"]}
+            {signInDescription}
           </Text>
 
           {/* Social icons row */}
@@ -180,7 +187,7 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
           {/* Divider */}
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
-            <Text style={styles.dividerText}>{configs.strings["APP.GENERAL.OR"]}</Text>
+            <Text style={styles.dividerText}>{orText}</Text>
             <View style={styles.divider} />
           </View>
 
@@ -205,7 +212,7 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
               source={require('../../rn_style/assets/icon_desktop.png')}
               style={{ width: 18, height: 18, marginEnd: 8, tintColor: currentTheme.colors.textSecondary }}
             />
-            <Text style={styles.actionButtonText}>{configs.strings["APP.TURNKEY_ONBOARD.SIGN_IN_DESKTOP"]}</Text>
+            <Text style={styles.actionButtonText}>{signInDesktopText}</Text>
             <Image
               source={require('../../rn_style/assets/chevron_right.png')}
               style={{ height: 10, tintColor: currentTheme.colors.textTertiary }}
@@ -223,7 +230,7 @@ export const Auth = ({ configs }: { configs: TurnkeyConfigs }) => {
               source={require('../../rn_style/assets/icon_wallet.png')}
               style={{ width: 16, height: 16, marginEnd: 8, tintColor: currentTheme.colors.textSecondary }}
             />
-            <Text style={styles.actionButtonText}>{configs.strings["APP.TURNKEY_ONBOARD.SIGN_IN_WALLET"]}</Text>
+            <Text style={styles.actionButtonText}>{signInWalletText}</Text>
             <Image
               source={require('../../rn_style/assets/chevron_right.png')}
               style={{ height: 10, tintColor: currentTheme.colors.textTertiary }}
@@ -334,7 +341,7 @@ const ContinueSignInModal = ({
             paddingHorizontal: 24,
           }}
         >
-          {configs.strings['APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_DESCRIPTION']}
+          {useLocalizedString('APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_DESCRIPTION')}
         </Text>
       </View>
     </Modal>
