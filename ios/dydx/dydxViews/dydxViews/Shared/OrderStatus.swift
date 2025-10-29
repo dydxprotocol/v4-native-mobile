@@ -21,7 +21,7 @@ public class OrderStatusModel: PlatformViewModel {
             case .green:
                 return ThemeSettings.positiveColor.color
             case .blank:
-                return ThemeColor.SemanticColor.textPrimary.color
+                return ThemeColor.SemanticColor.layer2.color
             case .yellow:
                 return ThemeColor.SemanticColor.colorYellow.color
             }
@@ -46,7 +46,7 @@ public class OrderStatusModel: PlatformViewModel {
             return AnyView(
                 ZStack {
                     Circle()
-                        .fill(ThemeColor.SemanticColor.layer0.color ?? .clear)
+                        .fill(ThemeColor.SemanticColor.colorFadedPurple.color)
                         .frame(width: 16, height: 16)
                     Circle()
                         .fill(self.status?.color ?? .clear)

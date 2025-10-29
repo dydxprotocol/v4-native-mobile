@@ -28,19 +28,45 @@ public class dydxMarketTpSlGroupViewModel: PlatformViewModel {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let view =  HStack(spacing: 12) {
+            if self.takeProfitStatusViewModel == nil && self.stopLossStatusViewModel == nil {
+                return Button(action: takeProfitStopLossAction ?? {}) {
+                    HStack {
+                        PlatformIconViewModel(
+                            type: .system(name: "plus"),
+                            size: .init(width: 16, height: 16),
+                            templateColor: .textSecondary
+                        ).createView()
+                        Text(DataLocalizer.localize(path: "APP.TRADE.SET_TAKE_PROFIT_STOP_LOSS_TRIGGERS"))
+                            .themeColor(foreground: .textSecondary)
+                            .themeFont(fontSize: .small)
+                    }
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity)
+                .themeColor(background: .layer1)
+                .cornerRadius(12, corners: .allCorners)
+                .wrappedInAnyView()
+            }
+
+            let view =  HStack(spacing: 20) {
                 if self.takeProfitStatusViewModel != nil {
                     self.takeProfitStatusViewModel?.createView(parentStyle: style)
                 } else {
-                    self.createAddButton(label: DataLocalizer.localize(path: "APP.TRADE.TAKE_PROFIT"),
-                                         style: style)
+                    self.createAddButton(
+                        label: DataLocalizer.localize(path: "APP.TRADE.TAKE_PROFIT"),
+                        buttonLabel: DataLocalizer.localize(path: "APP.TRADE.ADD_TP"),
+                        style: style
+                    )
                 }
 
                 if self.stopLossStatusViewModel != nil {
                     self.stopLossStatusViewModel?.createView(parentStyle: parentStyle)
                 } else {
-                    self.createAddButton(label: DataLocalizer.localize(path: "APP.TRADE.STOP_LOSS"),
-                                         style: style)
+                    self.createAddButton(
+                        label: DataLocalizer.localize(path: "APP.TRADE.STOP_LOSS"),
+                        buttonLabel: DataLocalizer.localize(path: "APP.TRADE.ADD_SL"),
+                        style: style
+                    )
                 }
             }
                 .frame(maxHeight: .infinity)
@@ -49,33 +75,32 @@ public class dydxMarketTpSlGroupViewModel: PlatformViewModel {
         }
     }
 
-    private func createAddButton(label: String, style: ThemeStyle) -> some View {
-        let content = HStack {
-            Text(label)
-                .multilineTextAlignment(.leading)
-                .themeFont(fontSize: .small)
-                .themeColor(foreground: .textTertiary)
-                .frame(maxWidth: 60)
-
+    private func createAddButton(label: String, buttonLabel: String, style: ThemeStyle) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(label)
+                    .themeColor(foreground: .textTertiary)
+                    .themeFont(fontSize: .smaller)
+                Text("--")
+                    .themeColor(foreground: .textTertiary)
+                    .themeFont(fontSize: .smaller)
+            }
             Spacer()
-
-            PlatformIconViewModel(type: .system(name: "plus"),
-                                  size: CGSize(width: 14, height: 14),
-                                  templateColor: .textSecondary)
-            .createView(parentStyle: style)
-            .frame(width: 24, height: 24)
-            .themeColor(background: .layer5)
-            .clipShape(Circle())
-        }
+            Button(action: takeProfitStopLossAction ?? {}) {
+                HStack {
+                    PlatformIconViewModel(
+                        type: .system(name: "plus"),
+                        size: .init(width: 12, height: 12),
+                        templateColor: .textTertiary
+                    ).createView(parentStyle: style)
+                    Text(buttonLabel)
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontSize: .smaller)
+                }
+            }
             .padding(8)
-            .themeColor(background: .layer3)
-            .cornerRadius(10, corners: .allCorners)
-            .wrappedViewModel
-
-        return PlatformButtonViewModel(content: content, type: .iconType) { [weak self] in
-            self?.takeProfitStopLossAction?()
+            .border(borderWidth: 1, cornerRadius: 6, borderColor: ThemeColor.SemanticColor.layer3.color)
         }
-        .createView(parentStyle: style)
     }
 }
 

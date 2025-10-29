@@ -31,65 +31,30 @@ public class dydxTakeProfitStopLossStatusViewModel: PlatformViewModel {
         dydxTakeProfitStopLossStatusViewModel(triggerSide: .stopLoss, triggerPriceText: "0.000001")
     }
 
-    private func createTitleValueRow(titleStringKey: String, value: String?) -> AnyView? {
-        guard let value = value else { return nil }
-        return HStack(spacing: 8) {
-            Text(DataLocalizer.shared?.localize(path: titleStringKey, params: nil) ?? "")
-                .multilineTextAlignment(.leading)
-                .themeFont(fontSize: .small)
-                .themeColor(foreground: .textTertiary)
-                .frame(width: 60)
-
-            Spacer()
-
-            Text(value)
-                .themeFont(fontType: .base, fontSize: .small)
-                .themeColor(foreground: .textPrimary)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-        }
-        .wrappedInAnyView()
-    }
-
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
         PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
-            let content = VStack(spacing: 8) {
-                HStack(spacing: 8) {
+            return HStack {
+                VStack(alignment: .leading) {
                     Text(DataLocalizer.shared?.localize(path: self.triggerSide.titleStringKey, params: nil) ?? "")
-                        .themeFont(fontSize: .small)
                         .themeColor(foreground: .textTertiary)
-                        .frame(width: 60)
-
-                    Spacer()
-
+                        .themeFont(fontSize: .smaller)
                     Text(self.triggerPriceText ?? "")
-                        .themeFont(fontType: .base, fontSize: .large)
                         .themeColor(foreground: .textPrimary)
-                        .truncationMode(.middle)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(1)
+                        .themeFont(fontSize: .medium)
                 }
-                if self.limitPrice != nil || self.amount != nil {
-                    DividerModel().createView(parentStyle: style)
-                        .padding(.horizontal, -8)
-
-                    VStack(spacing: 4) {
-                        self.createTitleValueRow(titleStringKey: "APP.TRADE.LIMIT_ORDER_SHORT", value: self.limitPrice)
-                        self.createTitleValueRow(titleStringKey: "APP.GENERAL.AMOUNT", value: self.amount)
-                    }
+                Spacer()
+                Button(action: self.action ?? {}) {
+                    PlatformIconViewModel(
+                        type: .system(name: "pencil"),
+                        size: .init(width: 12, height: 12),
+                        templateColor: .textTertiary
+                    ).createView(parentStyle: style)
                 }
-            }
                 .padding(8)
-                .themeColor(background: .layer3)
-                .cornerRadius(10, corners: .allCorners)
-
-            return PlatformButtonViewModel(content: content.wrappedViewModel, type: .iconType) {[weak self] in
-                self?.action?()
-            }
-            .createView(parentStyle: style)
-            .wrappedInAnyView()
+                .border(borderWidth: 1, cornerRadius: 6, borderColor: ThemeColor.SemanticColor.layer3.color)
+            }.wrappedInAnyView()
         }
     }
 }

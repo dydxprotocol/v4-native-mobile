@@ -69,8 +69,6 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
                         self.createPositionSection(parentStyle: style)
                         Spacer(minLength: 24)
 
-//                        self.createConfigsSection(parentStyle: style)
-
                         // for tab bar scroll adjstment overlap
                         Spacer(minLength: 128)
                     }
@@ -113,6 +111,7 @@ public class dydxMarketInfoViewModel: PlatformViewModel {
             case .orders:
                 orders
                     .createView(parentStyle: parentStyle)
+                    .padding(.horizontal, 16)
             case .funding:
                 funding
                     .createView(parentStyle: parentStyle)

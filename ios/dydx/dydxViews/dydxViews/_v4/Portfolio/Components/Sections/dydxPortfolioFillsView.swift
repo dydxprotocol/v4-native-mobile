@@ -25,14 +25,17 @@ public class dydxPortfolioFillsViewModel: PlatformListViewModel {
             .wrappedViewModel
         }
         return PlaceholderViewModel(
-            text: DataLocalizer.localize(path: "APP.TRADE.TRADES_EMPTY_STATE")
+            text: DataLocalizer.localize(path: "APP.TRADE.TRADES_EMPTY_STATE"),
+            subText: DataLocalizer.localize(path: "APP.TRADE.TRADES_SHOW_HERE"),
+            icon: .system(name: "rectangle.stack.fill"),
+            useUpdatedStyle: true
         )
     }
 
     public init(items: [PlatformViewModel] = [], contentChanged: (() -> Void)? = nil) {
         super.init(items: items,
                    intraItemSeparator: true,
-                   firstListItemTopSeparator: true,
+                   firstListItemTopSeparator: false,
                    lastListItemBottomSeparator: true,
                    contentChanged: contentChanged)
         self.width = UIScreen.main.bounds.width - 16
@@ -45,25 +48,6 @@ public class dydxPortfolioFillsViewModel: PlatformListViewModel {
             SharedFillViewModel.previewValue
         ]
         return vm
-    }
-
-    public override var header: PlatformViewModel? {
-        guard items.count > 0 else { return nil }
-        return HStack {
-            HStack {
-                Text(DataLocalizer.localize(path: "APP.GENERAL.TIME"))
-                Spacer()
-            }
-            .frame(width: 80)
-            Text(DataLocalizer.localize(path: "APP.GENERAL.TYPE_AMOUNT"))
-            Spacer()
-            Text(DataLocalizer.localize(path: "APP.GENERAL.PRICE_FEE"))
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-        .themeFont(fontSize: .small)
-        .themeColor(foreground: .textTertiary)
-        .wrappedViewModel
     }
 }
 
