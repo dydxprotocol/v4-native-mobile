@@ -102,12 +102,9 @@ public class SharedFillViewModel: PlatformViewModel {
 
     private func createMain(parentStyle: ThemeStyle) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 2) {
+            HStack(spacing: 4) {
                 sideText.createView(parentStyle: parentStyle)
-                Text(size ?? "")
-                    .themeColor(foreground: .textPrimary)
-                    .themeFont(fontSize: .medium)
-                Text(token?.symbol ?? "")
+                Text("\(size ?? "") \(token?.symbol ?? "")")
                     .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
             }
@@ -130,7 +127,7 @@ public class SharedFillViewModel: PlatformViewModel {
             }
             if handler?.onTapAction != nil {
                 PlatformIconViewModel(
-                    type: .system(name: "square.and.arrow.up"),
+                    type: .asset(name: "icon_link", bundle: .dydxView),
                     size: .init(width: 16, height: 16),
                     templateColor: .textTertiary
                 )

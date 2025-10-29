@@ -181,9 +181,9 @@ public class dydxMarketPositionViewModel: PlatformViewModel {
             return AnyView(
                 VStack(spacing: 24) {
                     VStack(spacing: 16) {
-                        if self.hasOpenPosition {
+                        if !self.hasOpenPosition {
                             PlaceholderViewModel(
-                                text: emptyText,
+                                text: DataLocalizer.localize(path: "APP.TRADE.POSITIONS_EMPTY_STATE"),
                                 subText: DataLocalizer.localize(path: "APP.TRADE.POSITIONS_SHOW_HERE"),
                                 icon: .asset(name: "circle_stack", bundle: .dydxView),
                                 useUpdatedStyle: true

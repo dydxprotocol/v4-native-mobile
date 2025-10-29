@@ -53,16 +53,18 @@ public class dydxPortfolioSectionsViewModel: PlatformViewModel {
                 HStack {
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal, showsIndicators: false) {
-                            TabGroupModel(items: items,
-                                          selectedItems: selectedItems,
-                                          currentSelection: self.sectionIndex,
-                                          onSelectionChanged: { [weak self] idx in
-
-                                withAnimation {
-                                    proxy.scrollTo(idx, anchor: .center)
-                                }
+                            TabGroupModel(
+                                items: items,
+                                selectedItems: selectedItems,
+                                currentSelection: self.sectionIndex,
+                                onSelectionChanged: { [weak self] idx in
+                                    withAnimation {
+                                        proxy.scrollTo(idx, anchor: .center)
+                                    }
                                 self?.onSelectionChanged?(idx)
-                            })
+                                },
+                                spacing: 0
+                            )
                             .createView(parentStyle: style)
                             .overlay(
                                 Rectangle()

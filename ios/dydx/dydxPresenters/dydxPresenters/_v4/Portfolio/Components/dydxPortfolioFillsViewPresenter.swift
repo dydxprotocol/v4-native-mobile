@@ -29,7 +29,7 @@ class dydxPortfolioFillsViewPresenter: HostedViewPresenter<dydxPortfolioFillsVie
         super.init()
 
         self.viewModel = viewModel
-        
+
         viewModel?.onboardAction = {
             Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
             })
