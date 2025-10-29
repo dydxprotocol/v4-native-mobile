@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { currentTheme } from "../../rn_style/themes/currentTheme";
 import { useThemedStyles } from "../turnkeyStyle";
 import { Platform } from 'react-native';
+import { SharedNativeModule } from "../../SharedNativeModule";
 
 type OAuthProps = {
   onSuccess: (params: OAuthRequest) => Promise<void>;
@@ -28,7 +29,7 @@ export const GoogleAuthButton: React.FC<OAuthProps> = ({
 
   const handlePress = async () => {
     try {
-      TurnkeyNativeModule.onTrackingEvent("TurnkeyLoginInitiated", { "signinMethod": "google" });
+      SharedNativeModule.trackEvent("TurnkeyLoginInitiated", { "signinMethod": "google" });
       await handleGoogleOAuth({
         clientId: configs.googleClientId,
         nonce: embeddedKeyAndNonce.nonce!,
@@ -94,7 +95,7 @@ export const AppleAuthButton: React.FC<OAuthProps> = ({
   })
 
   const handleAppleAuth = async () => {
-    TurnkeyNativeModule.onTrackingEvent("TurnkeyLoginInitiated", { "signinMethod": "apple" });
+    SharedNativeModule.trackEvent("TurnkeyLoginInitiated", { "signinMethod": "apple" });
     if (!embeddedKeyAndNonce.nonce) {
       console.error("Nonce is not ready");
       return;
