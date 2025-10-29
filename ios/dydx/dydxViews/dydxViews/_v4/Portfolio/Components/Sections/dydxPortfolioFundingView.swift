@@ -44,7 +44,7 @@ public enum FundingStatus {
 
 public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
 
-    public init(amount: SignedAmountViewModel? = nil, rate: SignedAmountViewModel? = nil, time: Date? = nil, sideText: SideTextViewModel = SideTextViewModel(), status: FundingStatus = .paid, position: String? = nil, token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
+    public init(amount: SignedAmountViewModel? = nil, rate: SignedAmountViewModel? = nil, time: String? = nil, sideText: SideTextViewModel = SideTextViewModel(), status: FundingStatus = .paid, position: String? = nil, token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
         self.amount = amount
         self.rate = rate
         self.time = time
@@ -58,7 +58,7 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
 
     public var amount: SignedAmountViewModel?
     public var rate: SignedAmountViewModel?
-    public var time: Date?
+    public var time: String?
     public var sideText = SideTextViewModel()
     public var status: FundingStatus = .paid
     public var position: String?
@@ -69,7 +69,7 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
     public static var previewValue: dydxPortfolioFundingItemViewModel {
         let item = dydxPortfolioFundingItemViewModel(amount: .previewValue,
                                                      rate: .previewValue,
-                                                     time: Date(),
+                                                     time: Date().englishDatetimeString,
                                                      sideText: .previewValue,
                                                      status: .paid,
                                                      position: "$2300.0",
@@ -120,7 +120,7 @@ public class dydxPortfolioFundingItemViewModel: PlatformViewModel {
                     .themeFont(fontSize: .medium)
                 sideText.createView(parentStyle: parentStyle.themeFont(fontSize: .medium))
             }
-            Text(time?.englishDatetimeString ?? "")
+            Text(time ?? "")
                 .themeColor(foreground: .textTertiary)
                 .themeFont(fontSize: .smallest)
         }

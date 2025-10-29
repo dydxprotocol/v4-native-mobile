@@ -171,7 +171,7 @@ private class dydxTradeStatusViewPresenter: HostedViewPresenter<dydxTradeStatusV
         viewModel?.orderViewModel.size = dydxFormatter.shared.localFormatted(number: lastOrder.size, digits: configs.stepSizeDecimals?.intValue ?? 1)
         viewModel?.orderViewModel.token?.symbol = asset.displayableAssetId
         if let createdAt = lastOrder.createdAtMilliseconds?.uint64Value {
-            viewModel?.orderViewModel.date = Date(milliseconds: createdAt)
+            viewModel?.orderViewModel.date = Date(milliseconds: createdAt).englishDatetimeString
         }
         if let tickSize = configs.tickSizeDecimals?.intValue {
             viewModel?.orderViewModel.price = dydxFormatter.shared.dollar(number: lastOrder.price, digits: tickSize)
@@ -205,7 +205,7 @@ private class dydxTradeStatusViewPresenter: HostedViewPresenter<dydxTradeStatusV
             viewModel?.orderViewModel.token?.symbol = token
         }
 
-        viewModel?.orderViewModel.date = submissionDate
+        viewModel?.orderViewModel.date = submissionDate?.englishDatetimeString
         if let tickSize = configs?.tickSizeDecimals?.intValue {
             if let price = tradeInput.summary?.price {
                 viewModel?.orderViewModel.price = dydxFormatter.shared.dollar(number: price, digits: tickSize)
@@ -239,7 +239,7 @@ private class dydxTradeStatusViewPresenter: HostedViewPresenter<dydxTradeStatusV
         if let token = asset?.displayableAssetId ?? configsAndAsset?.assetId {
             viewModel?.orderViewModel.token?.symbol = token
         }
-        viewModel?.orderViewModel.date = submissionDate
+        viewModel?.orderViewModel.date = submissionDate?.englishDatetimeString
         if let tickSize = configs?.tickSizeDecimals?.intValue {
             viewModel?.orderViewModel.price = dydxFormatter.shared.dollar(number: closePositionInput.summary?.price, digits: tickSize)
             viewModel?.orderViewModel.fee = dydxFormatter.shared.dollar(number: closePositionInput.summary?.fee, digits: tickSize)

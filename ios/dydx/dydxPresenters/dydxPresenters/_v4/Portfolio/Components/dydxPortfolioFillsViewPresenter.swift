@@ -80,7 +80,7 @@ class dydxPortfolioFillsViewPresenter: HostedViewPresenter<dydxPortfolioFillsVie
         item.type = DataLocalizer.localize(path: fill.resources.typeStringKey ?? "-")
         item.size = dydxFormatter.shared.localFormatted(number: fill.size, digits: configs.displayStepSizeDecimals?.intValue ?? 1)
         item.token?.symbol = asset.displayableAssetId
-        item.date = Date(milliseconds: fill.createdAtMilliseconds)
+        item.date = Date(milliseconds: fill.createdAtMilliseconds).englishDatetimeString
         if let tickSize = configs.displayTickSizeDecimals?.intValue {
             item.price = dydxFormatter.shared.dollar(number: fill.price, digits: tickSize)
             item.fee = dydxFormatter.shared.dollar(number: fill.fee, digits: tickSize)

@@ -21,7 +21,7 @@ public class SharedFillViewModel: PlatformViewModel {
         public var onTapAction: (() -> Void)?
     }
 
-    public init(type: String? = nil, amount: String? = nil, date: Date? = nil, price: String? = nil, fee: String? = nil, feeLiquidity: String? = nil, sideText: SideTextViewModel = SideTextViewModel(), token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
+    public init(type: String? = nil, amount: String? = nil, date: String? = nil, price: String? = nil, fee: String? = nil, feeLiquidity: String? = nil, sideText: SideTextViewModel = SideTextViewModel(), token: TokenTextViewModel? = TokenTextViewModel(), logoUrl: URL? = nil, onTapAction: (() -> Void)? = nil) {
         self.type = type
         self.size = amount
         self.date = date
@@ -36,7 +36,7 @@ public class SharedFillViewModel: PlatformViewModel {
 
     @Published public var type: String?
     @Published public var size: String?
-    @Published public var date: Date?
+    @Published public var date: String?
     @Published public var price: String?
     @Published public var fee: String?
     @Published public var feeLiquidity: String?
@@ -50,7 +50,7 @@ public class SharedFillViewModel: PlatformViewModel {
     public static var previewValue: SharedFillViewModel {
         let vm = SharedFillViewModel(type: "Market Order",
                                      amount: "0.017 ETH",
-                                     date: Date(),
+                                     date: Date().englishDatetimeString,
                                      price: "$1,203.8",
                                      fee: "$0.0",
                                      feeLiquidity: "Taker",
@@ -108,7 +108,7 @@ public class SharedFillViewModel: PlatformViewModel {
                     .themeColor(foreground: .textPrimary)
                     .themeFont(fontSize: .medium)
             }
-            Text(date?.englishDatetimeString ?? "")
+            Text(date ?? "")
                 .themeColor(foreground: .textTertiary)
                 .themeFont(fontSize: .smallest)
         }
