@@ -5,12 +5,17 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import com.walletconnect.android.Core
-import com.walletconnect.android.CoreClient
-import com.walletconnect.android.relay.ConnectionType
-import com.walletconnect.sign.client.Sign
-import com.walletconnect.sign.client.SignClient
+import com.reown.android.Core
+import com.reown.android.CoreClient
+import com.reown.android.relay.ConnectionType
+import com.reown.appkit.client.AppKit
+import com.reown.appkit.client.Modal
+import com.reown.appkit.client.models.request.SentRequestResult
+import com.reown.appkit.presets.AppKitChainsPresets
+import com.reown.appkit.presets.AppKitChainsPresets.ethToken
+import com.reown.appkit.utils.EthUtils
 import exchange.dydx.dydxCartera.CarteraErrorCode
+import exchange.dydx.dydxCartera.WalletConnectModalConfig
 import exchange.dydx.dydxCartera.WalletConnectV2Config
 import exchange.dydx.dydxCartera.WalletConnectionType
 import exchange.dydx.dydxCartera.entities.Wallet
@@ -37,10 +42,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class WalletConnectV2Provider(
     private val walletConnectV2Config: WalletConnectV2Config?,
+    private val modalConfig: WalletConnectModalConfig?,
     private val application: Application
 ) : WalletOperationProviderProtocol {
     private var _walletStatus = WalletStatusImp()
@@ -58,7 +65,7 @@ class WalletConnectV2Provider(
     private val operationCompletions: MutableMap<String, WalletOperationCompletion> = mutableMapOf()
 
     private var requestingWallet: WalletRequest? = null
-    private var currentSession: Sign.Model.ApprovedSession? = null
+    private var currentSession: Modal.Model.ApprovedSession? = null
 
     private var currentPairing: Core.Model.Pairing? = null
 
@@ -66,43 +73,43 @@ class WalletConnectV2Provider(
     private val requestExpiry: Long
         get() = (System.currentTimeMillis() / 1000) + 400
 
-    private val nilDelegate = object : SignClient.DappDelegate {
-        override fun onConnectionStateChange(state: Sign.Model.ConnectionState) {
+    private val nilDelegate = object : AppKit.ModalDelegate {
+        override fun onSessionApproved(approvedSession: Modal.Model.ApprovedSession) {
         }
 
-        override fun onError(error: Sign.Model.Error) {
+        override fun onSessionRejected(rejectedSession: Modal.Model.RejectedSession) {
         }
 
-        override fun onProposalExpired(proposal: Sign.Model.ExpiredProposal) {
+        override fun onSessionUpdate(updatedSession: Modal.Model.UpdatedSession) {
         }
 
-        override fun onRequestExpired(request: Sign.Model.ExpiredRequest) {
+        override fun onSessionExtend(session: Modal.Model.Session) {
         }
 
-        override fun onSessionApproved(approvedSession: Sign.Model.ApprovedSession) {
+        override fun onSessionEvent(sessionEvent: Modal.Model.SessionEvent) {
         }
 
-        override fun onSessionDelete(deletedSession: Sign.Model.DeletedSession) {
+        override fun onSessionDelete(deletedSession: Modal.Model.DeletedSession) {
         }
 
-        override fun onSessionEvent(sessionEvent: Sign.Model.SessionEvent) {
+        override fun onSessionRequestResponse(response: Modal.Model.SessionRequestResponse) {
         }
 
-        override fun onSessionExtend(session: Sign.Model.Session) {
+        override fun onProposalExpired(proposal: Modal.Model.ExpiredProposal) {
         }
 
-        override fun onSessionRejected(rejectedSession: Sign.Model.RejectedSession) {
+        override fun onRequestExpired(request: Modal.Model.ExpiredRequest) {
         }
 
-        override fun onSessionRequestResponse(response: Sign.Model.SessionRequestResponse) {
+        override fun onConnectionStateChange(state: Modal.Model.ConnectionState) {
         }
 
-        override fun onSessionUpdate(updatedSession: Sign.Model.UpdatedSession) {
+        override fun onError(error: Modal.Model.Error) {
         }
     }
 
-    private val dappDelegate = object : SignClient.DappDelegate {
-        override fun onSessionApproved(approvedSession: Sign.Model.ApprovedSession) {
+    private val dappDelegate = object : AppKit.ModalDelegate {
+        override fun onSessionApproved(approvedSession: Modal.Model.ApprovedSession) {
             // Triggered when Dapp receives the session approval from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionApproved")
 
@@ -140,7 +147,7 @@ class WalletConnectV2Provider(
             }
         }
 
-        override fun onSessionRejected(rejectedSession: Sign.Model.RejectedSession) {
+        override fun onSessionRejected(rejectedSession: Modal.Model.RejectedSession) {
             // Triggered when Dapp receives the session rejection from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionRejected: $rejectedSession")
 
@@ -165,22 +172,22 @@ class WalletConnectV2Provider(
             }
         }
 
-        override fun onSessionUpdate(updatedSession: Sign.Model.UpdatedSession) {
+        override fun onSessionUpdate(updatedSession: Modal.Model.UpdatedSession) {
             // Triggered when Dapp receives the session update from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionUpdate")
         }
 
-        override fun onSessionExtend(session: Sign.Model.Session) {
+        override fun onSessionExtend(session: Modal.Model.Session) {
             // Triggered when Dapp receives the session extend from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionExtend")
         }
 
-        override fun onSessionEvent(sessionEvent: Sign.Model.SessionEvent) {
+        override fun onSessionEvent(sessionEvent: Modal.Model.SessionEvent) {
             // Triggered when the peer emits events that match the list of events agreed upon session settlement
             Log.d(tag(this@WalletConnectV2Provider), "onSessionEvent")
         }
 
-        override fun onSessionDelete(deletedSession: Sign.Model.DeletedSession) {
+        override fun onSessionDelete(deletedSession: Modal.Model.DeletedSession) {
             // Triggered when Dapp receives the session delete from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionDelete: $deletedSession")
 
@@ -189,7 +196,7 @@ class WalletConnectV2Provider(
             }
         }
 
-        override fun onSessionRequestResponse(response: Sign.Model.SessionRequestResponse) {
+        override fun onSessionRequestResponse(response: Modal.Model.SessionRequestResponse) {
             // Triggered when Dapp receives the session request response from wallet
             Log.d(tag(this@WalletConnectV2Provider), "onSessionRequestResponse: $response")
 
@@ -197,18 +204,18 @@ class WalletConnectV2Provider(
                 val completion = operationCompletions[response.topic]
                 if (completion != null) {
                     when (response.result) {
-                        is Sign.Model.JsonRpcResponse.JsonRpcResult -> {
+                        is Modal.Model.JsonRpcResponse.JsonRpcResult -> {
                             val result =
-                                response.result as Sign.Model.JsonRpcResponse.JsonRpcResult
+                                response.result as Modal.Model.JsonRpcResponse.JsonRpcResult
                             completion.invoke(
                                 result.result,
                                 null,
                             )
                         }
 
-                        is Sign.Model.JsonRpcResponse.JsonRpcError -> {
+                        is Modal.Model.JsonRpcResponse.JsonRpcError -> {
                             val error =
-                                response.result as Sign.Model.JsonRpcResponse.JsonRpcError
+                                response.result as Modal.Model.JsonRpcResponse.JsonRpcError
                             completion.invoke(
                                 null,
                                 WalletError(
@@ -224,22 +231,22 @@ class WalletConnectV2Provider(
             }
         }
 
-        override fun onConnectionStateChange(state: Sign.Model.ConnectionState) {
+        override fun onConnectionStateChange(state: Modal.Model.ConnectionState) {
             // Triggered whenever the connection state is changed
             Log.d(tag(this@WalletConnectV2Provider), "onConnectionStateChange: $state")
         }
 
-        override fun onError(error: Sign.Model.Error) {
+        override fun onError(error: Modal.Model.Error) {
             // Triggered whenever there is an issue inside the SDK
 
             Log.d(tag(this@WalletConnectV2Provider), "onError: $error")
         }
 
-        override fun onProposalExpired(proposal: Sign.Model.ExpiredProposal) {
+        override fun onProposalExpired(proposal: Modal.Model.ExpiredProposal) {
             Log.d(tag(this@WalletConnectV2Provider), "onProposalExpired: $proposal")
         }
 
-        override fun onRequestExpired(request: Sign.Model.ExpiredRequest) {
+        override fun onRequestExpired(request: Modal.Model.ExpiredRequest) {
             Log.d(tag(this@WalletConnectV2Provider), "onRequestExpired: $request")
         }
     }
@@ -270,11 +277,23 @@ class WalletConnectV2Provider(
                 },
             )
 
-            val init = Sign.Params.Init(core = CoreClient)
-
-            SignClient.initialize(init) { error ->
-                Log.e(tag(this@WalletConnectV2Provider), error.throwable.stackTraceToString())
-            }
+            AppKit.initialize(
+                init = Modal.Params.Init(
+                    core = CoreClient,
+                    recommendedWalletsIds = modalConfig?.walletIds ?: emptyList(),
+                    includeWalletIds = modalConfig?.walletIds ?: emptyList(),
+                    coinbaseEnabled = false,
+                ),
+                onSuccess = {
+                    // Callback will be called if initialization is successful
+                    Timber.tag(tag(this)).d("WalletConnectModal initialized.")
+                },
+                onError = { error ->
+                    // Error will be thrown if there's an issue during initialization
+                    Timber.tag(tag(this))
+                        .e(error.throwable.stackTraceToString())
+                },
+            )
         }
     }
 
@@ -288,7 +307,22 @@ class WalletConnectV2Provider(
         } else {
             requestingWallet = request
 
-            SignClient.setDappDelegate(dappDelegate)
+            AppKit.setDelegate(dappDelegate)
+
+            if (request.chainId != null) {
+                val testnetChain = Modal.Model.Chain(
+                    chainName = "Ethereum",
+                    chainNamespace = "eip155",
+                    chainReference = request.chainId,
+                    requiredMethods = EthUtils.ethRequiredMethods,
+                    optionalMethods = EthUtils.ethOptionalMethods,
+                    events = EthUtils.ethEvents,
+                    token = ethToken,
+                )
+                AppKit.setChains(listOf(testnetChain))
+            } else {
+                AppKit.setChains(AppKitChainsPresets.ethChains.values.toList())
+            }
 
             CoroutineScope(IO).launch {
                 doConnect(request = request) { pairing, error ->
@@ -343,7 +377,7 @@ class WalletConnectV2Provider(
         connectCompletions.clear()
         operationCompletions.clear()
 
-        SignClient.setDappDelegate(nilDelegate)
+        AppKit.setDelegate(nilDelegate)
     }
 
     override fun signMessage(
@@ -353,17 +387,14 @@ class WalletConnectV2Provider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Sign.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = currentSession?.account()
             val namespace = currentSession?.namespace()
             val chainId = request.chainId ?: currentSession?.chainId()
-            return if (sessionTopic != null && account != null && namespace != null && chainId != null) {
-                Sign.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null && namespace != null && chainId != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "personal_sign",
                     params = "[\"${message}\", \"${account}\"]",
-                    chainId = "$namespace:$chainId",
                     expiry = requestExpiry,
                 )
             } else {
@@ -381,19 +412,16 @@ class WalletConnectV2Provider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Sign.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = currentSession?.account()
             val namespace = currentSession?.namespace()
             val chainId = request.chainId ?: currentSession?.chainId()
             val message = typedDataProvider?.typedDataAsString?.replace("\"", "\\\"")
 
-            return if (sessionTopic != null && account != null && namespace != null && chainId != null && message != null) {
-                Sign.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null && namespace != null && chainId != null && message != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "eth_signTypedData",
                     params = "[\"${account}\", \"${message}\"]",
-                    chainId = "$namespace:$chainId",
                     expiry = requestExpiry,
                 )
             } else {
@@ -410,18 +438,15 @@ class WalletConnectV2Provider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Sign.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = currentSession?.account()
             val namespace = currentSession?.namespace()
             val chainId = request.walletRequest.chainId ?: currentSession?.chainId()
             val message = request.ethereum?.toJsonRequest()
-            return if (sessionTopic != null && account != null && namespace != null && chainId != null && message != null) {
-                Sign.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null && namespace != null && chainId != null && message != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "eth_sendTransaction",
                     params = "[$message]",
-                    chainId = "$namespace:$chainId",
                     expiry = requestExpiry,
                 )
             } else {
@@ -460,9 +485,8 @@ class WalletConnectV2Provider(
             "accountsChanged",
             "chainChanged",
         )
-        val proposal = Sign.Model.Namespace.Proposal(chains, methods, events)
-        val requiredNamespaces: Map<String, Sign.Model.Namespace.Proposal> = mapOf(namespace to proposal) /*Required namespaces to setup a session*/
-        val optionalNamespaces: Map<String, Sign.Model.Namespace.Proposal> = emptyMap() /*Optional namespaces to setup a session*/
+        val proposal = Modal.Model.Namespace.Proposal(chains, methods, events)
+        val requiredNamespaces: Map<String, Modal.Model.Namespace.Proposal> = mapOf(namespace to proposal) /*Required namespaces to setup a session*/
 
         val pairings = CoreClient.Pairing.getPairings()
         for (pairing in pairings) {
@@ -477,21 +501,20 @@ class WalletConnectV2Provider(
 
         if (pairing != null) {
             val connectParams =
-                Sign.Params.Connect(
-                    namespaces = requiredNamespaces,
-                    optionalNamespaces = optionalNamespaces,
+                Modal.Params.ConnectParams(
+                    sessionNamespaces = requiredNamespaces,
                     properties = properties,
                     pairing = pairing,
                 )
 
-            SignClient.connect(
-                connect = connectParams,
+            AppKit.connect(
+                connectParams = connectParams,
                 onSuccess = { value ->
-                    Log.d(tag(this@WalletConnectV2Provider), "Connected to wallet: $value")
+                    Log.d(tag(this), "Connected to wallet: $value")
                     completion(pairing, null)
                 },
-                onError = { error: Sign.Model.Error ->
-                    Log.e(tag(this@WalletConnectV2Provider), error.throwable.stackTraceToString())
+                onError = { error: Modal.Model.Error ->
+                    Log.e(tag(this), error.throwable.stackTraceToString())
                     completion(
                         null,
                         WalletError(
@@ -502,13 +525,14 @@ class WalletConnectV2Provider(
                     )
                 },
             )
+
             openPeerDeeplink(request, pairing)
         }
     }
 
     private fun connectAndMakeRequest(
         request: WalletRequest,
-        requestParams: (() -> Sign.Params.Request?),
+        requestParams: (() -> com.reown.appkit.client.models.request.Request?),
         connected: WalletConnectedCompletion?,
         completion: WalletOperationCompletion
     ) {
@@ -542,25 +566,29 @@ class WalletConnectV2Provider(
 
     private fun reallyMakeRequest(
         request: WalletRequest,
-        requestParams: Sign.Params.Request,
+        requestParams: com.reown.appkit.client.models.request.Request,
         completion: WalletOperationCompletion
     ) {
-        SignClient.request(
+        AppKit.request(
             request = requestParams,
-            onSuccess = { sendRequest: Sign.Model.SentRequest ->
+            onSuccess = { sendRequest: SentRequestResult ->
+                val sendRequest = sendRequest as SentRequestResult.WalletConnect
                 Log.d(tag(this@WalletConnectV2Provider), "Wallet request made.")
                 operationCompletions[sendRequest.sessionTopic] = completion
             },
-            onError = { error ->
-                Log.e(tag(this@WalletConnectV2Provider), error.throwable.stackTraceToString())
-                completion(
-                    null,
-                    WalletError(
-                        CarteraErrorCode.CONNECTION_FAILED,
-                        "SignClient.request error",
-                        error.throwable.stackTraceToString(),
-                    ),
-                )
+            onError = {
+                Log.e(tag(this@WalletConnectV2Provider), it.stackTraceToString())
+                val isSuccessCalled = operationCompletions.values.contains(completion)
+                if (!isSuccessCalled) {
+                    completion(
+                        null,
+                        WalletError(
+                            CarteraErrorCode.CONNECTION_FAILED,
+                            "SignClient.request error",
+                            it.stackTraceToString(),
+                        ),
+                    )
+                }
             },
         )
 
@@ -577,7 +605,8 @@ class WalletConnectV2Provider(
         )
     }
 
-    private fun fromApprovedSession(session: Sign.Model.ApprovedSession, wallet: Wallet?): WalletInfo {
+    private fun fromApprovedSession(session: Modal.Model.ApprovedSession, wallet: Wallet?): WalletInfo {
+        val session = session as Modal.Model.ApprovedSession.WalletConnectSession
         return WalletInfo(
             address = session.account(),
             chainId = session.chainId(),
@@ -617,8 +646,9 @@ class WalletConnectV2Provider(
     }
 }
 
-private fun Sign.Model.ApprovedSession.chainId(): String? {
-    val split = accounts.first().split(":")
+private fun Modal.Model.ApprovedSession.chainId(): String? {
+    val session = this as Modal.Model.ApprovedSession.WalletConnectSession
+    val split = session.accounts.first().split(":")
     return if (split.count() > 1) {
         split[1]
     } else {
@@ -626,8 +656,9 @@ private fun Sign.Model.ApprovedSession.chainId(): String? {
     }
 }
 
-private fun Sign.Model.ApprovedSession.chainIds(): List<String>? {
-    return accounts.mapNotNull {
+private fun Modal.Model.ApprovedSession.chainIds(): List<String>? {
+    val session = this as Modal.Model.ApprovedSession.WalletConnectSession
+    return session.accounts.mapNotNull {
         val split = it.split(":")
         if (split.count() > 1) {
             split[1]
@@ -637,8 +668,9 @@ private fun Sign.Model.ApprovedSession.chainIds(): List<String>? {
     }
 }
 
-private fun Sign.Model.ApprovedSession.namespace(): String? {
-    val split = accounts.first().split(":")
+private fun Modal.Model.ApprovedSession.namespace(): String? {
+    val session = this as Modal.Model.ApprovedSession.WalletConnectSession
+    val split = session.accounts.first().split(":")
     return if (split.count() > 0) {
         split[0]
     } else {
@@ -646,8 +678,9 @@ private fun Sign.Model.ApprovedSession.namespace(): String? {
     }
 }
 
-private fun Sign.Model.ApprovedSession.account(): String? {
-    val split = accounts.first().split(":")
+private fun Modal.Model.ApprovedSession.account(): String? {
+    val session = this as Modal.Model.ApprovedSession.WalletConnectSession
+    val split = session.accounts.first().split(":")
     return if (split.count() > 2) {
         split[2]
     } else {

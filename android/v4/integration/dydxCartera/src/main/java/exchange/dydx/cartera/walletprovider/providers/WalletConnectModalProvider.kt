@@ -5,14 +5,14 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import androidx.navigation.NavHostController
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.walletconnect.android.CoreClient
-import com.walletconnect.wcmodal.client.Modal
-import com.walletconnect.wcmodal.client.WalletConnectModal
-import com.walletconnect.wcmodal.ui.openWalletConnectModal
+import com.reown.appkit.client.AppKit
+import com.reown.appkit.client.Modal
+import com.reown.appkit.client.models.request.SentRequestResult
+import com.reown.appkit.presets.AppKitChainsPresets
+import com.reown.appkit.presets.AppKitChainsPresets.ethToken
+import com.reown.appkit.ui.openAppKit
+import com.reown.appkit.utils.EthUtils
 import exchange.dydx.dydxCartera.CarteraErrorCode
-import exchange.dydx.dydxCartera.WalletConnectModalConfig
 import exchange.dydx.dydxCartera.entities.Wallet
 import exchange.dydx.dydxCartera.entities.toJsonRequest
 import exchange.dydx.dydxCartera.tag
@@ -33,17 +33,14 @@ import exchange.dydx.dydxCartera.walletprovider.WalletStatusImp
 import exchange.dydx.dydxCartera.walletprovider.WalletStatusProtocol
 import exchange.dydx.dydxCartera.walletprovider.WalletTransactionRequest
 import exchange.dydx.dydxCartera.walletprovider.WalletUserConsentProtocol
-import exchange.dydx.dydxcartera.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.reflect.Type
 
 class WalletConnectModalProvider(
     private val application: Application,
-    private val config: WalletConnectModalConfig?,
-) : WalletOperationProviderProtocol, WalletConnectModal.ModalDelegate {
+) : WalletOperationProviderProtocol, AppKit.ModalDelegate {
 
     private var _walletStatus = WalletStatusImp()
         set(value) {
@@ -57,7 +54,7 @@ class WalletConnectModalProvider(
     override var userConsentDelegate: WalletUserConsentProtocol? = null
 
     private var requestingWallet: WalletRequest? = null
-    private var currentSession: Modal.Model.ApprovedSession? = null
+    private var currentSession: Modal.Model.ApprovedSession.WalletConnectSession? = null
 
     private val connectCompletions: MutableList<WalletConnectCompletion> = mutableListOf()
     private val operationCompletions: MutableMap<String, WalletOperationCompletion> = mutableMapOf()
@@ -70,36 +67,6 @@ class WalletConnectModalProvider(
 
     var nav: NavHostController? = null
 
-    init {
-        val jsonData = application.getResources().openRawResource(R.raw.wc_modal_ids)
-            .bufferedReader().use { it.readText() }
-        val gson = Gson()
-        val idListType: Type = object : TypeToken<List<String>?>() {}.type
-        val wc_modal_ids: List<String>? = gson.fromJson(jsonData, idListType)
-        val excludedIds = wc_modal_ids?.toMutableList() ?: mutableListOf()
-        for (id in config?.walletIds ?: emptyList()) {
-            if (excludedIds.contains(id)) {
-                excludedIds.remove(id)
-            }
-        }
-        WalletConnectModal.initialize(
-            init = Modal.Params.Init(
-                core = CoreClient,
-                //     recommendedWalletsIds = config?.walletIds ?: emptyList(),
-                //     excludedWalletIds = excludedIds,
-            ),
-            onSuccess = {
-                // Callback will be called if initialization is successful
-                Timber.tag(tag(this)).d("WalletConnectModal initialized.")
-            },
-            onError = { error ->
-                // Error will be thrown if there's an issue during initialization
-                Timber.tag(tag(this))
-                    .e(error.throwable.stackTraceToString())
-            },
-        )
-    }
-
     override fun handleResponse(uri: Uri): Boolean {
         return false
     }
@@ -110,54 +77,36 @@ class WalletConnectModalProvider(
         } else {
             requestingWallet = request
 
-            val chain: String = if (request.chainId != null) {
-                "$ethNamespace:${request.chainId}"
+            if (request.chainId != null) {
+                val testnetChain = Modal.Model.Chain(
+                    chainName = "Ethereum",
+                    chainNamespace = "eip155",
+                    chainReference = request.chainId,
+                    requiredMethods = EthUtils.ethRequiredMethods,
+                    optionalMethods = EthUtils.ethOptionalMethods,
+                    events = EthUtils.ethEvents,
+                    token = ethToken,
+                )
+                AppKit.setChains(listOf(testnetChain))
             } else {
-                "$ethNamespace:1"
+                AppKit.setChains(AppKitChainsPresets.ethChains.values.toList())
             }
-            val chains: List<String> = listOf(chain)
-            val methods: List<String> = listOf(
-                "personal_sign",
-                "eth_sendTransaction",
-                "eth_signTypedData",
-                //   "wallet_addEthereumChain",
-                // "eth_sign"
-            )
-            val events: List<String> = listOf(
-                "accountsChanged",
-                "chainChanged",
-            )
-            val namespaces = mapOf(
-                ethNamespace to Modal.Model.Namespace.Proposal(
-                    chains = chains,
-                    methods = methods,
-                    events = events,
-                ),
-            )
 
-            val sessionParams = Modal.Params.SessionParams(
-                requiredNamespaces = namespaces,
-                optionalNamespaces = null,
-                properties = null,
-            )
-
-            WalletConnectModal.setSessionParams(sessionParams)
-
-            WalletConnectModal.setDelegate(this)
+            AppKit.setDelegate(this)
 
             connectCompletions.add(completion)
 
-            nav?.openWalletConnectModal()
+            nav?.openAppKit()
         }
     }
 
     override fun disconnect() {
         val currentSession = this.currentSession
         if (currentSession != null) {
-            WalletConnectModal.disconnect(Modal.Params.Disconnect(currentSession.topic), onSuccess = {
-                Timber.tag(tag(this)).d("Disconnected from session: ${currentSession!!.topic}")
+            AppKit.disconnect(onSuccess = {
+                Timber.tag(tag(this)).d("Disconnected from session ")
             }, onError = {
-                Timber.tag(tag(this)).e(it.throwable.stackTraceToString())
+                Timber.tag(tag(this)).e(it.message)
             })
             this.currentSession = null
         }
@@ -178,20 +127,12 @@ class WalletConnectModalProvider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Modal.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = _walletStatus.connectedWallet?.address
-            val chainId = if (request.chainId != null) {
-                "$ethNamespace:${request.chainId}"
-            } else {
-                currentSession?.namespaces?.get(ethNamespace)?.chains?.firstOrNull()
-            }
-            return if (sessionTopic != null && account != null && chainId != null) {
-                Modal.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "personal_sign",
                     params = "[\"${message}\", \"${account}\"]",
-                    chainId = chainId,
                     expiry = requestExpiry,
                 )
             } else {
@@ -209,22 +150,14 @@ class WalletConnectModalProvider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Modal.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = _walletStatus.connectedWallet?.address
-            val chainId = if (request.chainId != null) {
-                "$ethNamespace:${request.chainId}"
-            } else {
-                currentSession?.namespaces?.get(ethNamespace)?.chains?.firstOrNull()
-            }
             val message = typedDataProvider?.typedDataAsString?.replace("\"", "\\\"")
 
-            return if (sessionTopic != null && account != null && chainId != null && message != null) {
-                Modal.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null && message != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "eth_signTypedData",
                     params = "[\"${account}\", \"${message}\"]",
-                    chainId = chainId,
                     expiry = requestExpiry,
                 )
             } else {
@@ -241,22 +174,14 @@ class WalletConnectModalProvider(
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        fun requestParams(): Modal.Params.Request? {
-            val sessionTopic = currentSession?.topic
+        fun requestParams(): com.reown.appkit.client.models.request.Request? {
             val account = _walletStatus.connectedWallet?.address
-            val chainId = if (request.walletRequest.chainId != null) {
-                "$ethNamespace:${request.walletRequest.chainId}"
-            } else {
-                currentSession?.namespaces?.get(ethNamespace)?.chains?.firstOrNull()
-            }
             val message = request.ethereum?.toJsonRequest()
 
-            return if (sessionTopic != null && account != null && chainId != null && message != null) {
-                Modal.Params.Request(
-                    sessionTopic = sessionTopic,
+            return if (account != null && message != null) {
+                com.reown.appkit.client.models.request.Request(
                     method = "eth_sendTransaction",
                     params = "[$message]",
-                    chainId = chainId,
                     expiry = requestExpiry,
                 )
             } else {
@@ -279,7 +204,7 @@ class WalletConnectModalProvider(
 
     private fun connectAndMakeRequest(
         request: WalletRequest,
-        requestParams: (() -> Modal.Params.Request?),
+        requestParams: (() -> com.reown.appkit.client.models.request.Request?),
         connected: WalletConnectedCompletion?,
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
@@ -314,26 +239,27 @@ class WalletConnectModalProvider(
     }
 
     private fun reallyMakeRequest(
-        requestParams: Modal.Params.Request,
+        requestParams: com.reown.appkit.client.models.request.Request,
         status: WalletOperationStatus?,
         completion: WalletOperationCompletion
     ) {
-        WalletConnectModal.request(
+        AppKit.request(
             request = requestParams,
             onSuccess = { sendRequest ->
                 /* callback that letting you know that you have successful request */
                 Timber.d("Wallet request made.")
-                operationCompletions[sendRequest.sessionTopic] = completion
+                val walletConnect = sendRequest as SentRequestResult.WalletConnect
+                operationCompletions[walletConnect.sessionTopic] = completion
             },
             onError = { error ->
                 /* callback that letting you know that you have error */
-                Timber.e(error.throwable.stackTraceToString())
+                Timber.e(error.stackTrace.toString())
                 completion(
                     null,
                     WalletError(
                         code = CarteraErrorCode.CONNECTION_FAILED,
                         title = "WalletConnectModal.request error",
-                        message = error.throwable.stackTraceToString(),
+                        message = error.stackTrace.toString(),
                     ),
                 )
             },
@@ -361,6 +287,7 @@ class WalletConnectModalProvider(
     }
 
     override fun onSessionApproved(approvedSession: Modal.Model.ApprovedSession) {
+        val approvedSession = approvedSession as Modal.Model.ApprovedSession.WalletConnectSession
         Timber.d("Session approved: $approvedSession")
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -496,6 +423,7 @@ class WalletConnectModalProvider(
     }
 
     private fun fromApprovedSession(session: Modal.Model.ApprovedSession, wallet: Wallet?): WalletInfo {
+        val session = session as Modal.Model.ApprovedSession.WalletConnectSession
         val account = session.accounts.firstOrNull()
         var address: String? = null
         var chainId: String? = null

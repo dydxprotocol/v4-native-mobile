@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.walletconnect.wcmodal.ui.walletConnectModalGraph
+import com.reown.appkit.ui.appKitGraph
 import exchange.dydx.feature.onboarding.loginGraph
 import exchange.dydx.newsalerts.newsAlertsGraph
 import exchange.dydx.trading.common.navigation.DydxRouter
@@ -60,7 +60,9 @@ fun DydxNavGraph(
 
     InitializeManagers()
 
-    ModalBottomSheetLayout(bottomSheetNavigator = bottomSheetNavigator) {
+    ModalBottomSheetLayout(
+        bottomSheetNavigator = bottomSheetNavigator,
+    ) {
         NavHost(
             navController = navController,
             startDestination = DEFAULT_START_DESTINATION,
@@ -106,7 +108,7 @@ fun DydxNavGraph(
                 logger = logger,
             )
 
-            walletConnectModalGraph(navController)
+            appKitGraph(navController)
         }
     }
 }

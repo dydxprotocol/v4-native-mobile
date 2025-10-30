@@ -71,14 +71,7 @@ class CarteraConfig(
         registration[WalletConnectionType.WalletConnect] = RegistrationConfig(
             provider = WalletConnectV1Provider(),
         )
-        if (walletProvidersConfig.walletConnectV2 != null) {
-            registration[WalletConnectionType.WalletConnectV2] = RegistrationConfig(
-                provider = WalletConnectV2Provider(
-                    walletConnectV2Config = walletProvidersConfig.walletConnectV2,
-                    application = application,
-                ),
-            )
-        }
+
         if (walletProvidersConfig.walletSegue != null) {
             registration[WalletConnectionType.WalletSegue] = RegistrationConfig(
                 provider = WalletSegueProvider(
@@ -102,10 +95,18 @@ class CarteraConfig(
     }
 
     fun updateModalConfig(walletConnectModal: WalletConnectModalConfig) {
+        if (walletProvidersConfig.walletConnectV2 != null) {
+            registration[WalletConnectionType.WalletConnectV2] = RegistrationConfig(
+                provider = WalletConnectV2Provider(
+                    walletConnectV2Config = walletProvidersConfig.walletConnectV2,
+                    modalConfig = walletConnectModal,
+                    application = application,
+                ),
+            )
+        }
         registration[WalletConnectionType.WalletConnectModal] = RegistrationConfig(
             provider = WalletConnectModalProvider(
                 application = application,
-                config = walletConnectModal,
             ),
         )
     }

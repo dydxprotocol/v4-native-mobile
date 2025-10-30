@@ -139,9 +139,9 @@ dependencies {
 
     implementation "androidx.biometric:biometric-ktx:$biometricVersion"
 
-    implementation platform("com.walletconnect:android-bom:$walletConnectVersion")
-    implementation('com.walletconnect:android-core')
-    implementation("com.walletconnect:walletconnect-modal")
+    implementation(platform("com.reown:android-bom:$walletConnectVersion"))
+    implementation("com.reown:android-core")
+    implementation("com.reown:appkit")
     implementation 'com.google.accompanist:accompanist-navigation-material:0.36.0'  // need for modal
 
     implementation("tz.co.asoft:kollections-interoperable:$kollectionsVersion")
