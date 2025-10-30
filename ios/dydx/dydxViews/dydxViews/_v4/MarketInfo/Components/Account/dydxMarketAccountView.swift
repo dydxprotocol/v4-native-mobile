@@ -12,6 +12,7 @@ import Utilities
 
 public class dydxMarketAccountViewModel: PlatformViewModel {
     @Published public var sharedAccountViewModel: SharedAccountViewModel? = SharedAccountViewModel()
+    @Published public var depositAction: (() -> Void)?
 
     public init() { }
 
@@ -22,87 +23,42 @@ public class dydxMarketAccountViewModel: PlatformViewModel {
     }
 
     public override func createView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> PlatformView {
-        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] style in
+        PlatformView(viewModel: self, parentStyle: parentStyle, styleKey: styleKey) { [weak self] _ in
             guard let self = self else { return AnyView(PlatformView.nilView) }
 
             return AnyView(
-                VStack {
-                    GeometryReader { container in
-                        VStack(spacing: 0) {
-                            DividerModel().createView(parentStyle: style)
+                HStack {
+                    PlatformIconViewModel(
+                        type: .asset(name: "account_wallet", bundle: .dydxView),
+                        clip: .noClip,
+                        size: .init(width: 16, height: 16),
+                        templateColor: .textTertiary
+                    )
+                    .createView()
+                    Text(DataLocalizer.localize(path: "APP.TRADE.AVAILABLE_TO_TRADE"))
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontType: .base, fontSize: .small)
+                    Spacer()
+                    Text(self.sharedAccountViewModel?.freeCollateral ?? "")
+                        .themeColor(foreground: .textSecondary)
+                        .themeFont(fontType: .base, fontSize: .small)
+                    PlatformButtonViewModel(
+                        content: PlatformIconViewModel(
+                            type: .system(name: "plus.circle"),
+                            size: .init(width: 16, height: 16),
+                            templateColor: .colorPurple
+                        ),
+                        type: .iconType,
+                        action: { self.depositAction?() }
+                    )
+                    .createView()
 
-                            HStack(alignment: .top, spacing: 8) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.BUYING_POWER"),
-                                               value: Text(self.sharedAccountViewModel?.buyingPower ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-                                    .padding(.top, 6)
-
-                                let value = HStack {
-                                    Text(self.sharedAccountViewModel?.marginUsage ?? "-")
-                                    self.sharedAccountViewModel?.marginUsageIcon?.createView(parentStyle: style)
-                                }
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.MARGIN_USAGE"),
-                                                    value: value)
-                                .padding(.vertical, 8)
-                             }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-
-                            HStack(alignment: .top, spacing: 8) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.EQUITY"),
-                                               value: Text(self.sharedAccountViewModel?.equity ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.FREE_COLLATERAL"),
-                                               value: Text(self.sharedAccountViewModel?.freeCollateral ?? "-"))
-                                .padding(.vertical, 8)
-                            }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-
-                            HStack(alignment: .top) {
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.TRADE.OPEN_INTEREST"),
-                                               value: Text(self.sharedAccountViewModel?.openInterest ?? "-"))
-                                .padding(8)
-
-                                DividerModel().createView(parentStyle: style)
-                                    .padding(.bottom, -6)
-
-                                let value = HStack {
-                                    Text(self.sharedAccountViewModel?.leverage ?? "-")
-                                    self.sharedAccountViewModel?.leverageIcon?.createView(parentStyle: style)
-                                }
-                                self.createCellView(title: DataLocalizer.localize(path: "APP.GENERAL.LEVERAGE"),
-                                               value: value)
-                                .padding(.vertical, 8)
-                            }
-                            .frame(height: container.size.height / 3)
-
-                            DividerModel().createView(parentStyle: style)
-                        }
-                    }
-                    .padding(.vertical, 24)
                 }
+                .padding(12)
+                .themeColor(background: .layer1)
+                .border(borderWidth: 1, cornerRadius: 12, borderColor: ThemeColor.SemanticColor.layer3.color)
             )
         }
-    }
-
-    private func createCellView<Content: View>(title: String, value: Content) -> some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text(title)
-                .themeColor(foreground: .textTertiary)
-                .themeFont(fontSize: .small)
-
-            value
-        }
-        .leftAligned()
-        .padding(8)
     }
 }
 

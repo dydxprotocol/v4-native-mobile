@@ -29,6 +29,10 @@ class dydxPortfolioPositionsViewPresenter: HostedViewPresenter<dydxPortfolioPosi
         viewModel?.vaultTapAction = {
             Router.shared?.navigate(to: RoutingRequest(path: "/vault"), animated: true, completion: nil)
         }
+        viewModel?.onboardAction = {
+            Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
+            })
+        }
     }
 
     override func start() {
@@ -36,11 +40,7 @@ class dydxPortfolioPositionsViewPresenter: HostedViewPresenter<dydxPortfolioPosi
 
         AbacusStateManager.shared.state.onboarded
             .sink { [weak self] onboarded in
-                if onboarded {
-                    self?.viewModel?.emptyText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS")
-                } else {
-                    self?.viewModel?.emptyText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_POSITIONS_LOG_IN")
-                }
+                self?.viewModel?.isSignedIn = onboarded
             }
             .store(in: &subscriptions)
 

@@ -26,10 +26,17 @@ public enum AppPositionSide {
 }
 
 public enum PortfolioSection: String {
+    case details
     case positions
-    case orders
     case trades
+    case orders
     case funding
-    case fees
-    case transfers
+}
+
+public enum TileType: Int {
+    case price
+    case depth
+    case funding
+    case orderbook
+    case recent
 }

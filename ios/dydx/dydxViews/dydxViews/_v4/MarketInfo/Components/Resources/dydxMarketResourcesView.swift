@@ -29,9 +29,14 @@ public class dydxMarketResourcesViewModel: PlatformViewModel {
 
             func createIconButton(url: URL?, iconAssetName: String) -> AnyView {
                 if let url = url {
-                    let icon = PlatformIconViewModel(type: .asset(name: iconAssetName, bundle: Bundle.dydxView),
-                                                     clip: .circle(background: .layer4, spacing: 16),
-                                                     size: CGSize(width: 40, height: 40))
+                    let icon = PlatformIconViewModel(
+                        type: .asset(
+                            name: iconAssetName,
+                            bundle: Bundle.dydxView
+                        ),
+                        size: CGSize(width: 16, height: 16),
+                        templateColor: .textTertiary
+                    )
                     return AnyView(
                         Link(destination: url) {
                             PlatformButtonViewModel(content: icon, type: .iconType) {
@@ -52,37 +57,17 @@ public class dydxMarketResourcesViewModel: PlatformViewModel {
 
             return AnyView(
                 VStack(alignment: .leading, spacing: 8) {
-
-                    let icon = PlatformIconViewModel(type: .url(url: sharedMarketViewModel.logoUrl),
-                                                     clip: .defaultCircle,
-                                                     size: CGSize(width: 40, height: 40),
-                                                     backgroundColor: .colorWhite)
-
-                    let main =
-                        HStack {
-                            VStack(alignment: .leading) {
-                                HStack(spacing: 4) {
-                                    Text(sharedMarketViewModel.assetName ?? "")
-                                        .themeColor(foreground: .textPrimary)
-                                        .themeFont(fontType: .plus, fontSize: .medium)
-                                }
-                                Text(sharedMarketViewModel.assetId ?? "")
-                                    .themeFont(fontType: .base, fontSize: .small)
-                            }
-                            Spacer()
-                        }
-
-                    let trailing =
-                        HStack {
+                    HStack {
+                        Text(DataLocalizer.localize(path: "APP.GENERAL.ABOUT"))
+                            .themeColor(foreground: .textPrimary)
+                            .themeFont(fontType: .plus, fontSize: .medium)
+                        Spacer()
+                        HStack(spacing: 16) {
                             createIconButton(url: sharedMarketViewModel.coinMarketPlaceUrl, iconAssetName: "icon_coinmarketcap")
                             createIconButton(url: sharedMarketViewModel.whitepaperUrl, iconAssetName: "icon_whitepaper")
                             createIconButton(url: sharedMarketViewModel.websiteUrl, iconAssetName: "icon_web")
                         }
-
-                    PlatformTableViewCellViewModel(logo: icon,
-                                                   main: main.wrappedViewModel,
-                                                   trailing: trailing.wrappedViewModel)
-                        .createView(parentStyle: style)
+                    }
 
                     Group {
                         if let primaryDescription = sharedMarketViewModel.primaryDescription {
@@ -95,7 +80,6 @@ public class dydxMarketResourcesViewModel: PlatformViewModel {
                         .themeFont(fontSize: .medium)
                         .themeColor(foreground: .textSecondary)
                         .padding(.vertical, 8)
-                        .padding(.horizontal, 16)
                 }
             )
         }

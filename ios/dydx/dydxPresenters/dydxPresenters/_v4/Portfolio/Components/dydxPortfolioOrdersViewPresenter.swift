@@ -29,6 +29,11 @@ class dydxPortfolioOrdersViewPresenter: HostedViewPresenter<dydxPortfolioOrdersV
         super.init()
 
         self.viewModel = viewModel
+
+        viewModel?.onboardAction = {
+            Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
+            })
+        }
     }
 
     override func start() {
@@ -36,11 +41,7 @@ class dydxPortfolioOrdersViewPresenter: HostedViewPresenter<dydxPortfolioOrdersV
 
         AbacusStateManager.shared.state.onboarded
             .sink { [weak self] onboarded in
-                if onboarded {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_ORDERS")
-                } else {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_ORDERS_LOG_IN")
-                }
+                self?.viewModel?.isSignedIn = onboarded
             }
             .store(in: &subscriptions)
 
@@ -79,9 +80,9 @@ class dydxPortfolioOrdersViewPresenter: HostedViewPresenter<dydxPortfolioOrdersV
         item.id = order.id
         item.type = DataLocalizer.localize(path: order.resources.typeStringKey ?? "-")
         if order.side == Abacus.OrderSide.buy {
-            item.sideText.side = .buy
+            item.sideText = SideTextViewModel(side: .buy, coloringOption: .withBackground)
         } else {
-            item.sideText.side = .sell
+            item.sideText = SideTextViewModel(side: .sell, coloringOption: .withBackground)
         }
         item.status = DataLocalizer.localize(path: order.resources.statusStringKey ?? "-")
         item.canCancel = order.status.canCancel

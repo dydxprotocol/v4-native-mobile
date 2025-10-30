@@ -1,6 +1,5 @@
 package exchange.dydx.feature.onboarding.turnkey
 
-import android.R.attr.path
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.abacus.protocols.ParserProtocol
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
-import exchange.dydx.dydxstatemanager.localizeWithParams
 import exchange.dydx.platformui.designSystem.theme.ThemeSettings
 import exchange.dydx.trading.common.DydxViewModel
 import exchange.dydx.trading.common.R
@@ -19,7 +17,6 @@ import exchange.dydx.trading.feature.shared.analytics.OnboardingAnalytics
 import exchange.dydx.trading.feature.shared.analytics.WalletAnalytics
 import exchange.dydx.trading.integration.analytics.tracking.Tracking
 import exchange.dydx.trading.integration.cosmos.CosmosV4ClientProtocol
-import exchange.dydx.trading.integration.react.LocalizerEntry
 import exchange.dydx.trading.integration.react.TurnkeyBridgeManagerDelegate
 import exchange.dydx.trading.integration.react.TurnkeyReactBridge
 import exchange.dydx.utilities.utils.Logging
@@ -86,45 +83,15 @@ class DydxTurnkeyAuthViewModel @Inject constructor(
             "turnkeyOrgId" to appContext.getString(R.string.turnkey_org_id),
             "backendApiUrl" to indexerUrl,
             "deploymentUri" to abacusStateManager.deploymentUri + "/",
+            "tosUrl" to tosUrl,
+            "privacyUrl" to privacyUrl,
             "theme" to (ThemeSettings.shared.themeConfig.value?.id ?: "dark"),
             "isSamsungDevice" to android.os.Build.MANUFACTURER.equals("samsung", ignoreCase = true),
-        )
-
-        // The terms string contains HTML links, so we need to construct it here
-        val tos = "<a href=\"${tosUrl}\">${localizer.localize(path = "APP.HEADER.TERMS_OF_USE")}</a>"
-        val privacy = "<a href=\"${privacyUrl}\">${localizer.localize(path = "APP.ONBOARDING.PRIVACY_POLICY")}</a>"
-        val terms = localizer.localizeWithParams(
-            path = "APP.ONBOARDING.TOS_SHORT",
-            params = mapOf(
-                "TERMS_LINK" to tos,
-                "PRIVACY_POLICY_LINK" to privacy,
-            ),
-        )
-
-        val localizerEntries = listOf(
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_TITLE"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_DESCRIPTION"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_PASSKEY"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_WALLET"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_DESKTOP"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SUBMIT"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.EMAIL_PLACEHOLDER"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.CHECK_EMAIL_TITLE"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.CHECK_EMAIL_DESCRIPTION"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.RESEND"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_GOOGLE"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_APPLE"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.SIGN_IN_EMAIL"),
-            LocalizerEntry(path = "APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_DESCRIPTION"),
-            LocalizerEntry(path = "APP.GENERAL.OR"),
-            LocalizerEntry(path = "APP.ONBOARDING.TOS_SHORT", localized = terms),
-            LocalizerEntry(path = "APP.GENERAL.EMAIL"),
         )
 
         return DydxTurnkeyAuthView.ViewState(
             localizer = localizer,
             initialProperties = initialProperties,
-            localizerEntries = localizerEntries,
             closeAction = {
                 router.navigateBack()
             },

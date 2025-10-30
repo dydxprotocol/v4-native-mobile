@@ -62,7 +62,6 @@ private class dydxMarketInfoViewPresenter: HostedViewPresenter<dydxMarketInfoVie
     var shouldDisplayFullTradeInputOnAppear: Bool = false
 
     private let pagingPresenter = dydxMarketInfoPagingViewPresenter()
-    private let statsPresenter = dydxMarketStatsViewPresenter()
     private let configsPresenter = dydxMarketConfigsViewPresenter()
     private let sharedMarketPresenter = SharedMarketPresenter()
     private let favoritePresenter = dydxUserFavoriteViewPresenter()
@@ -73,7 +72,6 @@ private class dydxMarketInfoViewPresenter: HostedViewPresenter<dydxMarketInfoVie
 
     private lazy var childPresenters: [HostedViewPresenterProtocol] = [
         pagingPresenter,
-        statsPresenter,
         configsPresenter,
         sharedMarketPresenter,
         favoritePresenter
@@ -103,7 +101,6 @@ private class dydxMarketInfoViewPresenter: HostedViewPresenter<dydxMarketInfoVie
         sharedMarketPresenter.$viewModel.assign(to: &viewModel.header.$sharedMarketViewModel)
         favoritePresenter.$viewModel.assign(to: &viewModel.header.$favoriteViewModel)
         pagingPresenter.$viewModel.assign(to: &viewModel.$paging)
-        statsPresenter.$viewModel.assign(to: &viewModel.$stats)
         configsPresenter.$viewModel.assign(to: &viewModel.$configs)
         sharedMarketPresenter.$viewModel.assign(to: &viewModel.resources.$sharedMarketViewModel)
 
@@ -142,7 +139,6 @@ private class dydxMarketInfoViewPresenter: HostedViewPresenter<dydxMarketInfoVie
             .sink { [weak self] marketId in
                 AbacusStateManager.shared.setMarket(market: marketId)
                 self?.pagingPresenter.marketId = marketId
-                self?.statsPresenter.marketId = marketId
                 self?.configsPresenter.marketId = marketId
                 self?.sharedMarketPresenter.marketId = marketId
                 self?.favoritePresenter.marketId = marketId
@@ -237,6 +233,7 @@ private struct Section: Equatable {
     let key: PortfolioSection
 
     static let allSections: [Self] = [
+        Self(text: DataLocalizer.localize(path: "APP.GENERAL.DETAILS"), key: .details),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.POSITION"), key: .positions),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.ORDERS"), key: .orders),
         Self(text: DataLocalizer.localize(path: "APP.GENERAL.TRADES"), key: .trades),

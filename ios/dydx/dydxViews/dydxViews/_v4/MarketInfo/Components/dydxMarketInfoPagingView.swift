@@ -12,8 +12,8 @@ import Utilities
 
 public class dydxMarketInfoPagingViewModel: PlatformViewModel {
     @Published public var tiles = dydxMarketTilesViewModel()
-    @Published public var tileSelection: Int = 1
-    @Published public var account: dydxMarketAccountViewModel = dydxMarketAccountViewModel()
+    @Published public var tileSelection: TileType = .price
+    @Published public var account: dydxMarketAccountViewModel? = dydxMarketAccountViewModel()
     @Published public var priceCandles: dydxMarketPriceCandlesViewModel? = dydxMarketPriceCandlesViewModel()
     @Published public var depth: dydxMarketDepthChartViewModel? = dydxMarketDepthChartViewModel()
     @Published public var funding: dydxMarketFundingChartViewModel? = dydxMarketFundingChartViewModel()
@@ -39,32 +39,34 @@ public class dydxMarketInfoPagingViewModel: PlatformViewModel {
 
             return AnyView(
                 VStack {
+                    self.tiles.createView(parentStyle: style)
+
                     Group {
-                        if self.tileSelection == 0, self.isAccountVisible {
-                            self.account
-                                .createView(parentStyle: style)
-                        } else if self.tileSelection == 1 {
+                        switch self.tileSelection {
+                        case .price:
                             self.priceCandles?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 2 {
+                        case .depth:
                             self.depth?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 3 {
+                        case .funding:
                             self.funding?
                                 .createView(parentStyle: style)
-                        } else if self.tileSelection == 4 {
+                        case .orderbook:
                             self.orderbook?
-                                .createView(parentStyle: style)
-                        } else if self.tileSelection == 5 {
+                            .createView(parentStyle: style)
+                        case .recent:
                             self.trades?
                                 .createView(parentStyle: style)
-                        } else {
-                            PlatformView.emptyView
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width, height: 310)
 
-                    self.tiles.createView(parentStyle: style)
+                    if self.isAccountVisible {
+                        self.account?.createView(parentStyle: style)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 16)
+                    }
                 }
             )
         }

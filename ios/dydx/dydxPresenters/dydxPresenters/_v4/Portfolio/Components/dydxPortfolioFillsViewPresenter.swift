@@ -29,6 +29,11 @@ class dydxPortfolioFillsViewPresenter: HostedViewPresenter<dydxPortfolioFillsVie
         super.init()
 
         self.viewModel = viewModel
+
+        viewModel?.onboardAction = {
+            Router.shared?.navigate(to: RoutingRequest(path: "/onboard"), animated: true, completion: { /* [weak self] */ _, _ in
+            })
+        }
     }
 
     override func start() {
@@ -36,11 +41,7 @@ class dydxPortfolioFillsViewPresenter: HostedViewPresenter<dydxPortfolioFillsVie
 
         AbacusStateManager.shared.state.onboarded
             .sink { [weak self] onboarded in
-                if onboarded {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_TRADES")
-                } else {
-                    self?.viewModel?.placeholderText = DataLocalizer.localize(path: "APP.GENERAL.PLACEHOLDER_NO_TRADES_LOG_IN")
-                }
+                self?.viewModel?.isSignedIn = onboarded
             }
             .store(in: &subscriptions)
 
@@ -79,7 +80,7 @@ class dydxPortfolioFillsViewPresenter: HostedViewPresenter<dydxPortfolioFillsVie
         item.type = DataLocalizer.localize(path: fill.resources.typeStringKey ?? "-")
         item.size = dydxFormatter.shared.localFormatted(number: fill.size, digits: configs.displayStepSizeDecimals?.intValue ?? 1)
         item.token?.symbol = asset.displayableAssetId
-        item.date = Date(milliseconds: fill.createdAtMilliseconds)
+        item.date = Date(milliseconds: fill.createdAtMilliseconds).englishDatetimeString
         if let tickSize = configs.displayTickSizeDecimals?.intValue {
             item.price = dydxFormatter.shared.dollar(number: fill.price, digits: tickSize)
             item.fee = dydxFormatter.shared.dollar(number: fill.fee, digits: tickSize)

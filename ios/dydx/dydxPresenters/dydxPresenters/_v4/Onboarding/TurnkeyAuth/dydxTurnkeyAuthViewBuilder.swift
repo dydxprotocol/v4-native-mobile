@@ -63,42 +63,14 @@ private class dydxTurnkeyAuthViewConntroller: ReactNativeHostingController, Turn
             "turnkeyOrgId": turnkeyOrgId,
             "backendApiUrl": indexerUrl,
             "deploymentUri": AbacusStateManager.shared.deploymentUri,
+            "tosUrl": tosUrl,
+            "privacyUrl": privacyUrl,
             "theme": dydxThemeSettings.shared.currentThemeType.rnThemeIdentifier,
             "enableAppleLoginIn": dydxBoolFeatureFlag.turnkey_ios_apple.isEnabled
         ]
 
-        // The terms string contains HTML links, so we need to construct it here
-        let tos = "<a href=\"\(tosUrl)\">\(DataLocalizer.localize(path: "APP.HEADER.TERMS_OF_USE"))</a>"
-        let privacy = "<a href=\"\(privacyUrl)\">\(DataLocalizer.localize(path: "APP.ONBOARDING.PRIVACY_POLICY"))</a>"
-        let terms = DataLocalizer.localize(
-            path: "APP.ONBOARDING.TOS_SHORT",
-            params: [
-                "TERMS_LINK": tos,
-                "PRIVACY_POLICY_LINK": privacy
-            ]
-        )
-
-        let stringKeys: [DataLocalizer.Entry] = [
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_TITLE"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_DESCRIPTION"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_PASSKEY"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_WALLET"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_DESKTOP"),
-            .init(path: "APP.TURNKEY_ONBOARD.SUBMIT"),
-            .init(path: "APP.TURNKEY_ONBOARD.EMAIL_PLACEHOLDER"),
-            .init(path: "APP.TURNKEY_ONBOARD.CHECK_EMAIL_TITLE"),
-            .init(path: "APP.TURNKEY_ONBOARD.CHECK_EMAIL_DESCRIPTION"),
-            .init(path: "APP.TURNKEY_ONBOARD.RESEND"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_GOOGLE"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_APPLE"),
-            .init(path: "APP.TURNKEY_ONBOARD.SIGN_IN_EMAIL"),
-            .init(path: "APP.TURNKEY_ONBOARD.CONTINUE_SIGN_IN_DESCRIPTION"),
-            .init(path: "APP.GENERAL.OR"),
-            .init(path: "APP.ONBOARDING.TOS_SHORT", localized: terms)
-        ]
         super.init(moduleName: "TurnkeyLogin",
                    initialProperties: initialProperties,
-                   stringKeys: stringKeys,
                    bridge: TurnkeyBridgeManager.shared.bridge)
     }
 

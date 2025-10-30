@@ -21,7 +21,6 @@ import exchange.dydx.platformui.theme.DydxThemedPreviewSurface
 import exchange.dydx.platformui.theme.MockLocalizer
 import exchange.dydx.trading.common.component.DydxComponent
 import exchange.dydx.trading.feature.shared.views.HeaderViewCloseBotton
-import exchange.dydx.trading.integration.react.LocalizerEntry
 import exchange.dydx.trading.integration.react.ReactNativeView
 
 @Preview
@@ -36,7 +35,6 @@ object DydxTurnkeyAuthView : DydxComponent {
     data class ViewState(
         val localizer: LocalizerProtocol,
         val initialProperties: Map<String, Any>?,
-        val localizerEntries: List<LocalizerEntry> = emptyList(), // Optional, for localization
         val closeAction: (() -> Unit)? = null,
     ) {
         companion object {
@@ -69,7 +67,6 @@ object DydxTurnkeyAuthView : DydxComponent {
                     .fillMaxWidth(),
                 moduleName = "TurnkeyLogin",
                 initialProps = state.initialProperties,
-                localizerEntries = state.localizerEntries,
                 localizer = state.localizer,
             )
 

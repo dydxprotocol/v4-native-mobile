@@ -80,9 +80,4 @@ class TurnkeyNativeModule: NSObject, RCTBridgeModule {
             self?.delegate?.onAppleAuthRequest(nonce: nonce, publicKey: publicKey)
         }
     }
-
-    @objc(onTrackingEvent::)
-    func onTrackingEvent(eventName: String, eventParams: [String: String]) {
-        Tracking.shared?.log(event: eventName, data: eventParams)
-    }
 }

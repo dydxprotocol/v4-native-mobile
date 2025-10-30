@@ -13,8 +13,6 @@ interface TurnkeyNativeModuleType {
   onAppleAuthRequest: (nonce: string, publicKey: string) => void;
 
   onUploadDydxAddressUploadResponse: (dydxAddress: string, result: string) => void;
-
-  onTrackingEvent: (eventName: string, eventParams: Record<string, string>) => void;
 }
 
 // Safely cast NativeModules
