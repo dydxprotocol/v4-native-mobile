@@ -16,12 +16,13 @@ import kotlin.js.JsExport
 
 /**
  *
- * Values: LIMIT,LIQUIDATED,DELEVERAGED
+ * Values: LIMIT,LIQUIDATED,DELEVERAGED,TWAPSUBORDER
  */
 @JsExport
 @Serializable
 enum class IndexerTradeType(val value: kotlin.String) {
     LIMIT("LIMIT"), // :/
     LIQUIDATED("LIQUIDATED"), // :/
-    DELEVERAGED("DELEVERAGED"); // :/
+    DELEVERAGED("DELEVERAGED"), // :/
+    TWAPSUBORDER("TWAP_SUBORDER"); // :/
 }

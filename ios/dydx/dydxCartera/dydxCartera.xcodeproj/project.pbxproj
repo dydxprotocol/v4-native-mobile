@@ -676,7 +676,7 @@
 				02446C4B2EA6974E00AF6FF5 /* XCRemoteSwiftPackageReference "Starscream" */,
 				02446C4E2EA6976400AF6FF5 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				02446C582EA697FB00AF6FF5 /* XCRemoteSwiftPackageReference "wallet-mobile-sdk" */,
-				02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */,
+				02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3.swift" */,
 				02446C5E2EA6988800AF6FF5 /* XCRemoteSwiftPackageReference "tweetnacl-swiftwrap" */,
 				02446C612EA699BB00AF6FF5 /* XCRemoteSwiftPackageReference "solana-swift" */,
 				02446E592EA6E11600AF6FF5 /* XCRemoteSwiftPackageReference "reown-swift" */,
@@ -824,13 +824,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxCarteraTests/Pods-iOS-dydxCarteraTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxCarteraTests/Pods-iOS-dydxCarteraTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1020,7 +1016,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -1094,7 +1093,10 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1263,7 +1265,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */ = {
+		02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WalletConnect/Web3.swift";
 			requirement = {
@@ -1331,7 +1333,7 @@
 		};
 		02446C5C2EA6983C00AF6FF5 /* Web3 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3" */;
+			package = 02446C5B2EA6983C00AF6FF5 /* XCRemoteSwiftPackageReference "Web3.swift" */;
 			productName = Web3;
 		};
 		02446C5F2EA6988900AF6FF5 /* TweetNacl */ = {
