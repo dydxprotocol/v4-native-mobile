@@ -6,7 +6,6 @@ node_modules
 ios/dydx/fastlane
 ios/dydx/Pods/abacus/.gradle
 ios/dydx/Pods/abacus/build
-ios/dydx/Pods/Abacus
 ios/dydxV4/dydxV4/_Configurations/credentials.json
 ios/dydxV4/dydxV4/_Configurations/GoogleService-Info-Staging.plist
 ios/dydxV4/dydxV4/_Configurations/GoogleService-Info.plist
