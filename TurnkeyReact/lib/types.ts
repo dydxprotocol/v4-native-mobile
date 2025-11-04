@@ -1,11 +1,10 @@
-
-import {type TurnkeyApiTypes} from "@turnkey/sdk-react-native";
+import { type TurnkeyApiTypes } from "@turnkey/sdk-react-native";
 
 export enum LoginMethod {
-  Passkey = "PASSKEY",
-  Email = "EMAIL",
-  Phone = "PHONE",
-  OAuth = "OAUTH",
+  Passkey = "passkey",
+  Email = "email",
+  Phone = "phone",
+  OAuth = "oauth",
 }
 
 export enum OtpType {
