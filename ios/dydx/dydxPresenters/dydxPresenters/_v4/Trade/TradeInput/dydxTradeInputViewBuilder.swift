@@ -55,7 +55,7 @@ private class dydxTradeInputViewController: HostingViewController<PlatformView, 
         var positions: [FloatingPanel.FloatingPanelState: FloatingPanel.FloatingPanelLayoutAnchoring] = [
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 90, edge: .bottom, referenceGuide: .safeArea),
             // Use .half instead of .full, so that the back button from the parent view is enabled.
-            .half: FloatingPanelLayoutAnchor(absoluteInset: 76, edge: .top, referenceGuide: .safeArea)
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 36, edge: .top, referenceGuide: .safeArea)
         ]
         if position == nil {
             positions[.hidden] = FloatingPanelLayoutAnchor(absoluteInset: 0, edge: .bottom, referenceGuide: .superview)
