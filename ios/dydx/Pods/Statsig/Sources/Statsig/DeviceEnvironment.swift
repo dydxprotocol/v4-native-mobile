@@ -7,7 +7,7 @@ struct DeviceEnvironment {
 
     static internal let deviceOS = PlatformCompatibility.deviceInfo.os
     static internal let sdkType: String = "ios-client"
-    static internal let sdkVersion: String = "1.54.0"
+    static internal let sdkVersion: String = "1.55.1"
 
     let lock = NSLock()
     var sessionID: String? { UUID().uuidString }
@@ -68,10 +68,10 @@ struct DeviceEnvironment {
         defer { lock.unlock() }
         
         return [
-            "sdkType": DeviceEnvironment.sdkType,
-            "sdkVersion": DeviceEnvironment.sdkVersion,
-            "sessionID": sessionID,
-            "stableID": getStableID(overrideStableID)
+            StatsigMetadata.SDK_TYPE_KEY: DeviceEnvironment.sdkType,
+            StatsigMetadata.SDK_VERSION_KEY: DeviceEnvironment.sdkVersion,
+            StatsigMetadata.SESSION_ID_KEY: sessionID,
+            StatsigMetadata.STABLE_ID_KEY: getStableID(overrideStableID)
         ]
     }
 
@@ -80,18 +80,18 @@ struct DeviceEnvironment {
         defer { lock.unlock() }
 
         return [
-            "appIdentifier": appIdentifier,
-            "appVersion": appVersion,
-            "deviceModel": deviceModel,
-            "deviceOS": DeviceEnvironment.deviceOS,
-            "language": language,
-            "locale": locale,
-            "sdkType": DeviceEnvironment.sdkType,
-            "sdkVersion": DeviceEnvironment.sdkVersion,
-            "sessionID": sessionID,
-            "stableID": getStableID(overrideStableID),
-            "systemVersion": systemVersion,
-            "systemName": systemName
+            StatsigMetadata.APP_IDENTIFIER_KEY: appIdentifier,
+            StatsigMetadata.APP_VERSION_KEY: appVersion,
+            StatsigMetadata.DEVICE_MODEL_KEY: deviceModel,
+            StatsigMetadata.DEVICE_OS_KEY: DeviceEnvironment.deviceOS,
+            StatsigMetadata.LANGUAGE_KEY: language,
+            StatsigMetadata.LOCALE_KEY: locale,
+            StatsigMetadata.SDK_TYPE_KEY: DeviceEnvironment.sdkType,
+            StatsigMetadata.SDK_VERSION_KEY: DeviceEnvironment.sdkVersion,
+            StatsigMetadata.SESSION_ID_KEY: sessionID,
+            StatsigMetadata.STABLE_ID_KEY: getStableID(overrideStableID),
+            StatsigMetadata.SYS_VERSION_KEY: systemVersion,
+            StatsigMetadata.SYS_NAME_KEY: systemName
         ]
     }
 

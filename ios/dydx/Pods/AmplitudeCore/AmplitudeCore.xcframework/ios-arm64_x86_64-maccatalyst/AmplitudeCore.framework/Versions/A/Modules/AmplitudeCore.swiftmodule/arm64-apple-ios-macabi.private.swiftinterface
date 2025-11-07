@@ -104,6 +104,7 @@ public protocol UniversalPlugin : AnyObject {
   func onIdentityChanged(_ identity: any AmplitudeCore.AnalyticsIdentity)
   func onSessionIdChanged(_ sessionId: Swift.Int64)
   func onOptOutChanged(_ optOut: Swift.Bool)
+  func onReset()
 }
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension AmplitudeCore.UniversalPlugin {
@@ -116,6 +117,7 @@ extension AmplitudeCore.UniversalPlugin {
   public func onIdentityChanged(_ identity: any AmplitudeCore.AnalyticsIdentity)
   public func onSessionIdChanged(_ sessionId: Swift.Int64)
   public func onOptOutChanged(_ optOut: Swift.Bool)
+  public func onReset()
 }
 @objc @_hasMissingDesignatedInitializers @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public actor RemoteConfigClient : ObjectiveC.NSObject {
