@@ -2960,6 +2960,27 @@
             "funcSelfKind": "NonMutating"
           },
           {
+            "kind": "Function",
+            "name": "onReset",
+            "printedName": "onReset()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13AmplitudeCore15UniversalPluginP7onResetyyF",
+            "mangledName": "$s13AmplitudeCore15UniversalPluginP7onResetyyF",
+            "moduleName": "AmplitudeCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AmplitudeCore.UniversalPlugin>",
+            "sugared_genericSig": "<Self where Self : AmplitudeCore.UniversalPlugin>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
             "kind": "Var",
             "name": "name",
             "printedName": "name",
@@ -3166,6 +3187,26 @@
             "declKind": "Func",
             "usr": "s:13AmplitudeCore15UniversalPluginPAAE15onOptOutChangedyySbF",
             "mangledName": "$s13AmplitudeCore15UniversalPluginPAAE15onOptOutChangedyySbF",
+            "moduleName": "AmplitudeCore",
+            "genericSig": "<τ_0_0 where τ_0_0 : AmplitudeCore.UniversalPlugin>",
+            "sugared_genericSig": "<Self where Self : AmplitudeCore.UniversalPlugin>",
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "onReset",
+            "printedName": "onReset()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:13AmplitudeCore15UniversalPluginPAAE7onResetyyF",
+            "mangledName": "$s13AmplitudeCore15UniversalPluginPAAE7onResetyyF",
             "moduleName": "AmplitudeCore",
             "genericSig": "<τ_0_0 where τ_0_0 : AmplitudeCore.UniversalPlugin>",
             "sugared_genericSig": "<Self where Self : AmplitudeCore.UniversalPlugin>",

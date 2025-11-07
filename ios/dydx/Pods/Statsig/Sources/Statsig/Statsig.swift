@@ -452,6 +452,17 @@ public class Statsig {
 
         client.flush()
     }
+    
+    /**
+      Updates mutable-at-runtime options.
+      */
+     public static func updateOptions(eventLoggingEnabled: Bool? = nil) {
+         guard let client = client else {
+             PrintHandler.log("[Statsig]: \(getUnstartedErrorMessage()).")
+             return
+         }
+         client.updateOptions(eventLoggingEnabled: eventLoggingEnabled)
+     }
 
     /**
      The generated identifier that exists across users
@@ -465,6 +476,13 @@ public class Statsig {
      */
     public static func getSessionID() -> String? {
         return client?.getSessionID()
+    }
+    
+    /**
+     The  statsigMetadata included by the SDK on events
+     */
+    public static func getStatsigMetadata() -> StatsigMetadata? {
+        return client?.getStatsigMetadata()
     }
 
     /**
