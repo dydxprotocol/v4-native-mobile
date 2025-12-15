@@ -1,13 +1,13 @@
 PODS:
   - Abacus (1.14.14)
-  - AmplitudeCore (1.2.4)
-  - AmplitudeSwift (1.15.3):
+  - AmplitudeCore (1.3.1)
+  - AmplitudeSwift (1.15.5):
     - AmplitudeCore (< 2.0.0, >= 1.2.4)
     - AnalyticsConnector (~> 1.3.0)
   - AnalyticsConnector (1.3.1)
-  - AppsFlyerFramework (6.17.7):
-    - AppsFlyerFramework/Main (= 6.17.7)
-  - AppsFlyerFramework/Main (6.17.7)
+  - AppsFlyerFramework (6.17.8):
+    - AppsFlyerFramework/Main (= 6.17.8)
+  - AppsFlyerFramework/Main (6.17.8)
   - Atributika (5.0.5)
   - boost (1.84.0)
   - CombineExt (1.8.0)
@@ -1953,16 +1953,16 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - SDWebImage (5.21.3):
-    - SDWebImage/Core (= 5.21.3)
-  - SDWebImage/Core (5.21.3)
+  - SDWebImage (5.21.5):
+    - SDWebImage/Core (= 5.21.5)
+  - SDWebImage/Core (5.21.5)
   - SDWebImageSVGCoder (1.8.0):
     - SDWebImage/Core (~> 5.6)
   - SDWebImageSwiftUI (3.1.4):
     - SDWebImage (~> 5.21.1)
   - SnapKit (5.7.1)
   - SocketRocket (0.7.1)
-  - Statsig (1.55.1)
+  - Statsig (1.56.0)
   - Yoga (0.0.0)
   - ZSWTappableLabel (3.3.2)
 
@@ -2303,10 +2303,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Abacus: 55b457f9a5f2fd1851fe7ae0b565d92cc0bd9cc3
-  AmplitudeCore: 25385873104770c5245ed5780acd3eb1b3ae74b7
-  AmplitudeSwift: 8fe34c0cafde3474cfb4b3af0d47275f76c74a55
+  AmplitudeCore: c47c0a661bec076a197bc75a5a7b4c413da288a5
+  AmplitudeSwift: 9ab3b1624ea544a2e7d85030f73e64ccce2b460d
   AnalyticsConnector: 3def11199b4ddcad7202c778bde982ec5da0ebb3
-  AppsFlyerFramework: ae7caf1688348f2d7a742037bd4fc6966d39d362
+  AppsFlyerFramework: 63577b60d6b9fcdab60135289979e7d1c9ec79b9
   Atributika: ecedf5259e4aa3c6278d840b6c18d60c1a8b6ca0
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CombineExt: c4daa97ef75754d8ef319bd79edeef82652f3eea
@@ -2425,12 +2425,12 @@ SPEC CHECKSUMS:
   ReactCommon: 1511ef100f1afa4c199fe52fe7a8d2529a41429a
   RNInAppBrowser: 6d3eb68d471b9834335c664704719b8be1bfdb20
   RNKeychain: bc2dd8c6dd4c4063d83772d42902938d04f85257
-  SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
+  SDWebImage: e9c98383c7572d713c1a0d7dd2783b10599b9838
   SDWebImageSVGCoder: 8e10c8f6cc879c7dfb317b284e13dd589379f01c
   SDWebImageSwiftUI: 965cdad5a7210b7ec06aaa1a3d17180d0a152250
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  Statsig: 3ed9c14a91e856d53734dee25715c8831e79a63b
+  Statsig: dcbc4de28c857c5368a535cbdb6d98f8e85c4d32
   Yoga: 50518ade05048235d91a78b803336dbb5b159d5d
   ZSWTappableLabel: 92f11d677bb395a8294df48482316c4981783ca0
 

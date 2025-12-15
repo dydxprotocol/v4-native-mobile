@@ -43,7 +43,7 @@ open class AmplitudeTracking: TransformerTracker {
 
     // https://amplitude.com/docs/sdks/analytics/ios/ios-swift-sdk#identify
     override public func setValue(_ value: Any?, forUserProperty userProperty: String) {
-        Console.shared.log("analytics log | Amplitude: User Property `\(userProperty)` set to: \(value ?? "nil")")
+        Console.shared.log("analytics log | a: User Property `\(userProperty)` set to: \(value ?? "nil")")
         let identify = Identify()
         if value != nil {
             identify.set(property: userProperty, value: value)

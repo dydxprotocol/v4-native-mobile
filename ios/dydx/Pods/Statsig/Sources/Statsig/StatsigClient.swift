@@ -160,10 +160,28 @@ public class StatsigClient {
     }
 
     /**
+     Stops all Statsig activity and flushes any pending events.
+     Currently it's only available for tests.
+     */
+    internal func shutdown(completion: @escaping (() -> Void)) {
+        Diagnostics.shutdown()
+        syncTimer?.invalidate()
+        logger.stop(completion: completion)
+    }
+
+    /**
      Manually triggers a flush of any queued events.
      */
     public func flush() {
         logger.flush()
+    }
+
+    /**
+     Manually triggers a flush of any queued events.
+     Currently it's only available for tests.
+     */
+    internal func flush(completion: @escaping (() -> Void)) {
+        logger.flush(completion: completion);
     }
 
     /**
@@ -211,8 +229,13 @@ public class StatsigClient {
             "feature_gates": self.store.cache.gates,
             "dynamic_configs": self.store.cache.configs,
             "layer_configs": self.store.cache.layers,
+            "param_stores": self.store.cache.paramStores,
             "hash_used": self.store.cache.hashUsed,
-            "time": self.store.cache.userCache["time"]
+            "time": self.store.cache.userCache["time"],
+            "derived_fields": self.store.cache.userCache["derived_fields"],
+            "full_checksum": self.store.cache.userCache["full_checksum"],
+            "sdk_flags": self.store.cache.userCache["sdk_flags"],
+            "has_updates" : true
         ]
 
         if JSONSerialization.isValidJSONObject(dict),
