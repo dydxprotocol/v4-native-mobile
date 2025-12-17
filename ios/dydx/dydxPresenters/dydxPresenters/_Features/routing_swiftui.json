@@ -193,6 +193,10 @@
                     "destination":"dydxPresenters.dydxTradingRewardsViewBuilder",
                     "presentation":"push"
                 },
+                "/profile/trading-rewards/leaderboard":{
+                    "destination":"dydxPresenters.dydxRewardLeaderboardBuilder",
+                    "presentation":"push"
+                },
                 "/profile/security":{
                     "destination":"dydxPresenters.dydxWalletSecurityViewBuilder",
                     "presentation":"push"
