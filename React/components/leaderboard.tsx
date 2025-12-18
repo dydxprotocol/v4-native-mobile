@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { TouchableOpacity, Text, View } from "react-native";
+import { useTheme } from "../providers/themeProvider";
+import { LeaderboardNativeModule } from "../../LeaderboardNativeModule";
 
-export const Leaderboard = () => {
-  useEffect(() => {
-    console.log("MOUNT");
+type LeaderboardProps = {
+  address: string | null;
+};
 
-    return () => {
-      console.log("UNMOUNT");
-    };
-  }, []);
+export const Leaderboard = ({ address }: LeaderboardProps) => {
+  const { theme } = useTheme();
 
   return (
     <View
@@ -16,12 +16,41 @@ export const Leaderboard = () => {
         paddingTop: 100,
         height: "100%",
         width: "100%",
-        backgroundColor: "red",
+        backgroundColor: theme.colors.layer0,
       }}
     >
-      <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
-        This is the leaderboardkl
+      <Text
+        style={{ color: theme.colors.purple, fontSize: 20, fontWeight: "bold" }}
+      >
+        This is the leader
       </Text>
+      <TouchableOpacity
+        style={{ backgroundColor: theme.colors.purple }}
+        onPress={() => LeaderboardNativeModule.onNavigateBack()}
+      >
+        <Text style={{ color: theme.colors.white }}>Test</Text>
+      </TouchableOpacity>
+      {address ? (
+        <Text
+          style={{
+            color: theme.colors.fadedGreen,
+            fontSize: 16,
+            marginTop: 20,
+          }}
+        >
+          Address: {address}
+        </Text>
+      ) : (
+        <Text
+          style={{
+            color: theme.colors.fadedGreen,
+            fontSize: 16,
+            marginTop: 20,
+          }}
+        >
+          No address
+        </Text>
+      )}
     </View>
   );
 };

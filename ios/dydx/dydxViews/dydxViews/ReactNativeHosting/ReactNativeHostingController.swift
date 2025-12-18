@@ -42,6 +42,9 @@ open class ReactNativeHostingController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // Put any required subscriptions here, will run when loaded
+    open func setupSubscriptions() {}
+
     open override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,11 +52,13 @@ open class ReactNativeHostingController: UIViewController {
             NotificationCenter.default.addObserver(self, selector: #selector(onJSLoaded), name: NSNotification.Name.RCTJavaScriptDidLoad, object: bridge)
         } else {
             setupRootView()
+            setupSubscriptions()
         }
     }
 
     @objc private func onJSLoaded() {
         setupRootView()
+        setupSubscriptions()
     }
 
     private func setupRootView() {

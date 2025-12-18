@@ -4,8 +4,6 @@ import "react-native-get-random-values";
 import { TurnkeyLogin } from "./TurnkeyReact/TurnkeyLogin";
 import "react-native-url-polyfill/auto";
 
-import { Leaderboard } from "./React/components/leaderboard";
-
 import { TextDecoder, TextEncoder } from "text-encoding";
 import { Buffer } from "buffer";
 
@@ -19,7 +17,8 @@ if (typeof global.TextEncoder === "undefined") {
 global.Buffer = global.Buffer || Buffer;
 
 import "./TurnkeyReact/TurnkeyAddress";
+import { LeaderboardScreen } from "./React/screens/leaderboardScreen";
 
 AppRegistry.registerComponent("TurnkeyReact", () => App);
 AppRegistry.registerComponent("TurnkeyLogin", () => TurnkeyLogin);
-AppRegistry.registerComponent("Leaderboard", () => Leaderboard);
+AppRegistry.registerComponent("Leaderboard", () => LeaderboardScreen);
