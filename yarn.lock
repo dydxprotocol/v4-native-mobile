@@ -8909,7 +8909,7 @@ react-native-otp-entry@^1.8.5:
   resolved "https://registry.npmjs.org/react-native-otp-entry/-/react-native-otp-entry-1.8.5.tgz"
   integrity sha512-TZNkIuUzZKAAWrC8X/A22ZHJdycLysxUNysrGf0yTmDLRUyf4zLXwVFcDYUcRNe763Hjaf5qvtKGILb6lDGzoA==
 
-"react-native-pager-view@>= 6.0.0":
+react-native-pager-view@^8.0.0, "react-native-pager-view@>= 6.0.0":
   version "8.0.0"
   resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-8.0.0.tgz"
   integrity sha512-oAwlWT1lhTkIs9HhODnjNNl/owxzn9DP1MbP+az6OTUdgbmzA16Up83sBH8NRKwrH8rNm7iuWnX1qMqiiWOLhg==
@@ -8960,10 +8960,10 @@ react-native-render-html@^6.3.4:
     stringify-entities "^3.1.0"
     urijs "^1.19.6"
 
-react-native-safe-area-context@^5.5.2:
-  version "5.5.2"
-  resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-5.5.2.tgz"
-  integrity sha512-t4YVbHa9uAGf+pHMabGrb0uHrD5ogAusSu842oikJ3YKXcYp6iB4PTGl0EZNkUIR3pCnw/CXKn42OCfhsS0JIw==
+react-native-safe-area-context@^5.6.2:
+  version "5.6.2"
+  resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-5.6.2.tgz"
+  integrity sha512-4XGqMNj5qjUTYywJqpdWZ9IG8jgkS3h06sfVjfw5yZQZfWnRFXczi0GnYyFyCc2EBps/qFmoCH8fez//WumdVg==
 
 react-native-screens@^4.13.0:
   version "4.13.0"

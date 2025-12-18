@@ -125,6 +125,6 @@ private class dydxRewardLeaderboardViewController: ReactNativeHostingController,
     }
 
     func onNavigateBack() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
 }

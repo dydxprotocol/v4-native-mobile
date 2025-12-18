@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, DeviceEventEmitter } from "react-native";
-import { ThemeProvider } from "../providers/themeProvider";
+import { DeviceEventEmitter, SafeAreaView } from "react-native";
 import { DydxTheme } from "../../rn_style/themes/currentTheme";
 import { Leaderboard } from "../components/leaderboard";
+import { ThemeProvider } from "../providers/themeProvider";
 
 type LeaderboardScreenProps = {
   address: string | null;
@@ -31,7 +31,9 @@ export const LeaderboardScreen = ({
 
   return (
     <ThemeProvider initialTheme={theme}>
-      <Leaderboard address={currentAddress} />
+      <SafeAreaView>
+        <Leaderboard address={currentAddress} />
+      </SafeAreaView>
     </ThemeProvider>
   );
 };
