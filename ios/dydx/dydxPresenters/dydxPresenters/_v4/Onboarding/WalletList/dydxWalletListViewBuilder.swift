@@ -108,7 +108,7 @@ private class dydxWalletListViewPresenter: HostedViewPresenter<dydxWalletListVie
 
         viewModel = dydxWalletListViewModel()
         viewModel?.syncDesktopView = mobileOnly ? nil : desktopSyncViewModel
-        viewModel?.debugView = UIDevice.current.isSimulator ? debugScanViewModel : nil
+        viewModel?.debugView = debugScanViewModel
         viewModel?.metamaskView = metamaskViewModel
         viewModel?.phantomView = phantomViewModel
         viewModel?.coinbaseView = coinbaseViewModel

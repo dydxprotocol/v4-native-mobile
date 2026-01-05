@@ -1,1 +1,0 @@
-shasum build/dist/js/developmentLibrary/abacusjs.js > ../v4-web/local-abacus-hash

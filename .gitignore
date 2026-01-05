@@ -4,6 +4,7 @@
 .xcode*
 node_modules
 ios/dydx/fastlane
+# CocoaPod
 ios/dydx/Pods/abacus/.gradle
 ios/dydx/Pods/abacus/build
 ios/dydxV4/dydxV4/_Configurations/credentials.json

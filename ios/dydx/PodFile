@@ -118,6 +118,7 @@ def react_pods
   pod 'RNKeychain', :path => '../../node_modules/react-native-keychain'
   pod 'react-native-passkey', :path => '../../node_modules/react-native-passkey'
   pod 'RNInAppBrowser', :path => '../../node_modules/react-native-inappbrowser-reborn'
+  pod 'react-native-pager-view', :path => '../../node_modules/react-native-pager-view'
   #pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   #pod 'RNWorklets', :path => '../node_modules/react-native-worklets'
 end

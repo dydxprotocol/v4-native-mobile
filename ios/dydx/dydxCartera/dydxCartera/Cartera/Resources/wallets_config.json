@@ -7,7 +7,8 @@
     "chains": [
       "eip155:1",
       "eip155:42161",
-      "eip155:43114"
+      "eip155:43114",
+      "eip155:11155111"
     ],
     "versions": [
       "1"
@@ -47,10 +48,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -101,10 +102,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -155,10 +156,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -207,10 +208,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -263,10 +264,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -317,10 +318,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -369,10 +370,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -424,9 +425,9 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData"
       ]
     }
   },
@@ -477,10 +478,10 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData",
-          "wallet_addEthereumChain"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData",
+        "wallet_addEthereumChain"
       ]
     }
   },
@@ -530,9 +531,9 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData"
       ]
     },
     "userFields": {
@@ -585,9 +586,9 @@
         }
       ],
       "methods": [
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_signTypedData"
+        "eth_sendTransaction",
+        "personal_sign",
+        "eth_signTypedData"
       ]
     }
   }

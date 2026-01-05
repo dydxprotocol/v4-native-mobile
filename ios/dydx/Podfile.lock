@@ -1598,6 +1598,31 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-get-random-values (1.11.0):
     - React-Core
+  - react-native-pager-view (8.0.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SwiftUIIntrospect (~> 1.0)
+    - Yoga
   - react-native-passkey (3.1.0):
     - RCT-Folly
     - RCTRequired
@@ -1963,6 +1988,7 @@ PODS:
   - SnapKit (5.7.1)
   - SocketRocket (0.7.1)
   - Statsig (1.55.1)
+  - SwiftUIIntrospect (1.3.0)
   - Yoga (0.0.0)
   - ZSWTappableLabel (3.3.2)
 
@@ -2040,6 +2066,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-get-random-values (from `../../node_modules/react-native-get-random-values`)
+  - react-native-pager-view (from `../../node_modules/react-native-pager-view`)
   - react-native-passkey (from `../../node_modules/react-native-passkey`)
   - React-NativeModulesApple (from `../../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../../node_modules/react-native/ReactCommon/oscompat`)
@@ -2138,6 +2165,7 @@ SPEC REPOS:
     - SnapKit
     - SocketRocket
     - Statsig
+    - SwiftUIIntrospect
     - ZSWTappableLabel
 
 EXTERNAL SOURCES:
@@ -2225,6 +2253,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-get-random-values:
     :path: "../../node_modules/react-native-get-random-values"
+  react-native-pager-view:
+    :path: "../../node_modules/react-native-pager-view"
   react-native-passkey:
     :path: "../../node_modules/react-native-passkey"
   React-NativeModulesApple:
@@ -2391,6 +2421,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: da73f30b000114058d6bc41490dcce204a8ede32
   React-microtasksnativemodule: 444c5701aece79629bb73bd9e7ad8937ae65238c
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
+  react-native-pager-view: 12abf4f81134b2049d3a38fb3ed6a530e3504dd0
   react-native-passkey: 3aac247c18127443ef4a002b59d8e12dc7e99f2e
   React-NativeModulesApple: df8e5bc59e78ca3040ffbf41336889f3bd0fad68
   React-oscompat: ef5df1c734f19b8003e149317d041b8ce1f7d29c
@@ -2431,9 +2462,10 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Statsig: 3ed9c14a91e856d53734dee25715c8831e79a63b
+  SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   Yoga: 50518ade05048235d91a78b803336dbb5b159d5d
   ZSWTappableLabel: 92f11d677bb395a8294df48482316c4981783ca0
 
-PODFILE CHECKSUM: ccdb9ed55143f14ccd25923bb4df198e25194a6e
+PODFILE CHECKSUM: 482fbb312187639b8b0f084d9b5b5834db132651
 
 COCOAPODS: 1.16.2
