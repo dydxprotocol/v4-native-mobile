@@ -2,25 +2,32 @@ import { darkTheme } from "./darkTheme";
 import { lightTheme } from "./lightTheme";
 import { classicDarkTheme } from "./classicDarkTheme";
 
-export enum DydxTheme {
-  Dark = "dark",
-  Light = "light",
-  ClassicDark = "classicDark",
-}
+export type DydxTheme = "dark" | "light" | "classicDark";
 
 export const setDydXTheme = (theme: string) => {
   switch (theme) {
-    case DydxTheme.Dark:
+    case "dark":
       currentTheme = darkTheme;
       break;
-    case DydxTheme.Light:
+    case "light":
       currentTheme = lightTheme;
       break;
-    case DydxTheme.ClassicDark:
+    case "classicDark":
       currentTheme = classicDarkTheme;
       break;
     default:
       throw new Error(`Unknown theme: ${theme}`);
+  }
+};
+
+export const getTheme = (theme: DydxTheme) => {
+  switch (theme) {
+    case "dark":
+      return darkTheme;
+    case "light":
+      return lightTheme;
+    case "classicDark":
+      return classicDarkTheme;
   }
 };
 

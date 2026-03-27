@@ -50,10 +50,7 @@ public class dydxRewardsLaunchIncentivesPresenter: HostedViewPresenter<dydxRewar
         }
 
         viewModel?.leaderboardAction = {
-            let urlString = AbacusStateManager.shared.environment?.links?.incentiveProgramLeaderboard
-            if let urlString = urlString, let url = URL(string: urlString) {
-                Router.shared?.navigate(to: url, completion: nil)
-            }
+            Router.shared?.navigate(to: RoutingRequest(path: "/profile/trading-rewards/leaderboard"), animated: true, completion: nil)
         }
     }
 

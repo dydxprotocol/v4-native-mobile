@@ -21,7 +21,7 @@ class dydxReactViewController: UIViewController {
     init(moduleName: String, bundleRoot: String = "index") {
         self.moduleName = moduleName
         self.bundleRoot = bundleRoot
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {

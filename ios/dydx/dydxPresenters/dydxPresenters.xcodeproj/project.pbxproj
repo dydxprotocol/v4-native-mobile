@@ -237,6 +237,8 @@
 		27DB2EA32AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DB2EA22AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift */; };
 		27E0735C2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0735B2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift */; };
 		314BBDE9F332ECA910BC414E /* Pods_iOS_dydxPresenters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1551C00FFF41C29CFC5BD94 /* Pods_iOS_dydxPresenters.framework */; };
+		4844120B2EF32A83002781B1 /* dydxRewardLeaderboardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484411FD2EF32A7C002781B1 /* dydxRewardLeaderboardBuilder.swift */; };
+		487830512EF42E4C00F8D31B /* DydxRewardLeaderboardModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 487830432EF42E3800F8D31B /* DydxRewardLeaderboardModule.m */; };
 		48D8EBDF2EABD35B007630A1 /* dydxMarketAccountViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D8EBD12EABD34A007630A1 /* dydxMarketAccountViewPresenter.swift */; };
 		6448800B2AA248340068DD87 /* dydxAlertsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64487FFE2AA248340068DD87 /* dydxAlertsWorker.swift */; };
 		645299EF2AE86FB1000810E6 /* dydxUpdateViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645299E22AE86FB1000810E6 /* dydxUpdateViewPresenter.swift */; };
@@ -729,6 +731,8 @@
 		27C027522AFD761300E92CCB /* dydxProfileSecondaryButtonsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxProfileSecondaryButtonsViewPresenter.swift; sourceTree = "<group>"; };
 		27DB2EA22AC1E7B20047BC39 /* dydxTradeRestrictedViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxTradeRestrictedViewPresenter.swift; sourceTree = "<group>"; };
 		27E0735B2C20D2470034B963 /* dydxCancelPendingIsolatedOrdersViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxCancelPendingIsolatedOrdersViewBuilder.swift; sourceTree = "<group>"; };
+		484411FD2EF32A7C002781B1 /* dydxRewardLeaderboardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxRewardLeaderboardBuilder.swift; sourceTree = "<group>"; };
+		487830432EF42E3800F8D31B /* DydxRewardLeaderboardModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DydxRewardLeaderboardModule.m; sourceTree = "<group>"; };
 		48D8EBD12EABD34A007630A1 /* dydxMarketAccountViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxMarketAccountViewPresenter.swift; sourceTree = "<group>"; };
 		64487FFE2AA248340068DD87 /* dydxAlertsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dydxAlertsWorker.swift; sourceTree = "<group>"; };
 		645299E22AE86FB1000810E6 /* dydxUpdateViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dydxUpdateViewPresenter.swift; sourceTree = "<group>"; };
@@ -1959,6 +1963,8 @@
 		277E90172B1EA376005CCBCB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				487830432EF42E3800F8D31B /* DydxRewardLeaderboardModule.m */,
+				484411FD2EF32A7C002781B1 /* dydxRewardLeaderboardBuilder.swift */,
 				277E90182B1EA3C3005CCBCB /* dydxRewardsSummaryPresenter.swift */,
 				277E90322B1FAE9A005CCBCB /* dydxRewardsHelpViewPresenter.swift */,
 				277E908A2B2118AE005CCBCB /* dydxRewardsHistoryViewPresenter.swift */,
@@ -2475,13 +2481,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresentersTests/Pods-iOS-dydxPresentersTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresentersTests/Pods-iOS-dydxPresentersTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2496,13 +2498,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresentersTests/Pods-iOS-dydxPresentersTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresentersTests/Pods-iOS-dydxPresentersTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2517,13 +2515,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresenters/Pods-iOS-dydxPresenters-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iOS-dydxPresenters/Pods-iOS-dydxPresenters-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2563,6 +2557,7 @@
 				0207FC9D2D269C00004C2C9F /* dydxSimpleUITradeInputValidationViewPresenter.swift in Sources */,
 				02048E212D38A11000394CBE /* dydxSimpleUIMarketDetailsViewPresenter.swift in Sources */,
 				02465B96297F6E2E00A4CA55 /* dydxPortfolioHeaderPresenter.swift in Sources */,
+				487830512EF42E4C00F8D31B /* DydxRewardLeaderboardModule.m in Sources */,
 				02A6517F2DB30D87006DBD5F /* dydxSimpleUIMenuViewBuilder.swift in Sources */,
 				025D04162E31E7620015E1D7 /* dydxTurnkeyAuthViewBuilder.swift in Sources */,
 				0238FE0A296EF91D002E1C1A /* dydxMarketPositionViewPresenter.swift in Sources */,
@@ -2716,6 +2711,7 @@
 				6453A7D2299C563F0041A0C4 /* dydxClosePositionInputViewBuilder.swift in Sources */,
 				272C639C2CBE253000323933 /* VaultNetworking.swift in Sources */,
 				02031F142AC374150069E00D /* dydxTradeSheetTipBuySellViewPresenter.swift in Sources */,
+				4844120B2EF32A83002781B1 /* dydxRewardLeaderboardBuilder.swift in Sources */,
 				02B6CE752A7087A700C5F088 /* dydxTransferSubaccountWorker.swift in Sources */,
 				02279D5F2CE7ECDC00266956 /* SortAction.swift in Sources */,
 				02FF0BD229AE92FE00781EDA /* dydxWalletListViewBuilder_Deprecated.swift in Sources */,
@@ -2895,7 +2891,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2971,7 +2970,10 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
