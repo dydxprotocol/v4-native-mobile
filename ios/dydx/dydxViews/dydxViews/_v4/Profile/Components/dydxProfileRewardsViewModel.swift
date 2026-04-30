@@ -109,7 +109,7 @@ public class dydxProfileRewardsViewModel: dydxTitledCardViewModel {
             path: "APP.REWARDS_SURGE_APRIL_2025.LIQUIDATION_REBATES_SUB_BODY",
             params: [
                 "LOSS_REBATES_LINK": DataLocalizer.localize(path: "APP.REWARDS_SURGE_APRIL_2025.LOSS_REBATES"),
-                "CHECK_ELIGIBILITY_LINK": DataLocalizer.localize(path: "APP.GENERAL.HERE"),
+                "CHECK_ELIGIBILITY_LINK": DataLocalizer.localize(path: "APP.GENERAL.HERE")
             ]
         )
         return "\(body) \(subBody)"

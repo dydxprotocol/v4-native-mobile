@@ -5,10 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.dydxstatemanager.localizeWithParams
 import exchange.dydx.trading.common.DydxViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.delay
 import java.time.Duration
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
