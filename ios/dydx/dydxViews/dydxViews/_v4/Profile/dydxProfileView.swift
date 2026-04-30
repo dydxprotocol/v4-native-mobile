@@ -59,12 +59,11 @@ public class dydxProfileViewModel: PlatformViewModel {
                     self.balances?
                         .createView(parentStyle: style)
 
-                    HStack(spacing: 14) {
-                        self.fees?
-                            .createView(parentStyle: style)
-                        self.rewards?
-                            .createView(parentStyle: style)
-                    }
+                    self.fees?
+                        .createView(parentStyle: style)
+
+                    self.rewards?
+                        .createView(parentStyle: style)
 
                     self.history?
                         .createView(parentStyle: style)

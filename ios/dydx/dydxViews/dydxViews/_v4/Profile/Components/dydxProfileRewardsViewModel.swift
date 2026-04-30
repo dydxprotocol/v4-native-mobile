@@ -9,50 +9,130 @@
 import SwiftUI
 import PlatformUI
 import Utilities
+import Combine
 
 public class dydxProfileRewardsViewModel: dydxTitledCardViewModel {
-    @Published public var last7DaysRewardsAmount: String?
-    @Published public var allTimeRewardsAmount: String?
+    @Published public var countdownText: String = "-"
+
+    private var timerCancellable: AnyCancellable?
 
     public init() {
-        super.init(title: DataLocalizer.shared?.localize(path: "APP.GENERAL.TRADING_REWARDS", params: nil) ?? "")
+        super.init(title: DataLocalizer.localize(path: "APP.GENERAL.LIQUIDATION_REBATES"),
+                   verticalContentPadding: 16,
+                   horizontalContentPadding: 16)
+        updateCountdown()
+        timerCancellable = Timer.publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updateCountdown()
+            }
+    }
+
+    deinit {
+        timerCancellable?.cancel()
+    }
+
+    private func updateCountdown() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+
+        let now = Date()
+        let nowComponents = calendar.dateComponents([.year, .month], from: now)
+        guard let year = nowComponents.year, let month = nowComponents.month else {
+            countdownText = "-"
+            return
+        }
+
+        var nextMonthComponents = DateComponents()
+        nextMonthComponents.year = month == 12 ? year + 1 : year
+        nextMonthComponents.month = month == 12 ? 1 : month + 1
+        nextMonthComponents.day = 1
+        nextMonthComponents.hour = 0
+        nextMonthComponents.minute = 0
+        nextMonthComponents.second = 0
+
+        guard let nextMonth = calendar.date(from: nextMonthComponents) else {
+            countdownText = "-"
+            return
+        }
+
+        let interval = max(0, Int(nextMonth.timeIntervalSince(now)))
+        let days = interval / 86400
+        let hours = (interval % 86400) / 3600
+        let minutes = (interval % 3600) / 60
+        let seconds = interval % 60
+
+        countdownText = String(format: "%dd %dh %dm %ds", days, hours, minutes, seconds)
+    }
+
+    override func createTitleAccessoryView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> AnyView? {
+        Text(DataLocalizer.localize(path: "APP.GENERAL.ACTIVE"))
+            .themeColor(foreground: .colorGreen)
+            .themeFont(fontType: .base, fontSize: .smaller)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
+            .border(borderWidth: 1, cornerRadius: 4, borderColor: ThemeColor.SemanticColor.colorGreen.color)
+            .wrappedInAnyView()
     }
 
     override func createContentView(parentStyle: ThemeStyle = ThemeStyle.defaultStyle, styleKey: String? = nil) -> AnyView? {
-        HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 10) {
-                titleValueStack(title: DataLocalizer.shared?.localize(path: "APP.GENERAL.TIME_STRINGS.THIS_WEEK", params: nil) ?? "", value: last7DaysRewardsAmount)
-                if let allTimeRewardsAmount = allTimeRewardsAmount {
-                    titleValueStack(title: DataLocalizer.shared?.localize(path: "APP.GENERAL.TIME_STRINGS.ALL_TIME", params: nil) ?? "", value: allTimeRewardsAmount)
-                }
+        VStack(alignment: .leading, spacing: 12) {
+            Text(Self.localizedBody)
+                .themeFont(fontType: .base, fontSize: .small)
+                .themeColor(foreground: .textTertiary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            HStack(spacing: 8) {
+                PlatformIconViewModel(type: .system(name: "clock"),
+                                      size: CGSize(width: 14, height: 14),
+                                      templateColor: .colorPurple)
+                    .createView()
+                Text(Self.localizedCountdownLabel)
+                    .themeFont(fontType: .base, fontSize: .small)
+                    .themeColor(foreground: .colorPurple)
+                Text(countdownText)
+                    .themeFont(fontType: .base, fontSize: .small)
+                    .themeColor(foreground: .textPrimary)
             }
-            Spacer()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .themeColor(background: .layer4)
+            .cornerRadius(20)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .wrappedInAnyView()
     }
 
-    private func titleValueStack(title: String, value: String?) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .themeColor(foreground: .textSecondary)
-                .themeFont(fontType: .base, fontSize: .smaller)
-            HStack(spacing: 6) {
-                Text(value ?? "-")
-                    .themeColor(foreground: .textPrimary)
-                    .themeFont(fontType: .base, fontSize: .small)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                PlatformIconViewModel(type: .asset(name: "icon_dydx", bundle: .dydxView), clip: .noClip, size: .init(width: 24, height: 24), templateColor: nil)
-                    .createView()
-            }
-        }
+    private static var localizedBody: String {
+        let body = DataLocalizer.localize(path: "APP.REWARDS_SURGE_APRIL_2025.LIQUIDATION_REBATES_BODY")
+        let subBody = DataLocalizer.localize(
+            path: "APP.REWARDS_SURGE_APRIL_2025.LIQUIDATION_REBATES_SUB_BODY",
+            params: [
+                "LOSS_REBATES_LINK": DataLocalizer.localize(path: "APP.REWARDS_SURGE_APRIL_2025.LOSS_REBATES"),
+                "CHECK_ELIGIBILITY_LINK": DataLocalizer.localize(path: "APP.GENERAL.HERE"),
+            ]
+        )
+        return "\(body) \(subBody)"
+    }
 
+    private static var localizedCountdownLabel: String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = "MMMM"
+        let monthName = formatter.string(from: Date())
+        return DataLocalizer.localize(
+            path: "APP.REWARDS_SURGE_APRIL_2025.MONTH_COUNTDOWN",
+            params: ["MONTH": monthName]
+        )
     }
 
     public static var previewValue: dydxProfileRewardsViewModel {
         let vm = dydxProfileRewardsViewModel()
-        vm.last7DaysRewardsAmount = "20.00"
-        vm.allTimeRewardsAmount = "30.00"
+        vm.countdownText = "0d 9h 51m 46s"
         return vm
     }
 
