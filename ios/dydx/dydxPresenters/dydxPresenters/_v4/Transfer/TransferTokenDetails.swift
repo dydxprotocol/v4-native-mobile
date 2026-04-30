@@ -110,13 +110,17 @@ final class TransferTokenDetails {
 enum TransferChain: String {
     case Ethereum, Optimism, Arbitrum, Base, Polygon, Avalanche, Solana
 
-    var supportedDepositTokenString: String {
+    var supportedDepositTokens: [TransferToken] {
         switch self {
-        case .Ethereum, .Optimism, .Arbitrum, .Base: return "ETH, USDC"
-        case .Polygon: return "POL, USDC"
-        case .Solana: return "USDC"
-        case .Avalanche: return "USDC"
+        case .Ethereum, .Optimism, .Arbitrum, .Base: return [.ETH, .USDC]
+        case .Polygon: return [.POL, .USDC]
+        case .Solana: return [.USDC]
+        case .Avalanche: return [.USDC]
         }
+    }
+
+    var supportedDepositTokenString: String {
+        supportedDepositTokens.map { $0.rawValue }.joined(separator: ", ")
     }
 
     var depositFeesString: String {
@@ -127,32 +131,25 @@ enum TransferChain: String {
     }
 
     var depositWarningString: String? {
-        let tokens: String
-        switch self {
-        case .Ethereum, .Optimism, .Arbitrum, .Base: tokens = "ETH " + DataLocalizer.localize(path: "APP.GENERAL.OR") + " USDC"
-        case .Polygon: tokens =  "POL " + DataLocalizer.localize(path: "APP.GENERAL.OR") + " USDC"
-        case .Solana: tokens = "USDC"
-        case .Avalanche: tokens = "USDC"
-        }
+        let tokens = supportedDepositTokens
+            .map { $0.rawValue }
+            .joined(separator: " " + DataLocalizer.localize(path: "APP.GENERAL.OR") + " ")
 
-        let minSlow: String
         let minFast: String
         let maxVal: String
         switch self {
         case .Ethereum:
-            minSlow = dydxTurnkeyDepositParam.eth_min_slow.string
             minFast = dydxTurnkeyDepositParam.eth_min_fast.string
             maxVal = dydxTurnkeyDepositParam.eth_max.string
         case .Arbitrum, .Base, .Optimism, .Polygon, .Solana, .Avalanche:
-            minSlow = dydxTurnkeyDepositParam.default_min_slow.string
             minFast = dydxTurnkeyDepositParam.default_min_fast.string
             maxVal = dydxTurnkeyDepositParam.default_max.string
         }
 
-        return DataLocalizer.localize(path: "APP.TURNKEY_ONBOARD.DEPOSIT_NETWORK_WARNING", params: [
+        return DataLocalizer.localize(path: "APP.TURNKEY_ONBOARD.DEPOSIT_LOSS_OF_FUNDS_WARNING", params: [
             "ASSETS": tokens,
             "NETWORK": rawValue,
-            "MIN_DEPOSIT": minSlow,
+            "LOSS_OF_FUNDS": DataLocalizer.localize(path: "APP.TURNKEY_ONBOARD.LOSS_OF_FUNDS"),
             "MIN_INSTANT_DEPOSIT": minFast,
             "MAX_DEPOSIT": maxVal
         ])
@@ -175,6 +172,18 @@ enum TransferChain: String {
 
 enum TransferToken: String {
     case ETH, USDC, POL, SOL, AVAX
+
+    var logoUrl: String {
+        let logoName: String
+        switch self {
+        case .ETH: logoName = "eth.png"
+        case .USDC: logoName = "usdc.png"
+        case .POL: logoName = "pol.png"
+        case .SOL: logoName = "sol.png"
+        case .AVAX: logoName = "avax.png"
+        }
+        return AbacusStateManager.shared.deploymentUri + "/currencies/\(logoName)"
+    }
 }
 
 struct TransferTokenInfo: Equatable {
@@ -192,15 +201,7 @@ struct TransferTokenInfo: Equatable {
     }
 
     var tokenLogoUrl: String {
-        let logoName: String
-        switch token {
-        case .ETH: logoName = "eth.png"
-        case .USDC: logoName = "usdc.png"
-        case .POL: logoName = "pol.png"
-        case .SOL: logoName = "sol.png"
-        case .AVAX: logoName = "avax.png"
-        }
-        return AbacusStateManager.shared.deploymentUri + "/currencies/\(logoName)"
+        token.logoUrl
     }
 
     var decimals: Int {

@@ -104,16 +104,16 @@ class TransferTokenDetails @Inject constructor(
 enum class TransferChain {
     Ethereum, Optimism, Arbitrum, Base, Polygon, Solana, Avalanche;
 
-    val supportedDepositTokenString: String
+    val supportedDepositTokens: List<TransferToken>
         get() = when (this) {
-            Ethereum -> "ETH, USDC"
-            Optimism -> "ETH, USDC"
-            Arbitrum -> "ETH, USDC"
-            Base -> "ETH, USDC"
-            Polygon -> "POL, USDC"
-            Solana -> "USDC"
-            Avalanche -> "USDC"
+            Ethereum, Optimism, Arbitrum, Base -> listOf(TransferToken.ETH, TransferToken.USDC)
+            Polygon -> listOf(TransferToken.POL, TransferToken.USDC)
+            Solana -> listOf(TransferToken.USDC)
+            Avalanche -> listOf(TransferToken.USDC)
         }
+
+    val supportedDepositTokenString: String
+        get() = supportedDepositTokens.joinToString(", ") { it.name }
 
     fun depositFeesString(localizer: LocalizerProtocol): String {
         return when (this) {
@@ -127,18 +127,9 @@ enum class TransferChain {
     }
 
     fun depositWarningString(localizer: LocalizerProtocol, remoteFlags: RemoteFlags): String {
-        val tokens = when (this) {
-            Ethereum, Optimism, Arbitrum, Base -> "ETH " + localizer.localize(path = "APP.GENERAL.OR") + " USDC"
-            Polygon -> "POL " + localizer.localize(path = "APP.GENERAL.OR") + " USDC"
-            Solana -> "USDC"
-            Avalanche -> " USDC"
-        }
+        val orSeparator = " " + localizer.localize(path = "APP.GENERAL.OR") + " "
+        val tokens = supportedDepositTokens.joinToString(orSeparator) { it.name }
 
-        val minSlowVal = if (this == TransferChain.Ethereum) {
-            remoteFlags.getParamStoreValue("eth_min_slow", "-")
-        } else {
-            remoteFlags.getParamStoreValue("default_min_slow", "-")
-        }
         val minFastVal = if (this == TransferChain.Ethereum) {
             remoteFlags.getParamStoreValue("eth_min_fast", "-")
         } else {
@@ -151,11 +142,11 @@ enum class TransferChain {
         }
 
         return localizer.localizeWithParams(
-            path = "APP.TURNKEY_ONBOARD.DEPOSIT_NETWORK_WARNING",
+            path = "APP.TURNKEY_ONBOARD.DEPOSIT_LOSS_OF_FUNDS_WARNING",
             params = mapOf(
                 "ASSETS" to tokens,
                 "NETWORK" to name,
-                "MIN_DEPOSIT" to minSlowVal,
+                "LOSS_OF_FUNDS" to localizer.localize(path = "APP.TURNKEY_ONBOARD.LOSS_OF_FUNDS"),
                 "MIN_INSTANT_DEPOSIT" to minFastVal,
                 "MAX_DEPOSIT" to maxVal,
             ),
@@ -183,7 +174,18 @@ enum class TransferChain {
 }
 
 enum class TransferToken {
-    ETH, USDC, POL, SOL, AVAX
+    ETH, USDC, POL, SOL, AVAX;
+
+    fun logoUrl(deploymentUri: String): String {
+        val logoName = when (this) {
+            ETH -> "eth.png"
+            USDC -> "usdc.png"
+            POL -> "pol.png"
+            SOL -> "sol.png"
+            AVAX -> "avax.png"
+        }
+        return "$deploymentUri/currencies/$logoName"
+    }
 }
 
 data class TransferTokenInfo(
@@ -207,16 +209,7 @@ data class TransferTokenInfo(
         return "$deploymentUri/chains/$logoName"
     }
 
-    fun tokenLogoUrl(deploymentUri: String): String {
-        val logoName = when (token) {
-            TransferToken.ETH -> "eth.png"
-            TransferToken.USDC -> "usdc.png"
-            TransferToken.POL -> "pol.png"
-            TransferToken.SOL -> "sol.png"
-            TransferToken.AVAX -> "avax.png"
-        }
-        return "$deploymentUri/currencies/$logoName"
-    }
+    fun tokenLogoUrl(deploymentUri: String): String = token.logoUrl(deploymentUri)
 
     val decimals: Int
         get() = when (token) {

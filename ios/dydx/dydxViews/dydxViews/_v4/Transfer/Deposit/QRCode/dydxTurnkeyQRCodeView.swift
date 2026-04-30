@@ -16,7 +16,8 @@ public class dydxTurnkeyQRCodeViewModel: PlatformViewModel {
     @Published public var subtitle: String?
     @Published public var footer: String?
     @Published public var address: String?
-    @Published public var chainIcon: URL?
+    @Published public var supportedAssetsLabel: String?
+    @Published public var supportedAssetIcons: [URL] = []
     @Published public var onCopyAction: (() -> Void)?
     @Published public var copied: Bool = false
 
@@ -27,7 +28,11 @@ public class dydxTurnkeyQRCodeViewModel: PlatformViewModel {
         vm.subtitle = "Subtitle"
         vm.footer = "Footer"
         vm.address = "0xdeadbeef"
-        vm.chainIcon = URL(string: "https://v4.testnet.dydx.exchange/chains/ethereum.png")
+        vm.supportedAssetsLabel = "Supported assets"
+        vm.supportedAssetIcons = [
+            URL(string: "https://v4.testnet.dydx.exchange/currencies/usdc.png")!,
+            URL(string: "https://v4.testnet.dydx.exchange/currencies/eth.png")!
+        ]
         return vm
     }
 
@@ -82,13 +87,23 @@ public class dydxTurnkeyQRCodeViewModel: PlatformViewModel {
 
     private func createQRCodeSection(style: ThemeStyle) -> some View {
         HStack {
-            HStack {
-                PlatformIconViewModel(type: .url(url: self.chainIcon), clip: .circle(background: .transparent, spacing: 0), size: CGSize(width: 36, height: 36))
-                    .createView(parentStyle: style)
-                    .padding(16)
-                    .topAligned()
-                    .leftAligned()
+            VStack(alignment: .leading, spacing: 8) {
+                if let label = self.supportedAssetsLabel {
+                    Text(label)
+                        .themeColor(foreground: .textTertiary)
+                        .themeFont(fontSize: .small)
+                }
+                HStack(spacing: -10) {
+                    ForEach(Array(self.supportedAssetIcons.enumerated()), id: \.offset) { index, iconUrl in
+                        PlatformIconViewModel(type: .url(url: iconUrl), clip: .circle(background: .layer2, spacing: 4), size: CGSize(width: 28, height: 28))
+                            .createView(parentStyle: style)
+                            .zIndex(Double(self.supportedAssetIcons.count - index))
+                    }
+                }
             }
+            .padding(16)
+            .topAligned()
+            .leftAligned()
             .frame(maxWidth: .infinity)
 
             HStack {

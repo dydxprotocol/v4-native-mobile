@@ -4,6 +4,7 @@ import android.R.attr.bottom
 import android.R.attr.shape
 import android.R.attr.text
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -77,7 +80,8 @@ object DydxTurnkeyQRCodeView : DydxComponent {
         val subtitle: String? = null,
         val footer: String? = null,
         val address: String? = null,
-        val chainIconUrl: String? = null,
+        val supportedAssetsLabel: String? = null,
+        val supportedAssetIconUrls: List<String> = emptyList(),
         val onCopyAction: (() -> Unit)? = null,
         val copied: Boolean = true
     ) {
@@ -87,7 +91,11 @@ object DydxTurnkeyQRCodeView : DydxComponent {
                 subtitle = "Scan the QR code to deposit USDC",
                 footer = "Powered by dYdX Turnkey",
                 address = "0x1234567890abcdef1234567890abcdef12345678",
-                chainIconUrl = "https://example.com/icon.png",
+                supportedAssetsLabel = "Supported assets",
+                supportedAssetIconUrls = listOf(
+                    "https://v4.testnet.dydx.exchange/currencies/eth.png",
+                    "https://v4.testnet.dydx.exchange/currencies/usdc.png",
+                ),
             )
         }
     }
@@ -155,11 +163,39 @@ object DydxTurnkeyQRCodeView : DydxComponent {
                         Box(
                             modifier = Modifier.weight(1f),
                         ) {
-                            PlatformRoundImage(
-                                icon = state.chainIconUrl,
-                                size = 36.dp,
-                                modifier = Modifier.padding(24.dp),
-                            )
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                if (!state.supportedAssetsLabel.isNullOrEmpty()) {
+                                    Text(
+                                        text = state.supportedAssetsLabel,
+                                        style = TextStyle.dydxDefault
+                                            .themeFont(fontSize = ThemeFont.FontSize.small)
+                                            .themeColor(ThemeColor.SemanticColor.text_tertiary),
+                                    )
+                                }
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy((-10).dp),
+                                ) {
+                                    state.supportedAssetIconUrls.forEachIndexed { index, iconUrl ->
+                                        Box(
+                                            modifier = Modifier
+                                                .zIndex((state.supportedAssetIconUrls.size - index).toFloat())
+                                                .background(
+                                                    color = ThemeColor.SemanticColor.layer_2.color,
+                                                    shape = CircleShape,
+                                                )
+                                                .padding(2.dp),
+                                        ) {
+                                            PlatformRoundImage(
+                                                icon = iconUrl,
+                                                size = 28.dp,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         Box(

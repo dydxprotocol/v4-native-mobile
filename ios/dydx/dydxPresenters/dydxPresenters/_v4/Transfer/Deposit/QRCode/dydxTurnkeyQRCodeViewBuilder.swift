@@ -76,7 +76,8 @@ private class dydxTurnkeyQRCodeViewPresenter: HostedViewPresenter<dydxTurnkeyQRC
                     address = addresses?.svmAddress
                 }
                 self.viewModel?.address = address
-                self.viewModel?.chainIcon = URL(string: tokenChain.chainLogoUrl)
+                self.viewModel?.supportedAssetsLabel = DataLocalizer.localize(path: "APP.TURNKEY_ONBOARD.SUPPORTED_ASSETS")
+                self.viewModel?.supportedAssetIcons = tokenChain.supportedDepositTokens.compactMap { URL(string: $0.logoUrl) }
                 self.viewModel?.subtitle = DataLocalizer.localize(path: "APP.DEPOSIT_MODAL.TURNKEY_DEPOSIT_SUBTITLE", params: ["NETWORK": chain])
                 self.viewModel?.footer = tokenChain.depositWarningString
 
