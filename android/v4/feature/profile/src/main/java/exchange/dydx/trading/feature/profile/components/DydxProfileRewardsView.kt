@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,8 +46,6 @@ fun Preview_DydxProfileRewardsView() {
 }
 
 object DydxProfileRewardsView : DydxComponent {
-    private const val LIQUIDATION_REBATES_URL = "https://dydx.trade/DYDX"
-
     data class ViewState(
         val localizer: LocalizerProtocol,
         val title: String,
@@ -56,6 +53,7 @@ object DydxProfileRewardsView : DydxComponent {
         val bodyText: String,
         val countdownLabel: String,
         val countdownText: String,
+        val onTapAction: (() -> Unit)? = null,
     ) {
         companion object {
             val preview = ViewState(
@@ -63,7 +61,7 @@ object DydxProfileRewardsView : DydxComponent {
                 title = "Liquidation Rebates",
                 activeBadgeText = "Active",
                 bodyText = "With the Liquidation Rebate Program, eligible traders liquidated on non-BTC perpetual pairs have the opportunity to earn DYDX rebates on a portion of their losses. Reminder to claim previous loss rebates and check eligibility here.",
-                countdownLabel = "Month April Countdown",
+                countdownLabel = "Month May Countdown",
                 countdownText = "0d 9h 51m 46s",
             )
         }
@@ -83,14 +81,12 @@ object DydxProfileRewardsView : DydxComponent {
             return
         }
 
-        val uriHandler = LocalUriHandler.current
-
         Column(
             modifier = modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(14.dp))
                 .background(color = ThemeColor.SemanticColor.layer_3.color)
-                .clickable { uriHandler.openUri(LIQUIDATION_REBATES_URL) },
+                .clickable(enabled = state.onTapAction != null) { state.onTapAction?.invoke() },
         ) {
             Row(
                 modifier = Modifier

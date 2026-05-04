@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.dydxstatemanager.localizeWithParams
 import exchange.dydx.trading.common.DydxViewModel
+import exchange.dydx.trading.common.navigation.DydxRouter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DydxProfileRewardsViewModel @Inject constructor(
     val localizer: LocalizerProtocol,
+    private val router: DydxRouter,
 ) : ViewModel(), DydxViewModel {
 
     val state: Flow<DydxProfileRewardsView.ViewState?> = flow {
@@ -35,6 +37,9 @@ class DydxProfileRewardsViewModel @Inject constructor(
                         params = mapOf("MONTH" to currentMonthName(now)),
                     ),
                     countdownText = formatCountdown(remainingUntilNextMonthUtc(now)),
+                    onTapAction = {
+                        router.navigateTo(LIQUIDATION_REBATES_URL)
+                    },
                 ),
             )
             delay(1000L)
@@ -76,5 +81,9 @@ class DydxProfileRewardsViewModel @Inject constructor(
         val minutes = (totalSeconds % 3_600) / 60
         val seconds = totalSeconds % 60
         return "${days}d ${hours}h ${minutes}m ${seconds}s"
+    }
+
+    private companion object {
+        const val LIQUIDATION_REBATES_URL = "https://dydx.trade/DYDX"
     }
 }
