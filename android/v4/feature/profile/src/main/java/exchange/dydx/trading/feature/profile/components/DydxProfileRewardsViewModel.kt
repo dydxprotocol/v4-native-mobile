@@ -2,71 +2,88 @@ package exchange.dydx.trading.feature.profile.components
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import exchange.dydx.abacus.output.account.Account
 import exchange.dydx.abacus.protocols.LocalizerProtocol
-import exchange.dydx.abacus.state.manager.HistoricalTradingRewardsPeriod
-import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
-import exchange.dydx.dydxstatemanager.nativeTokenLogoUrl
+import exchange.dydx.dydxstatemanager.localizeWithParams
 import exchange.dydx.trading.common.DydxViewModel
-import exchange.dydx.trading.common.formatter.DydxFormatter
 import exchange.dydx.trading.common.navigation.DydxRouter
-import exchange.dydx.trading.common.navigation.ProfileRoutes
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import java.time.Instant
+import kotlinx.coroutines.flow.flow
+import java.time.Duration
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.TextStyle
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class DydxProfileRewardsViewModel @Inject constructor(
     val localizer: LocalizerProtocol,
-    private val abacusStateManager: AbacusStateManagerProtocol,
-    private val formatter: DydxFormatter,
     private val router: DydxRouter,
 ) : ViewModel(), DydxViewModel {
 
-    init {
-        abacusStateManager.setHistoricalTradingRewardsPeriod(HistoricalTradingRewardsPeriod.WEEKLY)
+    val state: Flow<DydxProfileRewardsView.ViewState?> = flow {
+        while (true) {
+            val now = ZonedDateTime.now(ZoneOffset.UTC)
+            emit(
+                DydxProfileRewardsView.ViewState(
+                    localizer = localizer,
+                    title = localizer.localize("APP.GENERAL.LIQUIDATION_REBATES"),
+                    activeBadgeText = localizer.localize("APP.GENERAL.ACTIVE"),
+                    bodyText = buildBodyText(),
+                    countdownLabel = localizer.localizeWithParams(
+                        path = "APP.REWARDS_SURGE_APRIL_2025.MONTH_COUNTDOWN",
+                        params = mapOf("MONTH" to currentMonthName(now)),
+                    ),
+                    countdownText = formatCountdown(remainingUntilNextMonthUtc(now)),
+                    onTapAction = {
+                        router.navigateTo(LIQUIDATION_REBATES_URL)
+                    },
+                ),
+            )
+            delay(1000L)
+        }
+    }.distinctUntilChanged()
+
+    private fun buildBodyText(): String {
+        val body = localizer.localize("APP.REWARDS_SURGE_APRIL_2025.LIQUIDATION_REBATES_BODY")
+        val subBody = localizer.localizeWithParams(
+            path = "APP.REWARDS_SURGE_APRIL_2025.LIQUIDATION_REBATES_SUB_BODY",
+            params = mapOf(
+                "LOSS_REBATES_LINK" to localizer.localize("APP.REWARDS_SURGE_APRIL_2025.LOSS_REBATES"),
+                "CHECK_ELIGIBILITY_LINK" to localizer.localize("APP.GENERAL.HERE"),
+            ),
+        )
+        return "$body $subBody"
     }
 
-    val state: Flow<DydxProfileRewardsView.ViewState?> = abacusStateManager.state.account
-        .map {
-            createViewState(it)
-        }
-        .distinctUntilChanged()
+    private fun currentMonthName(now: ZonedDateTime): String {
+        return now.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+    }
 
-    private fun createViewState(account: Account?): DydxProfileRewardsView.ViewState {
-        val rewards = account?.tradingRewards
-        val total = rewards?.total
-        val thisWeek = rewards?.filledHistory?.get("WEEKLY")?.lastOrNull()
-        val thisWeekAmount = thisWeek?.amount
-        val thisWeekStart = thisWeek?.startedAtInMilliseconds?.toLong()?.let {
-            Instant.ofEpochMilli(it)
-        }
-        val thisWeekStartText = thisWeekStart?.let { formatter.utcDate(it) }
-        val thisWeekEnd = thisWeek?.endedAtInMilliseconds?.toLong()?.let {
-            Instant.ofEpochMilli(it)
-        }
-        val thisWeekEndText = thisWeekEnd?.let { formatter.utcDate(it) }
-        return DydxProfileRewardsView.ViewState(
-            localizer = localizer,
-            summary = DydxRewardsSummaryState(
-                titleText = localizer.localize("APP.GENERAL.TRADING_REWARDS"),
-                rewards7DaysText = formatter.raw(thisWeekAmount, 6),
-                range7DaysText = thisWeekStartText?.let { start ->
-                    thisWeekEndText?.let { end ->
-                        "$start - $end"
-                    } ?: "$start - "
-                } ?: "",
-                rewardsAllTimeText = formatter.raw(total, 6),
-            ),
-            nativeTokenLogoUrl = abacusStateManager.nativeTokenLogoUrl,
-            onTapAction = {
-                router.navigateTo(
-                    route = ProfileRoutes.rewards,
-                    presentation = DydxRouter.Presentation.Push,
-                )
-            },
-        )
+    private fun remainingUntilNextMonthUtc(now: ZonedDateTime): Duration {
+        val nextMonthStart = now
+            .plusMonths(1)
+            .withDayOfMonth(1)
+            .withHour(0)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+        val duration = Duration.between(now, nextMonthStart)
+        return if (duration.isNegative) Duration.ZERO else duration
+    }
+
+    private fun formatCountdown(duration: Duration): String {
+        val totalSeconds = duration.seconds
+        val days = totalSeconds / 86_400
+        val hours = (totalSeconds % 86_400) / 3_600
+        val minutes = (totalSeconds % 3_600) / 60
+        val seconds = totalSeconds % 60
+        return "${days}d ${hours}h ${minutes}m ${seconds}s"
+    }
+
+    private companion object {
+        const val LIQUIDATION_REBATES_URL = "https://dydx.trade/DYDX"
     }
 }

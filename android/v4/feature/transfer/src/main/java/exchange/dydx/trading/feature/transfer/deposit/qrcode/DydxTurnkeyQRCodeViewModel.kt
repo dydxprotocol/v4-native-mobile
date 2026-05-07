@@ -57,28 +57,16 @@ class DydxTurnkeyQRCodeViewModel @Inject constructor(
             TransferChain.Avalanche -> addresses.avalancheAddress
             else -> null
         }
-        val minSlowVal = if (chain == TransferChain.Ethereum) {
-            remoteFlags.getParamStoreValue("eth_min_slow", "-")
-        } else {
-            remoteFlags.getParamStoreValue("default_min_slow", "-")
-        }
-        val minFastVal = if (chain == TransferChain.Ethereum) {
-            remoteFlags.getParamStoreValue("eth_min_fast", "-")
-        } else {
-            remoteFlags.getParamStoreValue("default_min_fast", "-")
-        }
-        val maxVal = if (chain == TransferChain.Ethereum) {
-            remoteFlags.getParamStoreValue("eth_max", "-")
-        } else {
-            remoteFlags.getParamStoreValue("default_max", "-")
-        }
         return DydxTurnkeyQRCodeView.ViewState(
             localizer = localizer,
             backAction = {
                 router.navigateBack()
             },
             address = address,
-            chainIconUrl = chain.chainLogoUrl(abacusStateManager.deploymentUri),
+            supportedAssetsLabel = localizer.localize(path = "APP.TURNKEY_ONBOARD.SUPPORTED_ASSETS"),
+            supportedAssetIconUrls = chain.supportedDepositTokens.map {
+                it.logoUrl(abacusStateManager.deploymentUri)
+            },
             subtitle = localizer.localizeWithParams(
                 path = "APP.DEPOSIT_MODAL.TURNKEY_DEPOSIT_SUBTITLE",
                 params = mapOf(
