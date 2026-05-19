@@ -449,14 +449,21 @@ abstract_target 'iOS' do
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '17.6'
             config.build_settings['SWIFT_VERSION'] = '5.0'
             config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
-            
+
             if config.base_configuration_reference
               xcconfig_path = config.base_configuration_reference.real_path
               xcconfig = File.read(xcconfig_path)
               xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
               File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
             end
-            
+
+          end
+
+          if target.name == 'fmt'
+            target.build_configurations.each do |config|
+              config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+              config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FMT_USE_CONSTEVAL=0'
+            end
           end
       end
   end
