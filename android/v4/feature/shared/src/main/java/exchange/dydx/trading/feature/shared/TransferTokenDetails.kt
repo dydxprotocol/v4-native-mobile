@@ -130,6 +130,11 @@ enum class TransferChain {
         val orSeparator = " " + localizer.localize(path = "APP.GENERAL.OR") + " "
         val tokens = supportedDepositTokens.joinToString(orSeparator) { it.name }
 
+        val minSlowVal = if (this == TransferChain.Ethereum) {
+            remoteFlags.getParamStoreValue("eth_min_slow", "-")
+        } else {
+            remoteFlags.getParamStoreValue("default_min_slow", "-")
+        }
         val minFastVal = if (this == TransferChain.Ethereum) {
             remoteFlags.getParamStoreValue("eth_min_fast", "-")
         } else {
@@ -147,6 +152,7 @@ enum class TransferChain {
                 "ASSETS" to tokens,
                 "NETWORK" to name,
                 "LOSS_OF_FUNDS" to localizer.localize(path = "APP.TURNKEY_ONBOARD.LOSS_OF_FUNDS"),
+                "MIN_AMOUNT_TO_DEPOSIT" to minSlowVal,
                 "MIN_INSTANT_DEPOSIT" to minFastVal,
                 "MAX_DEPOSIT" to maxVal,
             ),

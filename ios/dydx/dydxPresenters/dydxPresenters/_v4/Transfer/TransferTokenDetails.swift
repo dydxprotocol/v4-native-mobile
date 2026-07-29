@@ -135,13 +135,16 @@ enum TransferChain: String {
             .map { $0.rawValue }
             .joined(separator: " " + DataLocalizer.localize(path: "APP.GENERAL.OR") + " ")
 
+        let minSlow: String
         let minFast: String
         let maxVal: String
         switch self {
         case .Ethereum:
+            minSlow = dydxTurnkeyDepositParam.eth_min_slow.string
             minFast = dydxTurnkeyDepositParam.eth_min_fast.string
             maxVal = dydxTurnkeyDepositParam.eth_max.string
         case .Arbitrum, .Base, .Optimism, .Polygon, .Solana, .Avalanche:
+            minSlow = dydxTurnkeyDepositParam.default_min_slow.string
             minFast = dydxTurnkeyDepositParam.default_min_fast.string
             maxVal = dydxTurnkeyDepositParam.default_max.string
         }
@@ -150,6 +153,7 @@ enum TransferChain: String {
             "ASSETS": tokens,
             "NETWORK": rawValue,
             "LOSS_OF_FUNDS": DataLocalizer.localize(path: "APP.TURNKEY_ONBOARD.LOSS_OF_FUNDS"),
+            "MIN_AMOUNT_TO_DEPOSIT": minSlow,
             "MIN_INSTANT_DEPOSIT": minFast,
             "MAX_DEPOSIT": maxVal
         ])
