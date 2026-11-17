@@ -103,7 +103,8 @@ private struct VaultDepositWithdrawConfirmationView: View {
             HStack(alignment: .center, spacing: 16) {
                 generationTransferStep(title: transferType.transferOriginTitleText, thumbnail: transferType.transferOriginImage, subtitle: dydxFormatter.shared.dollar(number: viewModel.amount)  ?? "--")
                 Image(systemName: "chevron.forward.dotted.chevron.forward")
-                    .resizable().scaledToFit()
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 16, height: 16)
                     .themeColor(foreground: .textTertiary)
                 generationTransferStep(title: transferType.transferDestinationTitleText, thumbnail: transferType.transferDestinationImage, subtitle: transferType.transferDestinationSubtitleText)
@@ -123,7 +124,8 @@ private struct VaultDepositWithdrawConfirmationView: View {
             VStack(spacing: 8) {
                 if let thumbnail {
                     thumbnail
-                        .resizable().scaledToFit()
+                        .resizable()
+                        .scaledToFit()
                         .frame(width: 32, height: 32)
                 } else {
                     let thumbnailText = subtitle.prefix(1)

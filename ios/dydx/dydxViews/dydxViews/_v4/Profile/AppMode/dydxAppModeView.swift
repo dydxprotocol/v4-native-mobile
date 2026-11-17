@@ -76,7 +76,8 @@ public class dydxAppModeViewModel: PlatformViewModel {
                         .themeColor(background: .layer4)
 
                         Image("mode_simple", bundle: Bundle.dydxView)
-                            .resizable().scaledToFit()
+                            .resizable()
+                            .scaledToFit()
                             .padding(.horizontal)
                             .gradientShade(backgroundColor: .layer5, height: 64)
                     }
@@ -106,7 +107,8 @@ public class dydxAppModeViewModel: PlatformViewModel {
                         .themeColor(background: .layer4)
 
                         Image("mode_pro", bundle: Bundle.dydxView)
-                            .resizable().scaledToFit()
+                            .resizable()
+                            .scaledToFit()
                             .padding(.horizontal)
                             .gradientShade(backgroundColor: .layer5, height: 64)
                     }

@@ -54,7 +54,8 @@ public class dydxTransferNobleAddressViewModel: PlatformViewModel {
                             let uiImage = UIImage(cgImage: cgImage)
                             Spacer()
                             Image(uiImage: uiImage)
-                                .resizable().scaledToFit()
+                                .resizable()
+                                .scaledToFit()
                                 .padding(.horizontal, geo.size.width / 6)
                             Spacer()
                         } else {

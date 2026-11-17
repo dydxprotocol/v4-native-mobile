@@ -33,7 +33,8 @@ public class dydxOnboardQRCodeViewModel: PlatformViewModel {
                        let cgImage = EFQRCode.generate(for: qrCode) {
                         let uiImage = UIImage(cgImage: cgImage)
                         Image(uiImage: uiImage)
-                            .resizable().scaledToFit()
+                            .resizable()
+                            .scaledToFit()
                             .padding(.horizontal, 32)
                      } else {
                         PlatformView.nilView
