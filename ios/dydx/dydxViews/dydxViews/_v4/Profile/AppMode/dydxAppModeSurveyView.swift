@@ -70,8 +70,7 @@ public class dydxAppModeSurveyViewModel: PlatformViewModel {
 
             let view = VStack(alignment: .leading, spacing: 24) {
                 Image("survey_logo", bundle: Bundle.dydxView)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .resizable().scaledToFit()
                     .frame(width: 92, height: 92)
                     .padding(.horizontal)
 

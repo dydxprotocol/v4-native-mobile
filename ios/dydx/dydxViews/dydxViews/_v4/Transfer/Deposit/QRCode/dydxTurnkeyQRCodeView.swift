@@ -111,8 +111,7 @@ public class dydxTurnkeyQRCodeViewModel: PlatformViewModel {
                 if let address = self.address, let cgImage = EFQRCode.generate(for: address, backgroundColor: ThemeColor.SemanticColor.layer2.color.cgColor!, foregroundColor: ThemeColor.SemanticColor.textPrimary.color.cgColor!, icon: icon?.cgImage, pointStyle: .circle, isTimingPointStyled: true) {
                     let uiImage = UIImage(cgImage: cgImage)
                     Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .resizable().scaledToFit()
                         .padding(.horizontal, 8)
                 } else {
                     Spacer()

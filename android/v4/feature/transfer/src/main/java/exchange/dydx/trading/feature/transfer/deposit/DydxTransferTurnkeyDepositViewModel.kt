@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.trading.common.DydxViewModel
-import exchange.dydx.trading.common.featureflags.DydxBoolFeatureFlag
 import exchange.dydx.trading.common.featureflags.DydxFeatureFlags
 import exchange.dydx.trading.common.formatter.DydxFormatter
 import exchange.dydx.trading.common.navigation.DydxRouter
@@ -52,13 +51,8 @@ class DydxTransferTurnkeyDepositViewModel @Inject constructor(
             closeAction = {
                 router.navigateBack()
             },
-            fiatAction = if (featureFlags.isFeatureEnabled(DydxBoolFeatureFlag.ff_fiat_deposit)) {
-                {
-                    router.navigateTo(TransferRoutes.transfer_fiat_deposit, presentation = Presentation.Push)
-                }
-            } else {
-                null
-            },
+            // USDC migration (v9.9): MoonPay buys USDC on Noble, which would be stranded. Hidden until it targets Injective.
+            fiatAction = null,
             items = chainOrders.mapNotNull { tokenInfo ->
                 val chain = tokenInfos.firstOrNull { it.chain == tokenInfo }
                 chain?.let { createItem(it) }

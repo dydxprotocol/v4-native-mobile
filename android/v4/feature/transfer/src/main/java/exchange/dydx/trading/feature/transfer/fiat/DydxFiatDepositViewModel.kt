@@ -52,6 +52,10 @@ class DydxFiatDepositViewModel @Inject constructor(
         }
             .distinctUntilChanged()
 
+    // USDC migration (v9.9): MoonPay delivers USDC on Noble to the user's Noble address, where it is now
+    // rejected and would be stranded. Never launch it until it targets Injective.
+    private val moonPayPaused = true
+
     private fun createViewState(
         currentValue: String,
         currentWallet: DydxWalletInstance?
@@ -79,12 +83,12 @@ class DydxFiatDepositViewModel @Inject constructor(
                 router.navigateBack()
             },
             ctaAction = {
-                if (nobleAddress == null || currentValueDouble < minAmount) {
+                if (moonPayPaused || nobleAddress == null || currentValueDouble < minAmount) {
                     return@ViewState
                 }
                 showMoonPayUI(targetAddress = nobleAddress, usdAmount = currentValueDouble)
             },
-            ctaEnabled = currentValueDouble >= minAmount,
+            ctaEnabled = !moonPayPaused && currentValueDouble >= minAmount,
             providerName = "MoonPay",
             providerIcon = R.drawable.icon_moonpay,
             providerSubtitle = localizer.localize("APP.DEPOSIT_WITH_FIAT.MOONPAY_SUPPORT_ANDROID"),

@@ -32,6 +32,21 @@ private class dydxMarketsViewController: HostingViewController<PlatformView, dyd
     }
 }
 
+extension dydxMarketsBannerViewModel {
+    /// USDC migration notice, shown on the Portfolio (home) and Markets screens.
+    static func usdcMigration() -> dydxMarketsBannerViewModel {
+        dydxMarketsBannerViewModel(
+            text: DataLocalizer.localize(path: "APP.NOTIFICATIONS.USDC_MIGRATION"),
+            linkText: DataLocalizer.localize(path: "APP.GENERAL.LEARN_MORE"),
+            navigationAction: {
+                if let url = URL(string: "https://www.dydx.xyz/blog/usdc-migration-to-injective") {
+                    URLHandler.shared?.open(url, completionHandler: nil)
+                }
+            }
+        )
+    }
+}
+
 private class dydxMarketsViewPresenter: HostedViewPresenter<dydxMarketsViewModel> {
     @Published private var selectedSortAction: SortAction = SortAction.actions.first!
     @Published private var selectedFilterAction: FilterAction = FilterAction.actions.first!
@@ -46,15 +61,7 @@ private class dydxMarketsViewPresenter: HostedViewPresenter<dydxMarketsViewModel
             Router.shared?.navigate(to: RoutingRequest(path: "/markets/search"), animated: true, completion: nil)
         })
 
-        // TODO: remove after election day
-        // logic here turns this banner display off after election day
-        // Nov 6 12am ET https://currentmillis.com/?1730869200010
-        let electionDate = Date(timeIntervalSince1970: 1730869200)
-        if Date.now <= electionDate && dydxBoolFeatureFlag.showPredictionMarketsUI.isEnabled {
-            viewModel.banner = dydxMarketsBannerViewModel(navigationAction: {
-                Router.shared?.navigate(to: RoutingRequest(path: "/trade/TRUMPWIN-USD"), animated: true, completion: nil)
-            })
-        }
+        viewModel.banner = .usdcMigration()
 
         viewModel.summary = dydxMarketSummaryViewModel()
         viewModel.filter = dydxMarketAssetFilterViewModel(contents: FilterAction.actions.map(\.content),

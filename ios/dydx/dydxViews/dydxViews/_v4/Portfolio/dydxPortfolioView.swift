@@ -36,6 +36,7 @@ public class dydxPortfolioViewModel: PlatformViewModel {
     @Published public var expanded: Bool = false
     @Published public var expandAction: (() -> Void)?
     @Published public var sectionSelection: PortfolioSection = .positions
+    @Published public var banner: dydxMarketsBannerViewModel?
 
     public init() {
         super.init()
@@ -163,6 +164,12 @@ private struct dydxOverviewView: View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    if let banner = viewModel.banner {
+                        banner.createView()
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 8)
+                    }
+
                     ZStack {
                         VStack {
                             Spacer()

@@ -48,8 +48,7 @@ public class QRCodeDisplayModel: PlatformViewModel {
                     Spacer()
                     if let uiImage = self.content?.qrCodeImage {
                         Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .resizable().scaledToFit()
                     } else {
                         PlatformView.nilView
                     }

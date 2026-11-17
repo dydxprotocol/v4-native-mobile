@@ -66,6 +66,11 @@ class DydxTransferDepositCtaButtonModel @Inject constructor(
     private val tracker: Tracking,
 ) : ViewModel(), DydxViewModel {
     private val carteraProvider: CarteraProvider = CarteraProvider(context)
+
+    // USDC migration (v9.9): wallet deposits are quoted by Skip with the user's Noble address in the route.
+    // Noble deposits are now rejected and refunded to that Noble address, where they would be stranded
+    // (the Noble sweep is disabled). Paused until Abacus routes deposits via Injective.
+    private val walletDepositsPaused = true
     private val isSubmittingFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val state: Flow<DydxTransferDepositCtaButton.ViewState?> =
@@ -105,6 +110,9 @@ class DydxTransferDepositCtaButtonModel @Inject constructor(
                     )
                     !isOnboarded -> InputCtaButton.State.Disabled(
                         localizer.localize("APP.TURNKEY_ONBOARD.SIGN_IN_TITLE"),
+                    )
+                    walletDepositsPaused -> InputCtaButton.State.Disabled(
+                        localizer.localize("APP.ONBOARDING.TRANSFERS_PAUSED"),
                     )
                     hasValidSize(transferInput) -> {
                         if (belowMinSizeForDeposit(transferInput)) {
@@ -161,7 +169,7 @@ class DydxTransferDepositCtaButtonModel @Inject constructor(
                             route = OnboardingRoutes.welcome,
                             presentation = DydxRouter.Presentation.Modal,
                         )
-                    } else {
+                    } else if (!walletDepositsPaused) {
                         isSubmittingFlow.value = true
                         if (transferInput != null) {
                             deposit(transferInput, wallet, selectedRoute)
@@ -192,6 +200,7 @@ class DydxTransferDepositCtaButtonModel @Inject constructor(
         wallet: DydxWalletInstance?,
         selectedRoute: TransferRouteSelection,
     ) {
+        if (walletDepositsPaused) return
         val wallet = wallet ?: return
         val walletAddress = wallet.ethereumAddress ?: return
         val tokenAddress = transferInput.tokenAddress(featureFlags) ?: return
