@@ -112,7 +112,7 @@ public class dydxTurnkeyQRCodeViewModel: PlatformViewModel {
                     let uiImage = UIImage(cgImage: cgImage)
                     Image(uiImage: uiImage)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .scaledToFit()
                         .padding(.horizontal, 8)
                 } else {
                     Spacer()

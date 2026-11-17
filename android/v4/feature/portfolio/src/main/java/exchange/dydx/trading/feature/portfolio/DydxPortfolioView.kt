@@ -45,6 +45,7 @@ import exchange.dydx.trading.feature.portfolio.components.positions.DydxPortfoli
 import exchange.dydx.trading.feature.portfolio.components.vault.DydxPortfolioVaultView
 import exchange.dydx.trading.feature.shared.apprating.AppRatingDialog
 import exchange.dydx.trading.feature.shared.apprating.AppRatingDialogScaffold
+import exchange.dydx.trading.feature.shared.banner.DydxUsdcMigrationBannerView
 import exchange.dydx.trading.feature.shared.bottombar.DydxBottomBarScaffold
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -165,6 +166,12 @@ object DydxPortfolioView : DydxComponent {
                 state = listState,
             ) {
                 item(key = "summary") {
+                    DydxUsdcMigrationBannerView.Content(
+                        Modifier
+                            .padding(horizontal = ThemeShapes.HorizontalPadding)
+                            .padding(bottom = ThemeShapes.VerticalPadding),
+                    )
+
                     DydxPortfolioChartView.Content(Modifier)
 
                     DydxPortfolioDetailsView.Content(Modifier)

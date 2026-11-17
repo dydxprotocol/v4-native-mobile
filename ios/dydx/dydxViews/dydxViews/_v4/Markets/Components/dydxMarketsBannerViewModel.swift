@@ -11,14 +11,20 @@ import PlatformUI
 import Utilities
 
 public class dydxMarketsBannerViewModel: PlatformViewModel {
+    public var text: String
+    public var linkText: String?
     public var navigationAction: (() -> Void)
 
     static var previewValue: dydxMarketsBannerViewModel = {
-        let vm = dydxMarketsBannerViewModel(navigationAction: {})
+        let vm = dydxMarketsBannerViewModel(text: "Upcoming USDC migration from Noble to Injective.",
+                                            linkText: "Learn more",
+                                            navigationAction: {})
         return vm
     }()
 
-    public init(navigationAction: @escaping (() -> Void)) {
+    public init(text: String, linkText: String? = nil, navigationAction: @escaping (() -> Void)) {
+        self.text = text
+        self.linkText = linkText
         self.navigationAction = navigationAction
     }
 
@@ -34,42 +40,37 @@ public class dydxMarketsBannerViewModel: PlatformViewModel {
 private struct dydxMarketsBannerView: View {
     var viewModel: dydxMarketsBannerViewModel
 
-    var textStack: some View {
-        HStack(alignment: .top, spacing: 6) {
-            Text("🇺🇸")
-                .themeFont(fontType: .base, fontSize: .medium)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(localizerPathKey: "APP.PREDICTION_MARKET.LEVERAGE_TRADE_US_ELECTION_SHORT")
-                    .themeFont(fontType: .base, fontSize: .medium)
-                    .themeColor(foreground: .textPrimary)
-                Text(localizerPathKey: "APP.PREDICTION_MARKET.WITH_PREDICTION_MARKETS")
-                    .themeFont(fontType: .base, fontSize: .small)
-                    .themeColor(foreground: .textSecondary)
-            }
-        }
-    }
-
-    var navButton: some View {
-        Button(action: viewModel.navigationAction) {
-            Text("→")
-                .themeFont(fontType: .base, fontSize: .large)
-                .themeColor(foreground: .textSecondary)
-                .centerAligned()
-        }
-        .frame(width: 32, height: 32)
-        .themeColor(background: .layer6)
-        .borderAndClip(style: .circle, borderColor: .layer6)
+    private var message: Text {
+        let text = Text(viewModel.text)
+            .foregroundColor(ThemeColor.SemanticColor.textPrimary.color)
+        guard let linkText = viewModel.linkText else { return text }
+        return text + Text(" ") + Text(linkText)
+            .foregroundColor(ThemeColor.SemanticColor.colorPurple.color)
     }
 
     var body: some View {
-        HStack(spacing: 0) {
-            textStack
-            Spacer(minLength: 8)
-            navButton
+        Button(action: viewModel.navigationAction) {
+            HStack(alignment: .top, spacing: 8) {
+                PlatformIconViewModel(type: .asset(name: "icon_info", bundle: .dydxView),
+                                      clip: .noClip,
+                                      size: .init(width: 16, height: 16),
+                                      templateColor: .colorPurple)
+                    .createView()
+                message
+                    .themeFont(fontType: .base, fontSize: .small)
+                    .multilineTextAlignment(.leading)
+                    .leftAligned()
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 16)
+            .padding(.vertical, 12)
+            .themeColor(background: .layer1)
+            .overlay(alignment: .leading) {
+                ThemeColor.SemanticColor.colorPurple.color
+                    .frame(width: 4)
+            }
+            .clipShape(.rect(cornerRadius: 16))
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .themeColor(background: .layer1)
-        .clipShape(.rect(cornerRadius: 16))
+        .buttonStyle(.plain)
     }
 }

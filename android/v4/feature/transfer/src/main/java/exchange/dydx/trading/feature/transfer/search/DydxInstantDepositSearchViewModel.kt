@@ -5,12 +5,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.trading.common.DydxViewModel
-import exchange.dydx.trading.common.featureflags.DydxBoolFeatureFlag
 import exchange.dydx.trading.common.featureflags.DydxFeatureFlags
 import exchange.dydx.trading.common.formatter.DydxFormatter
 import exchange.dydx.trading.common.navigation.DydxRouter
-import exchange.dydx.trading.common.navigation.DydxRouter.Presentation
-import exchange.dydx.trading.common.navigation.TransferRoutes
 import exchange.dydx.trading.feature.shared.TransferTokenDetails
 import exchange.dydx.trading.feature.shared.TransferTokenInfo
 import kotlinx.coroutines.flow.Flow
@@ -63,22 +60,10 @@ class DydxInstantDepositSearchViewModel @Inject constructor(
             },
             tokens = tokens,
             otherTokens = otherTokens,
-            nobleItem = DydxTransferNobleItemView.ViewState(
-                localizer = localizer,
-                nobleAdddressAction = {
-                    router.navigateTo(TransferRoutes.transfer_deposit_noble, presentation = Presentation.Push)
-                },
-            ),
-            fiatItem = if (featureFlags.isFeatureEnabled(DydxBoolFeatureFlag.ff_fiat_deposit)) {
-                DydxTransferFiatItemView.ViewState(
-                    localizer = localizer,
-                    selectAction = {
-                        router.navigateTo(TransferRoutes.transfer_fiat_deposit, presentation = Presentation.Push)
-                    },
-                )
-            } else {
-                null
-            },
+            // Deposits to the Noble address are rejected after the v9.9 USDC migration to Injective.
+            nobleItem = null,
+            // USDC migration (v9.9): MoonPay buys USDC on Noble, which would be stranded. Hidden until it targets Injective.
+            fiatItem = null,
         )
     }
 

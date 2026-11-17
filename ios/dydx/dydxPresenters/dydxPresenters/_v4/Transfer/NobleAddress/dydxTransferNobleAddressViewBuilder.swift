@@ -49,24 +49,9 @@ private class dydxTransferNobleAddressViewPresenter: HostedViewPresenter<dydxTra
     override func start() {
         super.start()
 
-        AbacusStateManager.shared.state.currentWallet
-            .sink { [weak self] wallet in
-                guard let self else { return }
-                if let address = wallet?.cosmoAddress {
-                    let nobleAddress = AbacusStringUtils().toNobleAddress(dydxAddress: address)
-                    self.viewModel?.address = nobleAddress
-                    self.viewModel?.copyAction = {
-                        UIPasteboard.general.string = nobleAddress
-                        ErrorInfo.shared?.info(title: nil,
-                                               message: DataLocalizer.localize(path: "APP.V4.NOBLE_ADDRESS_COPIED"),
-                                               type: .info,
-                                               error: nil, time: 3)
-                    }
-                } else {
-                    self.viewModel?.address = nil
-                    self.viewModel?.copyAction = nil
-                }
-             }
-            .store(in: &subscriptions)
+        // USDC migration (v9.9): deposits to the Noble address are rejected and would be stranded there
+        // (the Noble sweep is disabled), so never show or copy the address, even if this screen is deep-linked.
+        viewModel?.address = nil
+        viewModel?.copyAction = nil
     }
 }

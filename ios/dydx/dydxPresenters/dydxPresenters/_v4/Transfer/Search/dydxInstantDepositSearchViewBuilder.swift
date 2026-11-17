@@ -81,25 +81,12 @@ private class dydxInstantDepositSearchViewPresenter: HostedViewPresenter<dydxIns
             .store(in: &subscriptions)
 
         AbacusStateManager.shared.state.currentWallet
-            .sink { [weak self] wallet in
+            .sink { [weak self] _ in
                 guard let self else { return }
-                if wallet != nil {
-                    self.viewModel?.nobleItem = dydxTransferNobleItemViewModel()
-                    self.viewModel?.nobleItem?.nobleAdddressAction = {
-                        Router.shared?.navigate(to: RoutingRequest(path: "/transfer/deposit/noble"), animated: true, completion: nil)
-                    }
-                    if dydxBoolFeatureFlag.fiat_deposit.isEnabled {
-                        self.viewModel?.fiatItem = dydxTransferFiatItemViewModel()
-                        self.viewModel?.fiatItem?.selectAction = {
-                            Router.shared?.navigate(to: RoutingRequest(path: "/transfer/deposit/fiat"), animated: true, completion: nil)
-                        }
-                    } else {
-                        self.viewModel?.fiatItem = nil
-                    }
-                } else {
-                    self.viewModel?.nobleItem = nil
-                    self.viewModel?.fiatItem = nil
-                }
+                // USDC migration (v9.9): the Noble address option and MoonPay (which buys USDC on Noble)
+                // both put funds on Noble, where they are now rejected and would be stranded.
+                self.viewModel?.nobleItem = nil
+                self.viewModel?.fiatItem = nil
              }
             .store(in: &subscriptions)
     }

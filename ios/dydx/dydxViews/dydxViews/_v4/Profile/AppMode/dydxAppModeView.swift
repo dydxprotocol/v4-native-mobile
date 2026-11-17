@@ -77,7 +77,7 @@ public class dydxAppModeViewModel: PlatformViewModel {
 
                         Image("mode_simple", bundle: Bundle.dydxView)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFit()
                             .padding(.horizontal)
                             .gradientShade(backgroundColor: .layer5, height: 64)
                     }
@@ -108,7 +108,7 @@ public class dydxAppModeViewModel: PlatformViewModel {
 
                         Image("mode_pro", bundle: Bundle.dydxView)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFit()
                             .padding(.horizontal)
                             .gradientShade(backgroundColor: .layer5, height: 64)
                     }

@@ -47,11 +47,8 @@ class dydxTurnkeyDepositViewPresenter: HostedViewPresenter<dydxTurnkeyDepositVie
             }
         }
 
-        if dydxBoolFeatureFlag.fiat_deposit.isEnabled {
-            viewModel?.fiatAction = {
-                Router.shared?.navigate(to: RoutingRequest(path: "/transfer/deposit/fiat"), animated: true, completion: nil)
-            }
-        }
+        // USDC migration (v9.9): MoonPay buys USDC on Noble, which would be stranded. Hidden until it targets Injective.
+        viewModel?.fiatAction = nil
     }
 
     private func createItem(for tokenInfo: TransferTokenInfo) -> dydxTurnkeyDepositViewModel.Item {

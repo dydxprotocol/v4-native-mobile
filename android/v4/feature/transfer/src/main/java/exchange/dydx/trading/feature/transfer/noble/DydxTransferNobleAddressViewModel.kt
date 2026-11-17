@@ -6,7 +6,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import exchange.dydx.abacus.protocols.LocalizerProtocol
-import exchange.dydx.abacus.utils.AbacusStringUtils
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.dydxstatemanager.clientState.wallets.DydxWalletInstance
 import exchange.dydx.platformui.components.container.PlatformInfo
@@ -37,12 +36,9 @@ class DydxTransferNobleAddressViewModel @Inject constructor(
     private fun createViewState(
         currentWallet: DydxWalletInstance?
     ): DydxTransferNobleAddressView.ViewState {
-        val cosmosAddress = currentWallet?.cosmoAddress
-        val nobleAddress = if (cosmosAddress != null) {
-            AbacusStringUtils.toNobleAddress(cosmosAddress)
-        } else {
-            null
-        }
+        // USDC migration (v9.9): deposits to the Noble address are rejected and would be stranded there
+        // (the Noble sweep is disabled), so never show or copy the address, even if this screen is deep-linked.
+        val nobleAddress: String? = null
         return DydxTransferNobleAddressView.ViewState(
             localizer = localizer,
             address = nobleAddress,

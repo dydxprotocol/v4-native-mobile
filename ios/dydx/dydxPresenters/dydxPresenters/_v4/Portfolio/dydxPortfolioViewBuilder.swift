@@ -115,6 +115,7 @@ private class dydxPortfolioViewPresenter: HostedViewPresenter<dydxPortfolioViewM
         }
         viewModel.sectionSelection = .positions
         viewModel.sections.sectionIndex = 0
+        viewModel.banner = .usdcMigration()
 
         self.viewModel = viewModel
 

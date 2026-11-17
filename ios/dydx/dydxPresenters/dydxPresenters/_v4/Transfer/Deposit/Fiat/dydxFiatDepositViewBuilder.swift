@@ -80,7 +80,14 @@ private class dydxFiatDepositViewPresenter: HostedViewPresenter<dydxFiatDepositV
         }
     }
 
+    // USDC migration (v9.9): MoonPay delivers USDC on Noble to the user's Noble address, where it is now
+    // rejected and would be stranded. Never launch it until it targets Injective.
+    private static let moonPayPaused = true
+
     private func showMoonPayUI() {
+        guard !Self.moonPayPaused else {
+            return
+        }
         guard let depositAmount, depositAmount >= minAmount else {
             return
         }

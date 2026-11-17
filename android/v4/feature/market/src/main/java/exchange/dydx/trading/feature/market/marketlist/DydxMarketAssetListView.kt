@@ -36,6 +36,7 @@ import exchange.dydx.trading.feature.market.marketlist.components.DydxMarketAsse
 import exchange.dydx.trading.feature.market.marketlist.components.DydxMarketAssetSortView
 import exchange.dydx.trading.feature.market.marketlist.components.DydxMarketHeaderView
 import exchange.dydx.trading.feature.market.marketlist.components.DydxMarketSummaryView
+import exchange.dydx.trading.feature.shared.banner.DydxUsdcMigrationBannerView
 import exchange.dydx.trading.feature.shared.bottombar.DydxBottomBarScaffold
 import kotlinx.coroutines.launch
 
@@ -102,12 +103,12 @@ object DydxMarketAssetListView : DydxComponent {
                     state = listState,
                 ) {
                     item(key = "summary") {
-//                        DydxPredictionMarketBannerView.Content(
-//                            Modifier.padding(
-//                                horizontal = ThemeShapes.HorizontalPadding,
-//                            )
-//                                .padding(bottom = ThemeShapes.VerticalPadding * 2),
-//                        )
+                        DydxUsdcMigrationBannerView.Content(
+                            Modifier.padding(
+                                horizontal = ThemeShapes.HorizontalPadding,
+                            )
+                                .padding(bottom = ThemeShapes.VerticalPadding * 2),
+                        )
                         DydxMarketSummaryView.Content(Modifier.padding(horizontal = ThemeShapes.HorizontalPadding))
                     }
                     stickyHeader(key = "filter") {

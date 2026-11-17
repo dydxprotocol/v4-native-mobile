@@ -34,7 +34,7 @@ public class dydxOnboardQRCodeViewModel: PlatformViewModel {
                         let uiImage = UIImage(cgImage: cgImage)
                         Image(uiImage: uiImage)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFit()
                             .padding(.horizontal, 32)
                      } else {
                         PlatformView.nilView
