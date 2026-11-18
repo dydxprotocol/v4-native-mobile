@@ -134,8 +134,8 @@ configurations.all {
 ext {
     // Sdk and tools
     minSdkVersion = 28 // https://apilevels.com/
-    targetSdkVersion = 35
-    compileSdkVersion = 35
+    targetSdkVersion = 36
+    compileSdkVersion = 36
 
     // App dependencies
     abacusVersion = '1.14.14'
