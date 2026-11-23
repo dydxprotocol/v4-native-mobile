@@ -45,6 +45,7 @@ import exchange.dydx.dydxstatemanager.clientState.depositaddresses.DydxDepositAd
 import exchange.dydx.dydxstatemanager.clientState.transfers.DydxTransferStateManagerProtocol
 import exchange.dydx.dydxstatemanager.clientState.wallets.DydxWalletInstance
 import exchange.dydx.dydxstatemanager.clientState.wallets.DydxWalletStateManagerProtocol
+import exchange.dydx.dydxstatemanager.protocolImplementations.InjectiveSigner
 import exchange.dydx.dydxstatemanager.protocolImplementations.LanguageKey
 import exchange.dydx.dydxstatemanager.protocolImplementations.UIImplementationsExtensions
 import exchange.dydx.trading.common.AppConfig
@@ -137,6 +138,7 @@ interface AbacusStateManagerProtocol {
 
     fun screen(address: String, callback: ((Restriction) -> Unit))
     fun commitCCTPWithdraw(callback: (Boolean, ParsingError?, Any?) -> Unit)
+    fun commitInjectiveDeposit(callback: (Boolean, ParsingError?, Any?) -> Unit)
 
     fun triggerOrders(input: String?, type: TriggerOrdersInputField?)
     fun commitTriggerOrders(callback: (SubmissionStatus) -> Unit)
@@ -179,6 +181,7 @@ class AbacusStateManager @Inject constructor(
     private val transferStateManager: DydxTransferStateManagerProtocol,
     private val depositAddressesStateManager: DydxDepositAddressesStateManagerProtocol,
     private val cosmosClient: CosmosV4ClientProtocol,
+    private val injectiveSigner: InjectiveSigner,
     private val preferencesStore: SharedPreferencesStore,
     @LanguageKey private val preferenceKey: String,
     @EnvKey private val envKey: String,
@@ -351,6 +354,7 @@ class AbacusStateManager @Inject constructor(
                                 userEmail = userEmail,
                             )
                         walletStateManager.setCurrentWallet(wallet)
+                        asyncStateManager.injectiveAddress = injectiveSigner.connect(dydxMnemonic)
                         asyncStateManager.setAddresses(
                             source = ethereumAddress,
                             account = cosmosAddress,
@@ -379,6 +383,8 @@ class AbacusStateManager @Inject constructor(
         transferStateManager.clear()
         depositAddressesStateManager.reset()
 
+        injectiveSigner.disconnect()
+        asyncStateManager.injectiveAddress = null
         asyncStateManager.setAddresses(
             source = null,
             account = null,
@@ -512,6 +518,10 @@ class AbacusStateManager @Inject constructor(
 
     override fun commitCCTPWithdraw(callback: (Boolean, ParsingError?, Any?) -> Unit) {
         asyncStateManager.commitCCTPWithdraw(callback)
+    }
+
+    override fun commitInjectiveDeposit(callback: (Boolean, ParsingError?, Any?) -> Unit) {
+        asyncStateManager.commitInjectiveDeposit(callback)
     }
 
     override fun triggerOrders(input: String?, type: TriggerOrdersInputField?) {

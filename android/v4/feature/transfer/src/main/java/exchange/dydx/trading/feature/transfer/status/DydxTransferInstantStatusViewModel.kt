@@ -10,7 +10,6 @@ import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.dydxstatemanager.clientState.transfers.DydxTransferInstance
 import exchange.dydx.dydxstatemanager.clientState.transfers.DydxTransferStateManagerProtocol
-import exchange.dydx.dydxstatemanager.localizeWithParams
 import exchange.dydx.platformui.components.container.PlatformInfo
 import exchange.dydx.trading.common.DydxViewModel
 import exchange.dydx.trading.common.formatter.DydxFormatter
@@ -146,8 +145,9 @@ class DydxTransferInstantStatusViewModel @Inject constructor(
             tokenIconUri = tokenInfo?.tokenLogoUrl(abacusStateManager.deploymentUri),
             chainIconUri = tokenInfo?.chainLogUrl(abacusStateManager.deploymentUri),
             amount = formatter.raw(number = amount, digits = 3),
+            // TODO(localization): replace the hardcoded Injective deposit copy with v4-localization keys
             title = if (completed) {
-                localizer.localize("APP.V4_DEPOSIT.COMPLETED_TITLE")
+                "USDC arrived on Injective"
             } else {
                 if (status?.error != null) {
                     localizer.localize("ERRORS.API_STATUS.UNKNOWN_API_ERROR")
@@ -156,14 +156,9 @@ class DydxTransferInstantStatusViewModel @Inject constructor(
                 }
             },
             subtitle = if (completed) {
-                localizer.localize("APP.V4_DEPOSIT.COMPLETED_TEXT")
+                "Complete your deposit to send it to your dYdX trading account."
             } else {
-                localizer.localizeWithParams(
-                    "APP.DEPOSIT_MODAL.YOUR_FUNDS_AVAILABLE_SOON",
-                    mapOf(
-                        "AMOUNT_ELEMENT" to (formatter.dollar(usdcSize, digits = 2) ?: ""),
-                    ),
-                )
+                "${formatter.dollar(usdcSize, digits = 2) ?: ""} is on its way to Injective. Once it arrives, complete your deposit to start trading."
             },
             status = if (completed) {
                 StatusIcon.SUCCESS

@@ -115,7 +115,6 @@ private class dydxPortfolioViewPresenter: HostedViewPresenter<dydxPortfolioViewM
         }
         viewModel.sectionSelection = .positions
         viewModel.sections.sectionIndex = 0
-        viewModel.banner = .usdcMigration()
 
         self.viewModel = viewModel
 
@@ -124,6 +123,12 @@ private class dydxPortfolioViewPresenter: HostedViewPresenter<dydxPortfolioViewM
 
     override func start() {
         super.start()
+
+        dydxMarketsBannerViewModel.usdcMigrationPublisher
+            .sink { [weak self] banner in
+                self?.viewModel?.banner = banner
+            }
+            .store(in: &subscriptions)
 
         resetPresentersForVisibilityChange()
     }

@@ -45,6 +45,29 @@ extension dydxMarketsBannerViewModel {
             }
         )
     }
+
+    // TODO(localization): move the copy to v4-localization keys
+    static func pendingInjectiveDeposit(amount: String) -> dydxMarketsBannerViewModel {
+        dydxMarketsBannerViewModel(
+            text: "\(amount) USDC is waiting on Injective. Send it to dYdX to start trading.",
+            linkText: "Complete deposit",
+            navigationAction: {
+                Router.shared?.navigate(to: RoutingRequest(path: "/transfer/deposit/injective"), animated: true, completion: nil)
+            }
+        )
+    }
+
+    static var usdcMigrationPublisher: AnyPublisher<dydxMarketsBannerViewModel, Never> {
+        AbacusStateManager.shared.state.account
+            .map { $0?.injectiveBalances }
+            .removeDuplicates()
+            .map { balances in
+                guard let balances, balances.hasPendingDeposit else { return usdcMigration() }
+                return pendingInjectiveDeposit(amount: dydxFormatter.shared.raw(number: NSNumber(value: balances.usdc), digits: 2) ?? "")
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }
 
 private class dydxMarketsViewPresenter: HostedViewPresenter<dydxMarketsViewModel> {
@@ -60,8 +83,6 @@ private class dydxMarketsViewPresenter: HostedViewPresenter<dydxMarketsViewModel
         viewModel.header = dydxMarketsHeaderViewModel(searchAction: {
             Router.shared?.navigate(to: RoutingRequest(path: "/markets/search"), animated: true, completion: nil)
         })
-
-        viewModel.banner = .usdcMigration()
 
         viewModel.summary = dydxMarketSummaryViewModel()
         viewModel.filter = dydxMarketAssetFilterViewModel(contents: FilterAction.actions.map(\.content),
@@ -93,6 +114,12 @@ private class dydxMarketsViewPresenter: HostedViewPresenter<dydxMarketsViewModel
 
     override func start() {
         super.start()
+
+        dydxMarketsBannerViewModel.usdcMigrationPublisher
+            .sink { [weak self] banner in
+                self?.viewModel?.banner = banner
+            }
+            .store(in: &subscriptions)
 
         AbacusStateManager.shared.state.marketSummary
             .sink { [weak self] (marketSummary: PerpetualMarketSummary) in

@@ -37,11 +37,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
         }
     }
 
-    // USDC migration (v9.9): wallet deposits are quoted by Skip with the user's Noble address in the route.
-    // Noble deposits are now rejected and refunded to that Noble address, where they would be stranded
-    // (the Noble sweep is disabled). Paused until Abacus routes deposits via Injective.
-    private static let walletDepositsPaused = true
-
     private let transferType: TransferType
     private let onboardingAnalytics = OnboardingAnalytics()
     private let transferAnalytics = TransferAnalytics()
@@ -69,11 +64,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
     }
 
     private func update(transferInput: TransferInput, tradeErrors: [ValidationError], isOnboarded: Bool, selectedRoute: TransferRouteSelection?) {
-        if transferType == .deposit && isOnboarded && Self.walletDepositsPaused {
-            viewModel?.ctaAction = nil
-            viewModel?.ctaButtonState = .disabled(DataLocalizer.localize(path: "APP.ONBOARDING.TRANSFERS_PAUSED"))
-            return
-        }
         updateCtaAction(transferInput: transferInput, isOnboarded: isOnboarded, selectedRoute: selectedRoute)
         updateCtaButtonState(transferInput: transferInput, tradeErrors: tradeErrors, isOnboarded: isOnboarded)
     }
@@ -170,7 +160,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
     }
 
     private func deposit(selectedRoute: TransferRouteSelection?) {
-        guard !Self.walletDepositsPaused else { return }
         Publishers.Zip(AbacusStateManager.shared.state.transferInput,
                        AbacusStateManager.shared.state.currentWallet.compactMap { $0 })
             .prefix(1)

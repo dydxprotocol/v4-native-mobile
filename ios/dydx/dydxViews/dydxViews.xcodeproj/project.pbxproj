@@ -223,6 +223,7 @@
 		02F6E7112A8292FC0018F00C /* dydxProfileFeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6E7102A8292FC0018F00C /* dydxProfileFeesView.swift */; };
 		02F7010329EA192A004DEB5E /* dydxReceiptItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F7010229EA192A004DEB5E /* dydxReceiptItemView.swift */; };
 		02F802802DD56BE70009BA8F /* dydxTransferNobleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8027F2DD56BE70009BA8F /* dydxTransferNobleAddressView.swift */; };
+		7A1E5C342EC1A00100D1A7E1 /* dydxInjectiveDepositView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1E5C332EC1A00100D1A7E1 /* dydxInjectiveDepositView.swift */; };
 		02F958142A1BDEE500828F9A /* dydxKeyExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F958132A1BDEE500828F9A /* dydxKeyExportView.swift */; };
 		02F95A7C2A1D2C5900828F9A /* dydxPortfolioSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A7B2A1D2C5900828F9A /* dydxPortfolioSelectorView.swift */; };
 		02F95A8C2A1D6A9200828F9A /* dydxProfileHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A8B2A1D6A9200828F9A /* dydxProfileHistoryView.swift */; };
@@ -725,6 +726,7 @@
 		02F6E7102A8292FC0018F00C /* dydxProfileFeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxProfileFeesView.swift; sourceTree = "<group>"; };
 		02F7010229EA192A004DEB5E /* dydxReceiptItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxReceiptItemView.swift; sourceTree = "<group>"; };
 		02F8027F2DD56BE70009BA8F /* dydxTransferNobleAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxTransferNobleAddressView.swift; sourceTree = "<group>"; };
+		7A1E5C332EC1A00100D1A7E1 /* dydxInjectiveDepositView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxInjectiveDepositView.swift; sourceTree = "<group>"; };
 		02F958132A1BDEE500828F9A /* dydxKeyExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxKeyExportView.swift; sourceTree = "<group>"; };
 		02F95A7B2A1D2C5900828F9A /* dydxPortfolioSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxPortfolioSelectorView.swift; sourceTree = "<group>"; };
 		02F95A8B2A1D6A9200828F9A /* dydxProfileHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dydxProfileHistoryView.swift; sourceTree = "<group>"; };
@@ -1696,6 +1698,7 @@
 				026BB4002E42AC7F009F33AB /* Faucet */,
 				026BB3FA2E42A284009F33AB /* Selector */,
 				02F802902DD56D080009BA8F /* NobleAddress */,
+				7A1E5C352EC1A00100D1A7E1 /* InjectiveDeposit */,
 				027CB27729EEFF670069781A /* TransferStatus */,
 				02F99F3C29E4D5600009B3E8 /* Search */,
 				02084B1F297FC2BE00CF9522 /* Components */,
@@ -1901,6 +1904,14 @@
 				02F8027F2DD56BE70009BA8F /* dydxTransferNobleAddressView.swift */,
 			);
 			path = NobleAddress;
+			sourceTree = "<group>";
+		};
+		7A1E5C352EC1A00100D1A7E1 /* InjectiveDeposit */ = {
+			isa = PBXGroup;
+			children = (
+				7A1E5C332EC1A00100D1A7E1 /* dydxInjectiveDepositView.swift */,
+			);
+			path = InjectiveDeposit;
 			sourceTree = "<group>";
 		};
 		02F958062A1BDED300828F9A /* KeyExport */ = {
@@ -2686,6 +2697,7 @@
 				02D6DBB62D134BCF008AAEA1 /* dydxSimpleUIMarketListView.swift in Sources */,
 				0284201629AD71B600C0E7CC /* Enums.swift in Sources */,
 				02F802802DD56BE70009BA8F /* dydxTransferNobleAddressView.swift in Sources */,
+				7A1E5C342EC1A00100D1A7E1 /* dydxInjectiveDepositView.swift in Sources */,
 				02678FA629666BE600EE346B /* dydxPortfolioOrdersView.swift in Sources */,
 				273C2F382C496F4F00F8391F /* dydxSliderInputView.swift in Sources */,
 				02A651872DB6DA15006DBD5F /* dydxSimpleUIMenuButtonsView.swift in Sources */,

@@ -164,8 +164,9 @@ private class dydxTransferStatusViewPresenter: HostedViewPresenter<dydxTransferS
         if let transactionHash = transactionHash,
            let status = statuses?[transactionHash] {
             if routeCompleted(transferStatus: status, chainId: transfer.toChainId) {
-                viewModel?.title = DataLocalizer.localize(path: "APP.V4_DEPOSIT.COMPLETED_TITLE")
-                viewModel?.text = DataLocalizer.localize(path: "APP.V4_DEPOSIT.COMPLETED_TEXT")
+                // TODO(localization): replace with Injective deposit keys in v4-localization
+                viewModel?.title = "USDC arrived on Injective"
+                viewModel?.text = "Complete your deposit to send it to your dYdX trading account."
 
                 step1.status = .completed
                 step2.status = .completed
