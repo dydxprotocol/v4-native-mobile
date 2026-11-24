@@ -83,9 +83,7 @@ private class dydxInstantDepositSearchViewPresenter: HostedViewPresenter<dydxIns
         AbacusStateManager.shared.state.currentWallet
             .sink { [weak self] _ in
                 guard let self else { return }
-                // USDC migration (v9.9): the Noble address option and MoonPay (which buys USDC on Noble)
-                // both put funds on Noble, where they are now rejected and would be stranded.
-                self.viewModel?.nobleItem = nil
+                // USDC migration (v9.9): MoonPay buys USDC on Noble, which would be stranded. Hidden until it targets Injective.
                 self.viewModel?.fiatItem = nil
              }
             .store(in: &subscriptions)

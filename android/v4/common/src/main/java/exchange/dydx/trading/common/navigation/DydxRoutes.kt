@@ -99,7 +99,6 @@ object TransferRoutes {
     const val transfer_deposit_search = "transfer/deposit/search"
     const val transfer_status = "transfer/status"
     const val transfer_status_instant = "transfer/status_instant"
-    const val transfer_deposit_noble = "transfer/deposit/noble"
     const val transfer_deposit_injective = "transfer/deposit/injective"
 }
 

@@ -173,11 +173,6 @@ public final class AbacusStateManager: NSObject {
         appConfigs.vaultConfigs = VaultConfigs.companion.forApp
         appConfigs.skipGoFast = true
 
-        // v9.9 (USDC migration to Injective) rejects deposits from Noble, so sweeping a Noble
-        // balance back to dYdX would loop forever. Disabled until Abacus routes via Injective.
-        // Note: this also stops the Noble -> CCTP leg of CCTP withdrawals.
-        AutoSweepConfig.shared.disable_autosweep = true
-
         return AsyncAbacusStateManagerV2(
             deploymentUri: deploymentUri,
             deployment: deployment,

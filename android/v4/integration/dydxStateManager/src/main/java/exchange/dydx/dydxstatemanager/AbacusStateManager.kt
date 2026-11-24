@@ -30,7 +30,6 @@ import exchange.dydx.abacus.state.machine.TransferInputField
 import exchange.dydx.abacus.state.machine.TriggerOrdersInputField
 import exchange.dydx.abacus.state.machine.WalletConnectionType
 import exchange.dydx.abacus.state.manager.ApiState
-import exchange.dydx.abacus.state.manager.AutoSweepConfig
 import exchange.dydx.abacus.state.manager.GasToken
 import exchange.dydx.abacus.state.manager.HistoricalPnlPeriod
 import exchange.dydx.abacus.state.manager.HistoricalTradingRewardsPeriod
@@ -240,11 +239,6 @@ class AbacusStateManager @Inject constructor(
                 NotificationProviderType.Positions,
             )
         appConfigsV2.skipGoFast = true
-
-        // v9.9 (USDC migration to Injective) rejects deposits from Noble, so sweeping a Noble
-        // balance back to dYdX would loop forever. Disabled until Abacus routes via Injective.
-        // Note: this also stops the Noble -> CCTP leg of CCTP withdrawals.
-        AutoSweepConfig.disable_autosweep = true
 
         AsyncAbacusStateManagerV2(
             deploymentUri = deploymentUri,

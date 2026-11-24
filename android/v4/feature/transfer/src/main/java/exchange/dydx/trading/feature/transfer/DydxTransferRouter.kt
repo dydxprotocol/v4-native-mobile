@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import exchange.dydx.trading.common.navigation.DydxRouter
 import exchange.dydx.trading.common.navigation.TransferRoutes
-import exchange.dydx.trading.common.navigation.TransferRoutes.transfer_deposit_noble
 import exchange.dydx.trading.common.navigation.dydxComposable
 import exchange.dydx.trading.feature.transfer.deposit.DydxTransferInstantDepositView
 import exchange.dydx.trading.feature.transfer.deposit.DydxTransferTurnkeyDepositView
@@ -14,7 +13,6 @@ import exchange.dydx.trading.feature.transfer.deposit.qrcode.DydxTurnkeyQRCodeVi
 import exchange.dydx.trading.feature.transfer.faucet.DydxTransferFaucetView
 import exchange.dydx.trading.feature.transfer.fiat.DydxFiatDepositView
 import exchange.dydx.trading.feature.transfer.injective.DydxInjectiveDepositView
-import exchange.dydx.trading.feature.transfer.noble.DydxTransferNobleAddressView
 import exchange.dydx.trading.feature.transfer.search.DydxInstantDepositSearchView
 import exchange.dydx.trading.feature.transfer.search.DydxTransferSearchView
 import exchange.dydx.trading.feature.transfer.selector.DydxTransferSelectorView
@@ -126,14 +124,6 @@ fun NavGraphBuilder.transferGraph(
         deepLinks = appRouter.deeplinks(TransferRoutes.transfer_deposit_search),
     ) { navBackStackEntry ->
         DydxInstantDepositSearchView.Content(Modifier)
-    }
-
-    dydxComposable(
-        router = appRouter,
-        route = TransferRoutes.transfer_deposit_noble,
-        deepLinks = appRouter.deeplinks(TransferRoutes.transfer_deposit_noble),
-    ) { navBackStackEntry ->
-        DydxTransferNobleAddressView.Content(Modifier)
     }
 
     dydxComposable(

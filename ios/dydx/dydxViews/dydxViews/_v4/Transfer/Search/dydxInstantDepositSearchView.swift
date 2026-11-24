@@ -14,7 +14,6 @@ public class dydxInstantDepositSearchViewModel: PlatformViewModel {
     @Published public var cancelAction: (() -> Void)?
     @Published public var tokens: [dydxInstantDepositSearchItemViewModel]?
     @Published public var otherTokens: [dydxInstantDepositSearchItemViewModel]?
-    @Published public var nobleItem: dydxTransferNobleItemViewModel?
     @Published public var fiatItem: dydxTransferFiatItemViewModel?
 
     public init() { }
@@ -23,7 +22,6 @@ public class dydxInstantDepositSearchViewModel: PlatformViewModel {
         let vm = dydxInstantDepositSearchViewModel()
         vm.tokens = [.previewValue]
         vm.otherTokens = [.previewValue]
-        vm.nobleItem = .previewValue
         return vm
     }
 
@@ -54,9 +52,6 @@ public class dydxInstantDepositSearchViewModel: PlatformViewModel {
 
                         let header = self.createHeader(text: DataLocalizer.localize(path: "APP.GENERAL.YOUR_TOKENS"))
                         Section(header: header) {
-                            self.nobleItem?.createView(parentStyle: style)
-                                .padding(.horizontal, 16)
-
                             self.fiatItem?.createView(parentStyle: style)
                                 .padding(.horizontal, 16)
 
