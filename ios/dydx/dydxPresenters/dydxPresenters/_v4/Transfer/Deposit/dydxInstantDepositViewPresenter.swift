@@ -59,6 +59,8 @@ class dydxInstantDepositViewPresenter: HostedViewPresenter<dydxInstantDepositVie
             return
         }
 
+        transferTokenDetails.refresh()
+
         Publishers
             .CombineLatest4(
                 AbacusStateManager.shared.state.transferInput,
