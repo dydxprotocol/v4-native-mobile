@@ -4,7 +4,6 @@ import exchange.dydx.abacus.output.account.Subaccount
 import exchange.dydx.abacus.output.input.TransferInput
 import exchange.dydx.abacus.protocols.LocalizerProtocol
 import exchange.dydx.abacus.protocols.ParserProtocol
-import exchange.dydx.dydxstatemanager.AbacusStateManagerProtocol
 import exchange.dydx.trading.integration.cosmos.CosmosV4WebviewClientProtocol
 import exchange.dydx.utilities.utils.AsyncStep
 import exchange.dydx.utilities.utils.jsonStringToMap
@@ -18,7 +17,6 @@ class DydxWithdrawToIBCStep(
     private val cosmosClient: CosmosV4WebviewClientProtocol,
     private val parser: ParserProtocol,
     private val localizer: LocalizerProtocol,
-    private val abacusStateManager: AbacusStateManagerProtocol,
 ) : AsyncStep<String> {
 
     override suspend fun run(): Result<String> {
@@ -29,32 +27,15 @@ class DydxWithdrawToIBCStep(
         }
         val data = transferInput.requestPayload?.data ?: return invalidInputEvent
 
-        return if (transferInput.isCctp) {
-            suspendCoroutine { continuation ->
-                abacusStateManager.commitCCTPWithdraw { success, parsingError, data ->
-                    if (success) {
-                        val response = data as? String
-                        if (response != null) {
-                            postTransaction(response, continuation)
-                        } else {
-                            continuation.resume(errorEvent(localizer.localize("APP.GENERAL.UNKNOWN_ERROR")))
-                        }
-                    } else {
-                        continuation.resume(errorEvent(parsingError?.message ?: localizer.localize("APP.GENERAL.UNKNOWN_ERROR")))
-                    }
-                }
-            }
-        } else {
-            suspendCoroutine { continuation ->
-                cosmosClient.withdrawToIBC(
-                    subaccount = selectedSubaccount.subaccountNumber,
-                    amount = amount,
-                    payload = data,
-                    completion = { response ->
-                        postTransaction(response, continuation)
-                    },
-                )
-            }
+        return suspendCoroutine { continuation ->
+            cosmosClient.withdrawToIBC(
+                subaccount = selectedSubaccount.subaccountNumber,
+                amount = amount,
+                payload = data,
+                completion = { response ->
+                    postTransaction(response, continuation)
+                },
+            )
         }
     }
 

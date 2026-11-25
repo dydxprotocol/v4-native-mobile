@@ -338,12 +338,6 @@ public final class AbacusStateManager: NSObject {
         asyncStateManager.screen(address: address, callback: callback)
     }
 
-    public func commitCCTPWithdraw(callback: @escaping ((Bool, Error?, Any?) -> Void)) {
-        asyncStateManager.commitCCTPWithdraw { success, parsingError, result in
-            callback(success.boolValue, parsingError, result)
-        }
-    }
-
     public func commitInjectiveDeposit(callback: @escaping ((Bool, ParsingError?, Any?) -> Void)) {
         asyncStateManager.commitInjectiveDeposit { success, parsingError, result in
             callback(success.boolValue, parsingError, result)

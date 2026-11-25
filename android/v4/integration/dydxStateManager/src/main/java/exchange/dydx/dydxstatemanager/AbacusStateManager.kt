@@ -136,7 +136,6 @@ interface AbacusStateManagerProtocol {
     )
 
     fun screen(address: String, callback: ((Restriction) -> Unit))
-    fun commitCCTPWithdraw(callback: (Boolean, ParsingError?, Any?) -> Unit)
     fun commitInjectiveDeposit(callback: (Boolean, ParsingError?, Any?) -> Unit)
 
     fun triggerOrders(input: String?, type: TriggerOrdersInputField?)
@@ -508,10 +507,6 @@ class AbacusStateManager @Inject constructor(
 
     override fun screen(address: String, callback: ((Restriction) -> Unit)) {
         asyncStateManager.screen(address, callback)
-    }
-
-    override fun commitCCTPWithdraw(callback: (Boolean, ParsingError?, Any?) -> Unit) {
-        asyncStateManager.commitCCTPWithdraw(callback)
     }
 
     override fun commitInjectiveDeposit(callback: (Boolean, ParsingError?, Any?) -> Unit) {

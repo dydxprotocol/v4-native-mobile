@@ -189,7 +189,6 @@ class DydxTransferWithdrawalCtaButtonModel @Inject constructor(
                         cosmosClient = cosmosClient,
                         parser = parser,
                         localizer = localizer,
-                        abacusStateManager = abacusStateManager,
                     ).runWithLogs()
                 }
 
