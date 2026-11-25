@@ -86,8 +86,9 @@ private class dydxTransferInstantStatusViewPresenter: HostedViewPresenter<dydxTr
             .sink { [weak self] transferState, hash, transferInput in
                 let size = self?.parser.asNumber(transferInput?.size?.usdcSize)?.doubleValue
                 self?.viewModel?.title = DataLocalizer.localize(path: "APP.V4_DEPOSIT.IN_PROGRESS_TITLE")
-                let params = ["AMOUNT_ELEMENT": dydxFormatter.shared.dollar(number: size) ?? ""]
-                self?.viewModel?.subtitle = DataLocalizer.localize(path: "APP.DEPOSIT_MODAL.YOUR_FUNDS_AVAILABLE_SOON", params: params)
+                // TODO(localization): replace with an Injective deposit key in v4-localization
+                let amount = dydxFormatter.shared.dollar(number: size) ?? ""
+                self?.viewModel?.subtitle = "\(amount) is on its way to Injective. Once it arrives, complete your deposit to start trading."
 
                 if let transferInstance = transferState.transfers.first(where: { $0.transactionHash == hash }) {
                     self?.updateTransferInstance(transfer: transferInstance)
@@ -148,8 +149,9 @@ private class dydxTransferInstantStatusViewPresenter: HostedViewPresenter<dydxTr
         if let transactionHash = transactionHash,
            let status = statuses?[transactionHash] {
             if routeCompleted(transferStatus: status, chainId: transfer.toChainId) {
-                viewModel?.title = DataLocalizer.localize(path: "APP.V4_DEPOSIT.COMPLETED_TITLE")
-                viewModel?.subtitle = DataLocalizer.localize(path: "APP.V4_DEPOSIT.COMPLETED_TEXT")
+                // TODO(localization): replace with Injective deposit keys in v4-localization
+                viewModel?.title = "USDC arrived on Injective"
+                viewModel?.subtitle = "Complete your deposit to send it to your dYdX trading account."
                 viewModel?.status = .success
                 deleteTransferInstance(transactionHash: transactionHash)
 

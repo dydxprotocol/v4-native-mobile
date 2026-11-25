@@ -37,11 +37,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
         }
     }
 
-    // USDC migration (v9.9): wallet deposits are quoted by Skip with the user's Noble address in the route.
-    // Noble deposits are now rejected and refunded to that Noble address, where they would be stranded
-    // (the Noble sweep is disabled). Paused until Abacus routes deposits via Injective.
-    private static let walletDepositsPaused = true
-
     private let transferType: TransferType
     private let onboardingAnalytics = OnboardingAnalytics()
     private let transferAnalytics = TransferAnalytics()
@@ -69,11 +64,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
     }
 
     private func update(transferInput: TransferInput, tradeErrors: [ValidationError], isOnboarded: Bool, selectedRoute: TransferRouteSelection?) {
-        if transferType == .deposit && isOnboarded && Self.walletDepositsPaused {
-            viewModel?.ctaAction = nil
-            viewModel?.ctaButtonState = .disabled(DataLocalizer.localize(path: "APP.ONBOARDING.TRANSFERS_PAUSED"))
-            return
-        }
         updateCtaAction(transferInput: transferInput, isOnboarded: isOnboarded, selectedRoute: selectedRoute)
         updateCtaButtonState(transferInput: transferInput, tradeErrors: tradeErrors, isOnboarded: isOnboarded)
     }
@@ -170,7 +160,6 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
     }
 
     private func deposit(selectedRoute: TransferRouteSelection?) {
-        guard !Self.walletDepositsPaused else { return }
         Publishers.Zip(AbacusStateManager.shared.state.transferInput,
                        AbacusStateManager.shared.state.currentWallet.compactMap { $0 })
             .prefix(1)
@@ -297,37 +286,20 @@ class dydxTransferInputCtaButtonViewPresenter: HostedViewPresenter<dydxTradeInpu
                 Tracking.shared?.logSharedEvent(ClientTrackableEventType.WithdrawInitiatedEvent(transferInput: transferInput,
                                                                                                 summary: transferInput.summary))
 
-                if transferInput.isCctp {
-                    AbacusStateManager.shared.commitCCTPWithdraw { [weak self] success, error, result in
-                        if success {
-                            self?.transferAnalytics.logWithdrawal(transferInput: transferInput)
-                            self?.postTransaction(result: result, transferInput: transferInput)
-                        } else {
-                            Tracking.shared?.logSharedEvent(ClientTrackableEventType.WithdrawErrorEvent(transferInput: transferInput, errorMessage: error?.localizedDescription ?? ""))
-
-                            ErrorInfo.shared?.info(title: DataLocalizer.localize(path: "APP.GENERAL.ERROR"),
-                                                   message: error?.localizedDescription,
-                                                   type: .error,
-                                                   error: nil, time: nil)
-                        }
+                let gasFee = transferInput.summary?.gasFee?.doubleValue ?? 0
+                let usdcBalanceInWallet = usdcBalanceInWallet ?? 0
+                let subaccount = Int(selectedSubaccount.subaccountNumber)
+                if usdcBalanceInWallet >= gasFee {
+                    CosmoJavascript.shared.withdrawToIBC(subaccount: subaccount, amount: amount, payload: data) { [weak self] result in
+                        self?.transferAnalytics.logWithdrawal(transferInput: transferInput)
+                        self?.postTransaction(result: result, transferInput: transferInput)
                         self?.viewModel?.ctaButtonState = .enabled(DataLocalizer.localize(path: "APP.GENERAL.CONFIRM_WITHDRAW"))
                     }
                 } else {
-                    let gasFee = transferInput.summary?.gasFee?.doubleValue ?? 0
-                    let usdcBalanceInWallet = usdcBalanceInWallet ?? 0
-                    let subaccount = Int(selectedSubaccount.subaccountNumber)
-                    if usdcBalanceInWallet >= gasFee {
-                        CosmoJavascript.shared.withdrawToIBC(subaccount: subaccount, amount: amount, payload: data) { [weak self] result in
-                            self?.transferAnalytics.logWithdrawal(transferInput: transferInput)
-                            self?.postTransaction(result: result, transferInput: transferInput)
-                            self?.viewModel?.ctaButtonState = .enabled(DataLocalizer.localize(path: "APP.GENERAL.CONFIRM_WITHDRAW"))
-                        }
-                    } else {
-                        Tracking.shared?.logSharedEvent(ClientTrackableEventType.WithdrawErrorEvent(transferInput: transferInput, errorMessage: "No gas"))
+                    Tracking.shared?.logSharedEvent(ClientTrackableEventType.WithdrawErrorEvent(transferInput: transferInput, errorMessage: "No gas"))
 
-                        self.showNoGas()
-                        self.viewModel?.ctaButtonState = .enabled(DataLocalizer.localize(path: "APP.GENERAL.CONFIRM_WITHDRAW"))
-                    }
+                    self.showNoGas()
+                    self.viewModel?.ctaButtonState = .enabled(DataLocalizer.localize(path: "APP.GENERAL.CONFIRM_WITHDRAW"))
                 }
             }
         }

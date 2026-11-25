@@ -60,8 +60,6 @@ class DydxInstantDepositSearchViewModel @Inject constructor(
             },
             tokens = tokens,
             otherTokens = otherTokens,
-            // Deposits to the Noble address are rejected after the v9.9 USDC migration to Injective.
-            nobleItem = null,
             // USDC migration (v9.9): MoonPay buys USDC on Noble, which would be stranded. Hidden until it targets Injective.
             fiatItem = null,
         )

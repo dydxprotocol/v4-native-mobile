@@ -10,6 +10,7 @@ import Combine
 import Utilities
 import ParticlesKit
 import dydxFormatter
+import dydxCartera
 
 public final class AbacusStateManager: NSObject {
     public static let shared = AbacusStateManager()
@@ -172,11 +173,6 @@ public final class AbacusStateManager: NSObject {
         appConfigs.vaultConfigs = VaultConfigs.companion.forApp
         appConfigs.skipGoFast = true
 
-        // v9.9 (USDC migration to Injective) rejects deposits from Noble, so sweeping a Noble
-        // balance back to dYdX would loop forever. Disabled until Abacus routes via Injective.
-        // Note: this also stops the Noble -> CCTP leg of CCTP withdrawals.
-        AutoSweepConfig.shared.disable_autosweep = true
-
         return AsyncAbacusStateManagerV2(
             deploymentUri: deploymentUri,
             deployment: deployment,
@@ -234,6 +230,8 @@ public final class AbacusStateManager: NSObject {
                 let wallet = dydxWalletInstance.V4(ethereumAddress: ethereumAddress, walletId: walletId, cosmoAddress: cosmoAddress, mnemonic: dydxMnemonic, svmAddress: svmAddress, avalancheAddress: avalancheAddress, sourceWalletMnemonic: sourceWalletMnemonic, loginMethod: loginMethod, userEmail: userEmail)
                 self._walletState.setCurrentWallet(wallet: wallet)
                 self.asyncStateManager.setAddresses(source: ethereumAddress, account: cosmoAddress, isNew: isNew)
+                let injectiveEvmAddress = InjectiveSigner.shared.connect(mnemonic: dydxMnemonic)
+                self.asyncStateManager.injectiveAddress = injectiveEvmAddress.flatMap { AbacusStringUtils.shared.evmToInjectiveAddress(evmAddress: $0) }
                 if walletId == "phantom-wallet" {
                     self.asyncStateManager.walletConnectionType = .solana
                 } else {
@@ -252,6 +250,8 @@ public final class AbacusStateManager: NSObject {
             dydxDepositAddressesStateManager.shared.clear()
         }
 
+        InjectiveSigner.shared.disconnect()
+        asyncStateManager.injectiveAddress = nil
         asyncStateManager.setAddresses(source: _walletState.currentWallet?.ethereumAddress, account: _walletState.currentWallet?.cosmoAddress, isNew: false)
     }
 
@@ -338,8 +338,8 @@ public final class AbacusStateManager: NSObject {
         asyncStateManager.screen(address: address, callback: callback)
     }
 
-    public func commitCCTPWithdraw(callback: @escaping ((Bool, Error?, Any?) -> Void)) {
-        asyncStateManager.commitCCTPWithdraw { success, parsingError, result in
+    public func commitInjectiveDeposit(callback: @escaping ((Bool, ParsingError?, Any?) -> Void)) {
+        asyncStateManager.commitInjectiveDeposit { success, parsingError, result in
             callback(success.boolValue, parsingError, result)
         }
     }

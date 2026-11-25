@@ -47,6 +47,20 @@ fun Preview_DydxUsdcMigrationBannerView() {
     }
 }
 
+@Preview
+@Composable
+fun Preview_DydxUsdcMigrationBannerView_PendingDeposit() {
+    DydxThemedPreviewSurface {
+        DydxUsdcMigrationBannerView.Content(
+            Modifier,
+            DydxUsdcMigrationBannerView.ViewState(
+                text = "123,456,789.12 USDC is waiting on Injective. Send it to dYdX to start trading.",
+                linkText = "Complete deposit",
+            ),
+        )
+    }
+}
+
 object DydxUsdcMigrationBannerView : DydxComponent {
     data class ViewState(
         val text: String,

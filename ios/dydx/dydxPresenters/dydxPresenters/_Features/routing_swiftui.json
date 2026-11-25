@@ -357,9 +357,9 @@
                     "destination":"dydxPresenters.dydxInstantDepositSearchViewBuilder",
                     "presentation":"push"
                 },
-                "/transfer/deposit/noble":{
-                    "destination":"dydxPresenters.dydxTransferNobleAddressViewBuilder",
-                    "presentation":"push"
+                "/transfer/deposit/injective":{
+                    "destination":"dydxPresenters.dydxInjectiveDepositViewBuilder",
+                    "presentation":"half"
                 },
                 "/transfer/status":{
                     "destination":"dydxPresenters.dydxTransferStatusViewBuilder",

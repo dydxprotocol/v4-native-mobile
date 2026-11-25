@@ -45,7 +45,6 @@ object DydxInstantDepositSearchView : DydxComponent {
         val backButtonAction: () -> Unit = {},
         val tokens: List<DydxInstantDepositSearchItem.ViewState>?,
         val otherTokens: List<DydxInstantDepositSearchItem.ViewState>?,
-        val nobleItem: DydxTransferNobleItemView.ViewState?,
         val fiatItem: DydxTransferFiatItemView.ViewState?,
     ) {
         companion object {
@@ -59,7 +58,6 @@ object DydxInstantDepositSearchView : DydxComponent {
                     DydxInstantDepositSearchItem.ViewState.preview,
                     DydxInstantDepositSearchItem.ViewState.preview,
                 ),
-                nobleItem = DydxTransferNobleItemView.ViewState.preview,
                 fiatItem = DydxTransferFiatItemView.ViewState.preview,
             )
         }
@@ -107,15 +105,6 @@ object DydxInstantDepositSearchView : DydxComponent {
                             .padding(vertical = ThemeShapes.VerticalPadding),
                         style = TextStyle.dydxDefault
                             .themeFont(fontSize = ThemeFont.FontSize.small),
-                    )
-                }
-
-                item {
-                    DydxTransferNobleItemView.Content(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                        state = state.nobleItem,
                     )
                 }
 

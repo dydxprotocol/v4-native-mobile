@@ -72,6 +72,7 @@
 		029E51C02D08BD4A005D4DC5 /* ByteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029E51BF2D08BD4A005D4DC5 /* ByteExtensions.swift */; };
 		029E51C22D08BE51005D4DC5 /* String+Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029E51C12D08BE51005D4DC5 /* String+Numeric.swift */; };
 		02DB5ECD29E602E5001EA0F1 /* EthereumInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DB5ECC29E602E5001EA0F1 /* EthereumInteractor.swift */; };
+		7A1E5C2B2EC1A00100D1A7E1 /* InjectiveSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1E5C2A2EC1A00100D1A7E1 /* InjectiveSigner.swift */; };
 		02DE2A6E2D0A0091007E1277 /* KeccakExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DE2A6D2D0A0091007E1277 /* KeccakExtensions.swift */; };
 		02DE2EAE2D0A05AE007E1277 /* keccak-tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 02DE2EAB2D0A05AE007E1277 /* keccak-tiny.c */; };
 		02DE2EAF2D0A05AE007E1277 /* keccak-tiny.h in Headers */ = {isa = PBXBuildFile; fileRef = 02DE2EA92D0A05AE007E1277 /* keccak-tiny.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -234,6 +235,7 @@
 		029E51BF2D08BD4A005D4DC5 /* ByteExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteExtensions.swift; sourceTree = "<group>"; };
 		029E51C12D08BE51005D4DC5 /* String+Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Numeric.swift"; sourceTree = "<group>"; };
 		02DB5ECC29E602E5001EA0F1 /* EthereumInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumInteractor.swift; sourceTree = "<group>"; };
+		7A1E5C2A2EC1A00100D1A7E1 /* InjectiveSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveSigner.swift; sourceTree = "<group>"; };
 		02DE2A6D2D0A0091007E1277 /* KeccakExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeccakExtensions.swift; sourceTree = "<group>"; };
 		02DE2EA92D0A05AE007E1277 /* keccak-tiny.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "keccak-tiny.h"; sourceTree = "<group>"; };
 		02DE2EAB2D0A05AE007E1277 /* keccak-tiny.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "keccak-tiny.c"; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				02DB5ECC29E602E5001EA0F1 /* EthereumInteractor.swift */,
+				7A1E5C2A2EC1A00100D1A7E1 /* InjectiveSigner.swift */,
 			);
 			path = Ethereum;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				029E51BA2D08B43D005D4DC5 /* Extensions.swift in Sources */,
 				0274248B29E785AD004C89AE /* ContractFunction.swift in Sources */,
 				02DB5ECD29E602E5001EA0F1 /* EthereumInteractor.swift in Sources */,
+				7A1E5C2B2EC1A00100D1A7E1 /* InjectiveSigner.swift in Sources */,
 				029E51BE2D08BC6B005D4DC5 /* HexUtil.swift in Sources */,
 				0274248729E76718004C89AE /* EthConversions.swift in Sources */,
 				02439E4429B04D2700A083FE /* dydxV4WalletSetup.swift in Sources */,

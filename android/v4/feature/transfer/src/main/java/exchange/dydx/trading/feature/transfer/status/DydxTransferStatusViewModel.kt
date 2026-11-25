@@ -128,15 +128,16 @@ class DydxTransferStatusViewModel @Inject constructor(
         }
 
         val size = transfer?.usdcSize ?: 0.0
+        // TODO(localization): replace the hardcoded Injective deposit copy with v4-localization keys
         return DydxTransferStatusView.ViewState(
             localizer = localizer,
             title = when (routeStatus) {
-                RouteStatus.Completed -> localizer.localize("APP.V4_DEPOSIT.COMPLETED_TITLE")
+                RouteStatus.Completed -> "USDC arrived on Injective"
                 RouteStatus.InProgress, RouteStatus.Step1 -> localizer.localize("APP.V4_DEPOSIT.IN_PROGRESS_TITLE")
                 RouteStatus.NoHash -> localizer.localize("APP.V4_DEPOSIT.CHECK_STATUS_TITLE")
             },
             text = when (routeStatus) {
-                RouteStatus.Completed -> localizer.localize("APP.V4_DEPOSIT.COMPLETED_TEXT")
+                RouteStatus.Completed -> "Complete your deposit to send it to your dYdX trading account."
                 RouteStatus.InProgress, RouteStatus.Step1 -> localizer.localizeWithParams(
                     path = "APP.V4_DEPOSIT.IN_PROGRESS_TEXT",
                     params = mapOf(

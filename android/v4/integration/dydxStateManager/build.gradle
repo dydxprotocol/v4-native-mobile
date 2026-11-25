@@ -74,4 +74,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion"
 
+    implementation "org.web3j:core:$web3jVersion"
+
 }
